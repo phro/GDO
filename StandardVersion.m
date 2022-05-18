@@ -19,6 +19,10 @@
 
 
 
+(*Mathematica implementation of Perturbed Gaussian generating functions for universal
+knot invariants by Dror Bar-Natan and Roland van der Veen, September 2021. (Standard version)*)
+
+
 (* ::Input::Initialization:: *)
 Once[<<KnotTheory`];
 
