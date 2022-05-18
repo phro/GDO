@@ -150,16 +150,8 @@ Zrule=Join[zrule,zrule/.r_Rule:>((U=r[[1]]/.{b->B,t->T,\[Alpha]->\[ScriptCapital
 Q1=Q/.(Zrule\[Union]\[Zeta]rule);
 EEQ[ps___]:=EEQ[ps]=(CF[E^-Q1 Subscript[D, Thread[{zs,{ps}}]][E^Q1]]/.{Alternatives@@zs->0,Alternatives@@Zs->1});
 CF@\[DoubleStruckCapitalE][c+\[Eta]s.lt.ys,Q1/.{Alternatives@@zs->0,Alternatives@@Zs->1},
-Det[lt](Subscript[Zip, \[Zeta]s][(EQ@@zs)(P/.(Zrule\[Union]\[Zeta]rule))] /. \!\(\*
-TagBox[
-StyleBox[
-RowBox[{
-RowBox[{
-RowBox[{"Derivative", "[", "ps___", "]"}], "[", "EQ", "]"}], "[", "___", "]"}],
-ShowSpecialCharacters->False,
-ShowStringCharacters->True,
-NumberMarks->True],
-FullForm]\) :> EEQ[ps] /. _EQ->1)  ] ];
+Det[lt](Subscript[Zip, \[Zeta]s][(EQ@@zs)(P/.(Zrule\[Union]\[Zeta]rule))] /.
+Derivative[ps___][EQ][___]:> EEQ[ps] /. _EQ->1)]];
 
 
 (* ::Input::Initialization:: *)
