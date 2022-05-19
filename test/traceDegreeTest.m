@@ -1,5 +1,6 @@
 Once[
-  Get["/home/jesse/ed/k/co/traceDegree.m"]
+  SetDirectory["~/ed/k/mma/gdo"]
+  Get["traceDegree.m"]
 ]
 
 (* testCoinvVanishesOnBrackets := VerificationTest[
@@ -19,13 +20,7 @@ Once[
 (* testZFramedSatisfiesRibbonR1; *)
 (* testZFramedRespectsWhirling; *)
 
-testSuite =
-  { testsZFramedReidemeister
-  , testsPDNotation
-  , testAddWeight
-  }
-
-testAddWeight := VerificationTest[
+VerificationTest[
   inputGDO =
     Subscript[\[DoubleStruckCapitalE],{i,j}->{k}][
       Subscript[α, i]Subscript[b,j]+ Subscript[β, i]Subscript[a,j],
@@ -40,155 +35,147 @@ testAddWeight := VerificationTest[
   TestID -> "AddWeight scales each variable by the weight-tracker."
 ]
 
-testsZFramedReidemeister :=
-  { VerificationTest[
-      Module[
-        { pCW  = SXForm[{Loop[1,2]},{Xp[2,1]}]
-        , pCCW = SXForm[{Loop[1,2]},{Xp[1,2]}]
-        },
-        ZFramed[pCW]==ZFramed[pCCW]
-      ],
-      TestID -> "ZFramed satisfies R1' for positive kinks."
-    ]
-  , VerificationTest[
-      Module[
-        { mCW  = SXForm[{Loop[1,2]},{Xm[1,2]}]
-        , mCCW = SXForm[{Loop[1,2]},{Xm[2,1]}]
-        },
-        ZFramed[mCW]==ZFramed[mCCW]
-      ],
-      TestID ->
-        "ZFramed satisfies R1' for negative kinks."
-    ]
-  , VerificationTest[
-      Module[
-        { doubleTwist = RVT[
-          {Strand[1,2,3,4]},
-          {Xp[1,2], Xm[4,3]},
-          {{2,-1},{4,-1},{1,0},{3,0}}]
-        , straightStrand = RVT[{Strand[1]},{},{{1,0}}]
-        },
-        Z[doubleTwist] == Z[straightStrand]
-      ],
-      TestID ->
-        "R1' ZFramed with cancelling negative kinks."
-  ]
-  }
-
-testsPDNotation :=
-  { VerificationTest[
-      Module[
-        { i
-        , j
-        , k
-        , l
-        , testSX = SXForm[{Loop[i,j], Strand[k,l]},{Xp[j, l], Xm[k, i]}]
-        },
-        Reindex[testSX]
-      ],
-      SXForm[{Loop[1,2], Strand[3,4]},{Xp[2, 4], Xm[3, 1]}],
-      TestID ->
-        "Reindex replaces SXForm indices with sequentially ordered positive
-        integers. (1)"
-    ]
-  , VerificationTest[
-      Module[
-        { ii
-        , j
-        , k
-        , l
-        , testSX = SXForm[{Loop[ii,j], Strand[k,l]},{Xp[j, l], Xm[k, ii]}]
-        },
-        Reindex[testSX]
-      ],
-      SXForm[{Loop[1,2], Strand[3,4]},{Xp[2, 4], Xm[3, 1]}],
-      TestID ->
-        "Reindex replaces SXForm indices with sequentially ordered positive
-        integers. (2)"
-    ]
-  , VerificationTest[
-      Module[
-        { i
-        , j
-        , k
-        , l
-        , testRVT = RVT[
-            {Loop[i,j], Strand[k,l]},
-            {Xp[j, l], Xm[k, i]},
-            {{i,0},{j,1},{k,-1}, {l,8}}
-          ]
-        },
-        Reindex[testRVT]
-      ],
-      RVT[
-      {Loop[1,2], Strand[3,4]},
-      {Xp[2, 4], Xm[3, 1]},
-      {{1,0},{2,1},{3,-1}, {4,8}}
-      ],
-      TestID ->
-        "Reindex replaces RVT local variable indices with sequentially ordered
-        positive integers."
-    ]
-  , VerificationTest[
-      Module[
-        { testRVT = RVT[
-            {Loop[0,1]},
-            {Xp[0, 1]},
-            {{0,0},{1,1}}
-          ]
-        },
-        Reindex[testRVT]
-      ],
-      RVT[
-        {Loop[1,2]},
-        {Xp[1, 2]},
-        {{1,0},{2,1}}
-      ],
-      TestID ->
-        "Reindex replaces RVT integer indices with sequentially ordered
-        positive integers."
-    ]
-  , VerificationTest[
-      Module[
-        { testRVT = RVT[
-            {Loop[0,1], Strand[-1,-2]},
-            {Xp[0, 1], Xm[-2, -1]},
-            {{0,0},{1,1},{-1,-1}, {-2,8}}
-          ]
-        },
-        Reindex[testRVT]
-      ],
-      RVT[
-        {Loop[1,2], Strand[3,4]},
-        {Xp[1, 2], Xm[4, 3]},
-        {{1,0},{2,1},{3,-1}, {4,8}}
-      ],
-      TestID ->
-        "Reindex replaces RVT integer indices with sequentially ordered
-        positive integers."
-    ]
-  }
-
-testTraceIsDyslexic := Module[
-  {i, j, k},
-  Echo["testTraceIsDyslexic"];
-  Assert[(
-    (TruncateToDegree[4][
-      Subscript[S\[HBar], i] Subscript[S\[HBar], j] //
-        (Subscript[cm, i, j -> k] /. U2l)] //
-        ExpandAll) // tr[k][8]
-  ) ==
-  (
-    (TruncateToDegree[4][
-      Subscript[S\[HBar], i] Subscript[S\[HBar], j] //
-        (Subscript[cm, j, i -> k] /. U2l)] //
-        ExpandAll) // tr[k][8]
-  )]
+VerificationTest[
+  Module[
+    { pCW  = SXForm[{Loop[1,2]},{Xp[2,1]}]
+    , pCCW = SXForm[{Loop[1,2]},{Xp[1,2]}]
+    },
+    ZFramed[pCW]==ZFramed[pCCW]
+  ],
+  TestID -> "ZFramed satisfies R1' for positive kinks."
+]
+VerificationTest[
+  Module[
+    { mCW  = SXForm[{Loop[1,2]},{Xm[1,2]}]
+    , mCCW = SXForm[{Loop[1,2]},{Xm[2,1]}]
+    },
+    ZFramed[mCW]==ZFramed[mCCW]
+  ],
+  TestID ->
+    "ZFramed satisfies R1' for negative kinks."
+]
+VerificationTest[
+  Module[
+    { doubleTwist = RVT[
+      {Strand[1,2,3,4]},
+      {Xp[1,2], Xm[4,3]},
+      {{2,-1},{4,-1},{1,0},{3,0}}]
+    , straightStrand = RVT[{Strand[1]},{},{{1,0}}]
+    },
+    Z[doubleTwist] == Z[straightStrand]
+  ],
+  TestID ->
+    "R1' ZFramed with cancelling negative kinks."
 ]
 
+VerificationTest[
+  Module[
+    { i
+    , j
+    , k
+    , l
+    , testSX = SXForm[{Loop[i,j], Strand[k,l]},{Xp[j, l], Xm[k, i]}]
+    },
+    Reindex[testSX]
+  ],
+  SXForm[{Loop[1,2], Strand[3,4]},{Xp[2, 4], Xm[3, 1]}],
+  TestID ->
+    "Reindex replaces SXForm indices with sequentially ordered positive
+    integers. (1)"
+]
+VerificationTest[
+  Module[
+    { ii
+    , j
+    , k
+    , l
+    , testSX = SXForm[{Loop[ii,j], Strand[k,l]},{Xp[j, l], Xm[k, ii]}]
+    },
+    Reindex[testSX]
+  ],
+  SXForm[{Loop[1,2], Strand[3,4]},{Xp[2, 4], Xm[3, 1]}],
+  TestID ->
+    "Reindex replaces SXForm indices with sequentially ordered positive
+    integers. (2)"
+]
+VerificationTest[
+  Module[
+    { i
+    , j
+    , k
+    , l
+    , testRVT = RVT[
+        {Loop[i,j], Strand[k,l]},
+        {Xp[j, l], Xm[k, i]},
+        {{i,0},{j,1},{k,-1}, {l,8}}
+      ]
+    },
+    Reindex[testRVT]
+  ],
+  RVT[
+    {Loop[1,2], Strand[3,4]},
+    {Xp[2, 4], Xm[3, 1]},
+    {{1,0},{2,1},{3,-1}, {4,8}}
+  ],
+  TestID ->
+    "Reindex replaces RVT local variable indices with sequentially ordered
+    positive integers."
+]
+VerificationTest[
+   testRVT = RVT[
+      {Loop[0,1]},
+      {Xp[0, 1]},
+      {{0,0},{1,1}}
+    ];
+    Reindex[testRVT]
+  ,
+  RVT[
+    {Loop[1,2]},
+    {Xp[1, 2]},
+    {{1,0},{2,1}}
+  ],
+  TestID ->
+    "Reindex replaces RVT integer indices with sequentially ordered
+    positive integers."
+]
+VerificationTest[
+   testRVT = RVT[
+      {Loop[0,1], Strand[-1,-2]},
+      {Xp[0, 1], Xm[-2, -1]},
+      {{0,0},{1,1},{-1,-1}, {-2,8}}
+    ];
+    Reindex[testRVT]
+  ,
+  RVT[
+    {Loop[1,2], Strand[3,4]},
+    {Xp[1, 2], Xm[4, 3]},
+    {{1,0},{2,1},{3,-1}, {4,8}}
+  ],
+  TestID ->
+    "Reindex replaces RVT integer indices with sequentially ordered
+    positive integers."
+]
+(*
+Module[
+  {i, j, k},
+  VerificationTest[
+    (TruncateToDegree[4][
+      Subscript[S\[HBar], i] Subscript[S\[HBar], j] //
+      (Subscript[cm, i, j -> k] /. U2l)] //
+      ExpandAll) // tr[k][8]
+    ,
+    (TruncateToDegree[4][
+      Subscript[S\[HBar], i] Subscript[S\[HBar], j] //
+      (Subscript[cm, j, i -> k] /. U2l)] //
+      ExpandAll) // tr[k][8]
+    ,
+    TestID -> "trace is dyslexic up to degree 4."
+  ]
+]
+
+  VerificationTest[
+    Sℏ[{i}] == Sℏ[i]];
 testSℏBehavesWellWithLists := Module[{i, j},
-  Echo["Testing whether Sℏ works on lists..."];
-  Assert[Sℏ[{i}] == Sℏ[i]];
   Assert[Sℏ[{i,j}] == Subscript[\[DoubleStruckCapitalE], {i, j} -> {i, j}][
     ℏ(Subscript[α, i] Subscript[a, i] +Subscript[β, i] Subscript[b, i]
      +Subscript[α, j] Subscript[a, j] +Subscript[β, j] Subscript[b, j]),
@@ -196,8 +183,9 @@ testSℏBehavesWellWithLists := Module[{i, j},
      +Subscript[ξ, j] Subscript[x, j] +Subscript[η, j] Subscript[y, j]),
     1
     ]
-  ];
+  ],
 ]
+  TestID->"Sℏ works on lists..."
 
 testTruncateToDegreeIsIdempotent := Module[
   {
@@ -437,9 +425,10 @@ testRotationNumbersAreSkeletonIndependent := Module[
   Assert[RotationNumbers[l1] == RotationNumbers[l2]];
 ]
 
-(* testRotationNumbersAreSkeletonIndependent *)
+(* 
+[>testRotationNumbersAreSkeletonIndependent<]
 
-(* Return all partial traces of the link. *)
+[>Return all partial traces of the link.<]
 ptrZs[deg_, L_] := Module[
   {
     Z = Zdeg[deg, L],
@@ -453,58 +442,58 @@ ptrZs[deg_, L_] := Module[
 (*
  * NB: This function currently produces a list of values, one for each opened
  * component. How does one compare equality between such lists of GDO elements?
- *)
+<]
 
-(* Subsets[#,{?}] *)
-
-
-
-(* k[3] = Reindex@SXForm[ *)
-  (* {Loop[1, 2], Loop[3, 4]}, *)
-  (* {Xp[4, 1], Xm[3,2]} *)
-(* ] *)
+[>Subsets[#,{?}]<]
 
 
-(* Testing... *)
 
-(* Echo["Begin Testing..."]; *)
+[>k[3] = Reindex@SXForm[<]
+  [>{Loop[1, 2], Loop[3, 4]},<]
+  [>{Xp[4, 1], Xm[3,2]}<]
+[>]<]
 
-(* Echo["Verify the trace coequalizes m and m^op:"]; *)
-(* Module[{i, j, k, deg=3}, *)
-  (* Print@Series[ *)
-      (* Subtract@@ *)
-      (* (Normal[ *)
-          (* Subscript[Sℏ, i] Subscript[Sℏ, j] // # /. U2l // tr[k][deg] *)
-        (* ][[3]]&/@ {Subscript[cm, i, j -> k], Subscript[cm, j, i -> k]}), *)
-      (* {ℏ, 0, deg + 1} *)
-  (* ] // Simplify *)
-(* ]; *)
-(* Echo["Done verifying."] *)
 
-(* MyLink := SXForm[Link[4,Alternating,1]] *)
-(* MyLink := SXForm[Link[7,Alternating,7]] *)
-(* Print@RotateSXForm[MyLink] *)
-(* RotateSXForm[banana] *)
+[>Testing...<]
 
-(* The following is a good sign: *)
-(* Print@#[[3]]&/@(ptrZ[2,MyLink]== ptrZ[2,RotateSXForm[MyLink,2]]) *)
+[>Echo["Begin Testing..."];<]
 
-(* Print@ptrZ[2,MyLink] *)
-(* Print@ptrZ[2,RotateSXForm[MyLink]] *)
-(* Z1 = ptrZs[1, MyLink]; *)
-(* Z2 = ptrZs[1, RotateSXForm[MyLink]]; *)
+[>Echo["Verify the trace coequalizes m and m^op:"];<]
+[>Module[{i, j, k, deg=3},<]
+  [>Print@Series[<]
+      [>Subtract@@<]
+      [>(Normal[<]
+          [>Subscript[Sℏ, i] Subscript[Sℏ, j] // # /. U2l // tr[k][deg]<]
+        [>][[3]]&/@ {Subscript[cm, i, j -> k], Subscript[cm, j, i -> k]}),<]
+      [>{ℏ, 0, deg + 1}<]
+  [>] // Simplify<]
+[>];<]
+[>Echo["Done verifying."]<]
 
-(* FIX: Important: These do not have the same value *)
+[>MyLink := SXForm[Link[4,Alternating,1]]<]
+[>MyLink := SXForm[Link[7,Alternating,7]]<]
+[>Print@RotateSXForm[MyLink]<]
+[>RotateSXForm[banana]<]
+
+[>The following is a good sign:<]
+[>Print@#[[3]]&/@(ptrZ[2,MyLink]== ptrZ[2,RotateSXForm[MyLink,2]])<]
+
+[>Print@ptrZ[2,MyLink]<]
+[>Print@ptrZ[2,RotateSXForm[MyLink]]<]
+[>Z1 = ptrZs[1, MyLink];<]
+[>Z2 = ptrZs[1, RotateSXForm[MyLink]];<]
+
+[>FIX: Important: These do not have the same value<]
 MyLink1 := SXForm[TorusKnot[4,2]]
 MyLink2 := SXForm[TorusKnot[2,4]]
-(* MyLink1 := SXForm[TorusKnot[6,2]] *)
-(* MyLink2 := SXForm[TorusKnot[2,6]] *)
-(* MyLink1 := SXForm[TorusKnot[1,2]] *)
-(* MyLink2 := SXForm[TorusKnot[2,1]] *)
+[>MyLink1 := SXForm[TorusKnot[6,2]]<]
+[>MyLink2 := SXForm[TorusKnot[2,6]]<]
+[>MyLink1 := SXForm[TorusKnot[1,2]]<]
+[>MyLink2 := SXForm[TorusKnot[2,1]]<]
 pZ1 := ptrZs[1, MyLink1];
 pZ2 := ptrZs[1, MyLink2];
 
-(* FIX: Even more important: These do not have the same value: *)
+[>FIX: Even more important: These do not have the same value:<]
 Z1 := Z[MyLink1];
 Z2 := Z[MyLink2];
 Zd1 := Zdeg[2, MyLink1];
@@ -563,7 +552,7 @@ k[7] := Reindex@SXForm[
 (*
  * Currently this table has _two_ changes in value, presumably each
  * corresponding to some bug in the program. Time to dig deeper.
- *)
+<]
 hopfLinksTable := Table[
   {i, k[i], DrawMorseLink[k[i]], MultivariableAlexander[k[i]][t]//Simplify, Zdeg[4, k[i]] // tr[3][4]
   (*, ptrZs[4, k[i]]*)},
@@ -578,8 +567,8 @@ clockwiseAnticlockwiseLoopComparison:= MapThread[List,
 
 testZFramedRespectsWhirling := Module[{},
 Echo["Test whether ZFramed respects the Whirling relation."];
-Assert[True];  (* TODO: implement when C_i's are non-central. *)
-]
+Assert[True];  [>TODO: implement when C_i's are non-central.<]
+] *)
 
 (* Off[Assert]; *)
 (* Echo[End Testing]; *)
