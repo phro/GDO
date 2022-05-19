@@ -1,9 +1,7 @@
-SetDirectory["/home/jesse/ed/k/co"];
-    Get["KnotTheory`"];
-    Get["../../dopegdo/Profile.m"];
-    Get["../../dopegdo/Engine-Speedy.m"];
-    Get["../../dopegdo/Objects.m"];
-    Get["RVT.m"];
+SetDirectory[NotebookDirectory[]];
+Get["KnotTheory`"];
+Get["StandardVersion.m"]
+Get["RVT.m"];
 
 
 toMixed[Subscript[\[DoubleStruckCapitalE], o1_->o2_][L_,Q_,P_]]:=

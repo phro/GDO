@@ -8,30 +8,9 @@
  * invariant.
  *)
 
-(*
- * Interoperability between Dror and Jesse's computers
- * TODO: replace with calling the SL2Portfolio2 as a package
- *)
-Once[
-  Switch[Jesse,
-  Jesse, (
-    SetDirectory["/home/jesse/ed/k/co"];
-    (*Get["KnotTheory`"];
-    Get["../dopegdo/Profile.m"];
-    Get["../dopegdo/Engine-Speedy.m"];
-    Get["../dopegdo/Objects.m"];*)
-    Get["closed_GDO.m"];
-    Get["equality_test.m"];
-    ),
-  Dror, (
-    SetDirectory["C:\\drorbn\\AcademicPensieve\\Projects\\SL2Portfolio2"];
-    Get["KnotTheory`"];
-    Get["../Profile/Profile.m"];
-    Get["Engine-Speedy.m"];
-    Get["Objects.m"];
-  )
-  ]
-]
+SetDirectory[NotebookDirectory[]];
+Get["closed_GDO.m"];
+Get["equality_test.m"];
 $k = 0; \[Gamma] = 1;
 
 
