@@ -1,5 +1,3 @@
-(* ::Package:: *)
-
 (*
  * Purpose:
  * Using the GDO package, define the trace operator. Currently, it is only defined
@@ -11,7 +9,7 @@
 Once[
   SetDirectory[NotebookDirectory[]];
   Get["closed_GDO.m"];
-  Get["test/equality_test.m"];
+  Get["equality_test.m"];
 ]
 $k = 0; \[Gamma] = 1;
 
@@ -59,8 +57,8 @@ Etest[n_] := Subscript[\[DoubleStruckCapitalE], {} -> Range[n]][
 
 
 (*
- * The coinvarants map defined on the (uncompleted) sl2-algebra expressed as a
- * non-standard mulitplicative structure on a polynomial algebra.
+ * The coinvariants map defined on the (uncompleted) sl2-algebra expressed as a
+ * non-standard multiplicative structure on a polynomial algebra.
  *)
 coinv[ii_][lincomb_Plus]:=coinv[ii]/@lincomb;
 coinv[ii_][word_]:=Module[{i,j,k,l,\[Lambda]},
