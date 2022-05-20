@@ -8,9 +8,11 @@
  * invariant.
  *)
 
-SetDirectory[NotebookDirectory[]];
-Get["closed_GDO.m"];
-Get["equality_test.m"];
+Once[
+  SetDirectory[NotebookDirectory[]];
+  Get["closed_GDO.m"];
+  Get["test/equality_test.m"];
+]
 $k = 0; \[Gamma] = 1;
 
 
@@ -80,7 +82,7 @@ coinv[ii_][word_]:=Module[{i,j,k,l,\[Lambda]},
 ]
 
 (*
- * The coinvariants map restricted to ħ-degree m, written in GDO form
+ * The coinvariants map restricted to \:0127-degree m, written in GDO form
  *)
 trGenFunc[ii_][m_] := Module[{i,j,k,l},
   Subscript[\[DoubleStruckCapitalE], {ii} -> {}][0,0,
@@ -102,7 +104,7 @@ tr[ii_][m_][GDO_] :=Module[{i,j,k,l},
 Subscript[tr, ii_][m_] := tr[ii][m]
 
 (*
- * Scale each variable by a factor of ħ
+ * Scale each variable by a factor of \:0127
  *)
 S\[HBar][is_List] := Product[S\[HBar][i],{i, is}]//Simplify;
 S\[HBar][i_] := Subscript[\[DoubleStruckCapitalE], {i} -> {i}][
