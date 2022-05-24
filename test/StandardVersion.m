@@ -17,11 +17,6 @@
 (* overwritten.                                                         *)
 (************************************************************************)
 
-
-
-SetDirectory["~/ed/k/mma/gdo"];
-Once[<<"StandardVersion.m"];
-
 VerificationTest[
 	Subscript[d\[CapitalDelta], 1->2,3]//Subscript[d\[CapitalDelta], 2->1,2],
 	Subscript[d\[CapitalDelta], 1->1,2]//Subscript[d\[CapitalDelta], 2->2,3],

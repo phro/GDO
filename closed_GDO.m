@@ -1,9 +1,3 @@
-SetDirectory[NotebookDirectory[]];
-Get["KnotTheory`"];
-Get["StandardVersion.m"]
-Get["RVT.m"];
-
-
 toMixed[Subscript[\[DoubleStruckCapitalE], o1_->o2_][L_,Q_,P_]]:=
   Subscript[\[DoubleStruckCapitalE], {o1, {}} -> {o2, {}}][L,Q,P];
 toMixed[

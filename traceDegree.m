@@ -6,11 +6,6 @@
  * invariant.
  *)
 
-Once[
-  SetDirectory[NotebookDirectory[]];
-  Get["closed_GDO.m"];
-  Get["equality_test.m"];
-]
 $k = 0; \[Gamma] = 1;
 
 
