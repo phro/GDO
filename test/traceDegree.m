@@ -1,16 +1,18 @@
-VerificationTest[
-  inputGDO =
+Module[{i,j, k},
+  VerificationTest[
+    inputGDO =
+      Subscript[\[DoubleStruckCapitalE],{i,j}->{k}][
+        Subscript[α, i]Subscript[b,j]+ Subscript[β, i]Subscript[a,j],
+        Subscript[η, i]Subscript[x,j]+ Subscript[y, i]Subscript[ξ,j],
+        Subscript[\[ScriptCapitalA], i]Subscript[B,j]
+      ];inputGDO // ScaleByLambda[i] // ScaleByLambda[j],
     Subscript[\[DoubleStruckCapitalE],{i,j}->{k}][
-      Subscript[α, i]Subscript[b,j]+ Subscript[β, i]Subscript[a,j],
-      Subscript[η, i]Subscript[x,j]+ Subscript[y, i]Subscript[ξ,j],
-      Subscript[\[ScriptCapitalA], i]Subscript[B,j]
-    ];inputGDO // ScaleByLambda[i] // ScaleByLambda[j],
-  Subscript[\[DoubleStruckCapitalE],{i,j}->{k}][
-    λ Subscript[α, i]Subscript[b,j]+ λ Subscript[β, i]Subscript[a,j],
-    λ Subscript[η, i]Subscript[x,j]+ λ Subscript[y, i]Subscript[ξ,j],
-    Subscript[\[ScriptCapitalA], i]^λ Subscript[B,j]
-  ],
-  TestID -> "AddWeight scales each variable by the weight-tracker."
+      λ Subscript[α, i]Subscript[b,j]+ λ Subscript[β, i]Subscript[a,j],
+      λ Subscript[η, i]Subscript[x,j]+ λ Subscript[y, i]Subscript[ξ,j],
+      Subscript[\[ScriptCapitalA], i]^λ Subscript[B,j]
+    ],
+    TestID -> "AddWeight scales each variable by the weight-tracker."
+  ]
 ]
 
 VerificationTest[

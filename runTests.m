@@ -1,7 +1,8 @@
 SetDirectory[NotebookDirectory[]]
 Echo@Directory[]
-Once[Get["closed_GDO.m"]]
-Once[Get["equality_test.m"]]
-Once[Get["traceDegree.m"]]
-reports=Table[TestReport[i],{i,FileNames["test/*.m"]}];
+Get["StandardVersion.m"]
+Get["closed_GDO.m"]
+Get["equality_test.m"]
+Get["traceDegree.m"]
+reports=Module[{i},Table[TestReport[i],{i,FileNames["test/*.m"]}]];
 reports
