@@ -20,3 +20,39 @@ Module[
     toMixed@EE,
     EE,
 TestID->"toMixed is null operation on expressions with closed domain"]]
+
+Module[
+  { L, P, Q,
+    EE = Subscript[\[DoubleStruckCapitalE], {{1,2},{3,4}}->{{1},{2,3,4}}][L,Q,P]
+  },
+  VerificationTest[
+    getDomain@addClosedDomain[{2,5}]@EE,
+    {{1,2},{2,3,4,5}},
+TestID->"addClosedDomain adds new components to GDO"]]
+
+Module[
+  { L, P, Q,
+    EE = Subscript[\[DoubleStruckCapitalE], {{1,2},{3,4}}->{{1},{2,3,4}}][L,Q,P]
+  },
+  VerificationTest[
+    addClosedDomain[{3}]@EE,
+    EE,
+TestID->"addClosedDomain is identity when domain is already present."]]
+
+Module[
+  { L, P, Q,
+    EE = Subscript[\[DoubleStruckCapitalE], {{1,2},{3,4}}->{{1},{2,3,4}}][L,Q,P]
+  },
+  VerificationTest[
+    getCodomain@addClosedCodomain[{4,5,6}]@EE,
+    {{1},{2,3,4,5,6}},
+TestID->"addClosedCodomain adds new components to GDO"]]
+
+Module[
+  { L, P, Q,
+    EE = Subscript[\[DoubleStruckCapitalE], {{1,2},{3,4}}->{{1},{2,3,4}}][L,Q,P]
+  },
+  VerificationTest[
+    addClosedCodomain[{3}]@EE,
+    EE,
+TestID->"addClosedCodomain is identity when codomain is already present."]]
