@@ -1,16 +1,64 @@
-Module[{i, j, k},
+Module[{i, j},
   VerificationTest[
-      Subscript[\[DoubleStruckCapitalE],{i,j}->{k}][
-        Subscript[α, i]Subscript[b,j]+ Subscript[β, i]Subscript[a,j],
-        Subscript[η, i]Subscript[x,j]+ Subscript[y, i]Subscript[ξ,j],
-        Subscript[\[ScriptCapitalA], i]Subscript[B,j]
-      ] // ScaleByLambda[i] // ScaleByLambda[j],
-    Subscript[\[DoubleStruckCapitalE],{i,j}->{k}][
-      λ Subscript[α, i]Subscript[b,j]+ λ Subscript[β, i]Subscript[a,j],
-      λ Subscript[η, i]Subscript[x,j]+ λ Subscript[y, i]Subscript[ξ,j],
-      Subscript[\[ScriptCapitalA], i]^λ Subscript[B,j]
+    Subscript[\[DoubleStruckCapitalE],{i}->{j}][
+      Subscript[α, i]Subscript[b,j],
+      0,
+      1
+    ] // ScaleByLambda[j],
+    Subscript[\[DoubleStruckCapitalE],{i}->{j}][
+      λ Subscript[α, i]Subscript[b,j],
+      0,
+      1
     ],
-    TestID -> "ScaleByLambda scales each variable by the weight-tracker."
+    TestID -> "ScaleByLambda scales b by the weight-tracker."
+  ]
+]
+
+Module[{i, j},
+  VerificationTest[
+    Subscript[\[DoubleStruckCapitalE],{i}->{j}][
+      Subscript[β, i]Subscript[a,j],
+      0,
+      1
+    ] // ScaleByLambda[j],
+    Subscript[\[DoubleStruckCapitalE],{i}->{j}][
+      λ Subscript[β, i]Subscript[a,j],
+      0,
+      1
+    ],
+    TestID -> "ScaleByLambda scales a by the weight-tracker."
+  ]
+]
+
+Module[{i, j},
+  VerificationTest[
+    Subscript[\[DoubleStruckCapitalE],{i}->{j}][
+      0,
+      Subscript[ξ, i]Subscript[y,j],
+      1
+    ] // ScaleByLambda[j],
+    Subscript[\[DoubleStruckCapitalE],{i}->{j}][
+      0,
+      λ Subscript[ξ, i]Subscript[y,j],
+      1
+    ],
+    TestID -> "ScaleByLambda scales y by the weight-tracker."
+  ]
+]
+
+Module[{i, j},
+  VerificationTest[
+    Subscript[\[DoubleStruckCapitalE],{i}->{j}][
+      0,
+      Subscript[β, i]Subscript[x,j],
+      1
+    ] // ScaleByLambda[j],
+    Subscript[\[DoubleStruckCapitalE],{i}->{j}][
+      0,
+      λ Subscript[β, i]Subscript[x,j],
+      1
+    ],
+    TestID -> "ScaleByLambda scales x by the weight-tracker."
   ]
 ]
 
