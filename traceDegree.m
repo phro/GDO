@@ -29,11 +29,11 @@ MatrixForm[Subscript[\[DoubleStruckCapitalE], {} -> ss_][L_,Q_,P_]] ^:=
  *)
 EtestScal[n_] := Subscript[\[DoubleStruckCapitalE], {} -> Range[n]][
   Sum[
-    \[HBar] Subscript[l, i,j] Subscript[b, i] Subscript[a, j],
+    ħ Subscript[l, i,j] Subscript[b, i] Subscript[a, j],
     {i,1,n}, {j,1,n}
   ],
   Sum[
-    \[HBar] Subscript[q, i,j][\[HBar] Subscript[b, i]]
+    ħ Subscript[q, i,j][ħ Subscript[b, i]]
     Subscript[y, i] Subscript[x, j],
     {i,1,n},{j,1,n}],
   1
@@ -41,11 +41,11 @@ EtestScal[n_] := Subscript[\[DoubleStruckCapitalE], {} -> Range[n]][
 
 Etest[n_] := Subscript[\[DoubleStruckCapitalE], {} -> Range[n]][
   Sum[
-    \[HBar] Subscript[l, i,j] Subscript[b, i] Subscript[a, j],
+    ħ Subscript[l, i,j] Subscript[b, i] Subscript[a, j],
     {i,1,n}, {j,1,n}
   ],
   Sum[
-    \[HBar] Subscript[q, i,j] Subscript[y, i] Subscript[x, j],
+    ħ Subscript[q, i,j] Subscript[y, i] Subscript[x, j],
     {i,1,n},{j,1,n}],
   1
 ]
@@ -97,16 +97,16 @@ tr[ii_][m_][GDO_] :=Module[{i,j,k,l},
 Subscript[tr, ii_][m_] := tr[ii][m]
 
 (*
- * Scale each variable by a factor of \:0127
+ * Scale each variable by a factor of ħ
  *)
-S\[HBar][is_List] := Product[S\[HBar][i],{i, is}]//Simplify;
-S\[HBar][i_] := Subscript[\[DoubleStruckCapitalE], {i} -> {i}][
-  \[HBar](Subscript[\[Alpha], i] Subscript[a, i] +Subscript[\[Beta], i] Subscript[b, i]),
-  \[HBar](Subscript[\[Xi], i] Subscript[x, i] +Subscript[\[Eta], i] Subscript[y, i]),
+Sħ[is_List] := Product[Sħ[i],{i, is}]//Simplify;
+Sħ[i_] := Subscript[\[DoubleStruckCapitalE], {i} -> {i}][
+  ħ(Subscript[\[Alpha], i] Subscript[a, i] +Subscript[\[Beta], i] Subscript[b, i]),
+  ħ(Subscript[\[Xi], i] Subscript[x, i] +Subscript[\[Eta], i] Subscript[y, i]),
   1
 ];
-Subscript[S\[HBar], is_List]:= S\[HBar][is];
-Subscript[S\[HBar], i_] := S\[HBar][i];
+Subscript[Sħ, is_List]:= Sħ[is];
+Subscript[Sħ, i_] := Sħ[i];
 
 (*
  * Convert a GDO series to a polynomial
@@ -133,7 +133,7 @@ AddWeight[Subscript[\[DoubleStruckCapitalE], is__->js__][L_,Q_,P_]] := Module[
 TruncateToDegree[n_][
   Subscript[\[DoubleStruckCapitalE], is__->js__][L_,Q_,P_]]:=
   Subscript[\[DoubleStruckCapitalE], is->js][0,0,
-    Expand@Normal[Series[Exp[L+Q]*P/.U2l,{\[HBar],0,n}]]
+    Expand@Normal[Series[Exp[L+Q]*P/.U2l,{ħ,0,n}]]
 ]
 
 GDOToList[Subscript[\[DoubleStruckCapitalE], is_->js_][L_,Q_,P_]] := {is, js, L, Q, P};
@@ -142,9 +142,9 @@ GDOFromList[is_, js_, L_, Q_, P_] := Subscript[\[DoubleStruckCapitalE], is->js][
 (* TruncateToDegreeWrong[n_][GDO_] := Module[
   {is, js, ks, L, Q, P},
   ks = GDOToList[GDO][[2]];
-  [>{is, js, L, Q, P} = GDOToList[S\[HBar][ks] // GDO];<]
-  {is, js, L, Q, P} = GDOToList[GDO // S\[HBar][ks]];
-  Subscript[\[DoubleStruckCapitalE], is->js][0,0, Normal[Series[Exp[L+Q]*P/.U2l,{\[HBar],0,n}]]]
+  [>{is, js, L, Q, P} = GDOToList[Sħ[ks] // GDO];<]
+  {is, js, L, Q, P} = GDOToList[GDO // Sħ[ks]];
+  Subscript[\[DoubleStruckCapitalE], is->js][0,0, Normal[Series[Exp[L+Q]*P/.U2l,{ħ,0,n}]]]
 ] *)
 
 (* Skeleton-Xing form *)
@@ -252,12 +252,12 @@ Reindex[RVT[cs_, xs_, rs_]] := Module[
  * The classical R-matrices, both in human-typable form and in front-end form
  *)
 cR[i_,j_] := Subscript[\[DoubleStruckCapitalE],{}->{i,j}][
-  \[HBar] Subscript[a, j] Subscript[b, i],
+  ħ Subscript[a, j] Subscript[b, i],
   (Subscript[B, i]-1)/(-Subscript[b, i]) Subscript[x, j] Subscript[y, i],
   1
 ]
 cRi[i_,j_] := Subscript[\[DoubleStruckCapitalE],{}->{i,j}][
-  -\[HBar] Subscript[a, j] Subscript[b, i],
+  -ħ Subscript[a, j] Subscript[b, i],
   (Subscript[B, i]-1)/(Subscript[B, i] Subscript[b, i]) Subscript[x, j] Subscript[y, i],
   1
 ]
@@ -317,8 +317,8 @@ ZFramed[L_SXForm] := Module[{RL, rs, s, xs, i, is, c, cs, z},
   z=Times@@xs/.{Xp[i_,j_]:>cR[i,j], Xm[i_,j_]:>cRi[i,j]};
   PrintTemporary["Introducing strands..."];
   z *= Product[Subscript[c\[Eta],i], {i, Flatten[List@@@s]}];
-  (* PrintTemporary["Adding \[HBar]'s..."]; *)
-  (* z = z // Product[S\[HBar][i[[1]]], {i, s}]; *)
+  (* PrintTemporary["Adding ħ's..."]; *)
+  (* z = z // Product[Sħ[i[[1]]], {i, s}]; *)
   PrintTemporary["Applying multiplication..."];
   Do[
     PrintTemporary["(",s[[i,1]],"\[LeftArrow]",s[[i,k]],")..."];
