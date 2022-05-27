@@ -32,8 +32,10 @@ VerificationTest[
   Normal@(Subscript[a\[CapitalDelta], i->1,2]//Subscript[aS, 2]//Subscript[bm, 1,2->1]),
   \!\(\*SubscriptBox[\(\[DoubleStruckCapitalE]\), \({i} \[Rule] {1}\)]\)[0,0,1],
 TestID->"a Antipode R"]
+]
 
 (* B-algebra testing *)
+Block[{$k=testDeg},
 VerificationTest[
   Subscript[b\[CapitalDelta], 1->2,3]//Subscript[b\[CapitalDelta], 2->1,2],
   Subscript[b\[CapitalDelta], 1->1,2]//Subscript[b\[CapitalDelta], 2->2,3],
@@ -65,7 +67,40 @@ VerificationTest[
 TestID->"b Antipode R"]
 ]
 
-(* D-algebra testing *)
+(* CU-algebra testing *)
+Block[{$k=testDeg},
+VerificationTest[
+  Subscript[c\[CapitalDelta], 1->2,3]//Subscript[c\[CapitalDelta], 2->1,2],
+  Subscript[c\[CapitalDelta], 1->1,2]//Subscript[c\[CapitalDelta], 2->2,3],
+TestID->"c Coassociativity"]
+]
+Block[{$k=testDeg},
+VerificationTest[
+  Subscript[c\[CapitalDelta], i->1,2] Subscript[c\[CapitalDelta], j->3,4]//Subscript[cm, 1,3->i]//Subscript[cm, 2,4->j],
+  Subscript[cm, i,j->k]//Subscript[c\[CapitalDelta], k->i,j],
+TestID->"c Algebra morphism"]
+]
+Block[{$k=testDeg},
+VerificationTest[
+  Subscript[cm, 2,3->k]//Subscript[cm, 1,k->k],
+  Subscript[cm, 1,2->k]//Subscript[cm, k,3->k],
+TestID->"c Associativity"]
+
+]
+Block[{$k=testDeg},
+VerificationTest[
+  Normal@(Subscript[c\[CapitalDelta], i->1,2]//Subscript[cS, 1]//Subscript[cm, 1,2->1]),
+  \!\(\*SubscriptBox[\(\[DoubleStruckCapitalE]\), \({i} \[Rule] {1}\)]\)[0,0,1],
+TestID->"c Antipode L"]
+]
+Block[{$k=testDeg},
+VerificationTest[
+  Normal@(Subscript[c\[CapitalDelta], i->1,2]//Subscript[cS, 2]//Subscript[cm, 1,2->1]),
+  \!\(\*SubscriptBox[\(\[DoubleStruckCapitalE]\), \({i} \[Rule] {1}\)]\)[0,0,1],
+TestID->"c Antipode R"]
+]
+
+(* QU-algebra testing *)
 Block[{$k=testDeg},
 VerificationTest[
 	Subscript[d\[CapitalDelta], 1->2,3]//Subscript[d\[CapitalDelta], 2->1,2],
