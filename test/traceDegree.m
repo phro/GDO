@@ -62,37 +62,38 @@ Module[{i, j},
   ]
 ]
 
-VerificationTest[
-  Module[
-    { pCW  = SXForm[{Loop[1,2]},{Xp[2,1]}]
-    , pCCW = SXForm[{Loop[1,2]},{Xp[1,2]}]
-    },
-    ZFramed[pCW]==ZFramed[pCCW]
-  ],
+Module[
+  { pCW  = SXForm[{Loop[1,2]},{Xp[2,1]}]
+  , pCCW = SXForm[{Loop[1,2]},{Xp[1,2]}]
+  },
+  VerificationTest[
+    ZFramed[pCW],
+    ZFramed[pCCW],
   TestID -> "ZFramed satisfies R1' for positive kinks."
+  ]
 ]
-VerificationTest[
-  Module[
-    { mCW  = SXForm[{Loop[1,2]},{Xm[1,2]}]
-    , mCCW = SXForm[{Loop[1,2]},{Xm[2,1]}]
-    },
-    ZFramed[mCW]==ZFramed[mCCW]
-  ],
-  TestID ->
-    "ZFramed satisfies R1' for negative kinks."
+Module[
+  { mCW  = SXForm[{Loop[1,2]},{Xm[1,2]}]
+  , mCCW = SXForm[{Loop[1,2]},{Xm[2,1]}]
+  },
+  VerificationTest[
+    ZFramed[mCW],
+    ZFramed[mCCW],
+  TestID -> "ZFramed satisfies R1' for negative kinks."
+  ]
 ]
-VerificationTest[
-  Module[
-    { doubleTwist = RVT[
-      {Strand[1,2,3,4]},
-      {Xp[1,2], Xm[4,3]},
-      {{2,-1},{4,-1},{1,0},{3,0}}]
-    , straightStrand = RVT[{Strand[1]},{},{{1,0}}]
-    },
-    Z[doubleTwist] == Z[straightStrand]
-  ],
-  TestID ->
-    "R1' ZFramed with cancelling negative kinks."
+Module[
+  { doubleTwist = RVT[
+    {Strand[1,2,3,4]},
+    {Xp[1,2], Xm[4,3]},
+    {{2,-1},{4,-1},{1,0},{3,0}}]
+  , straightStrand = RVT[{Strand[1]},{},{{1,0}}]
+  },
+  VerificationTest[
+    Z[doubleTwist],
+    Z[straightStrand],
+  TestID -> "R1' ZFramed with cancelling negative kinks."
+  ]
 ]
 
 VerificationTest[

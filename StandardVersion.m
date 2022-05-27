@@ -195,6 +195,10 @@ nisp->{is}/.{i->ii_,j->jj_,k->kk_}
 
 
 (* ::Input::Initialization:: *)
+(* Symmetric algebra objects *)
+
+
+(* ::Input::Initialization:: *)
 Subscript[sm, i_,j_->k_]:=\!\(\*SubscriptBox[\(\[DoubleStruckCapitalE]\), \({i, j} \[Rule] {k}\)]\)[Subscript[b, k](Subscript[\[Beta], i]+Subscript[\[Beta], j])+Subscript[t, k](Subscript[\[Tau], i]+Subscript[\[Tau], j])+Subscript[a, k](Subscript[\[Alpha], i]+Subscript[\[Alpha], j])+Subscript[y, k](Subscript[\[Eta], i]+Subscript[\[Eta], j])+Subscript[x, k](Subscript[\[Xi], i]+Subscript[\[Xi], j])];
 Subscript[s\[CapitalDelta], i_->j_,k_]:=\!\(\*SubscriptBox[\(\[DoubleStruckCapitalE]\), \({i} \[Rule] {j, k}\)]\)[Subscript[\[Beta], i](Subscript[b, j]+Subscript[b, k])+Subscript[\[Tau], i](Subscript[t, j]+Subscript[t, k])+Subscript[\[Alpha], i](Subscript[a, j]+Subscript[a, k])+Subscript[\[Eta], i](Subscript[y, j]+Subscript[y, k])+Subscript[\[Xi], i](Subscript[x, j]+Subscript[x, k])];
 Subscript[sS, i_]:=\!\(\*SubscriptBox[\(\[DoubleStruckCapitalE]\), \({i} \[Rule] {i}\)]\)[-Subscript[\[Beta], i] Subscript[b, i]-Subscript[\[Tau], i] Subscript[t, i]-Subscript[\[Alpha], i] Subscript[a, i]-Subscript[\[Eta], i] Subscript[y, i]-Subscript[\[Xi], i] Subscript[x, i]];
@@ -204,6 +208,24 @@ Subscript[s\[Epsilon], i_]:=\!\(\*SubscriptBox[\(\[DoubleStruckCapitalE]\), \({}
 (* ::Input::Initialization:: *)
 Subscript[s\[Sigma], i_->j_]:=\!\(\*SubscriptBox[\(\[DoubleStruckCapitalE]\), \({i} \[Rule] {j}\)]\)[Subscript[\[Beta], i] Subscript[b, j]+Subscript[\[Tau], i] Subscript[t, j]+Subscript[\[Alpha], i] Subscript[a, j]+Subscript[\[Eta], i] Subscript[y, j]+Subscript[\[Xi], i] Subscript[x, j]];
 Subscript[s\[CapitalUpsilon], i_->j_,k_,l_,m_]:=\!\(\*SubscriptBox[\(\[DoubleStruckCapitalE]\), \({i} \[Rule] {j, k, l, m}\)]\)[Subscript[\[Beta], i] Subscript[b, k]+Subscript[\[Tau], i] Subscript[t, k]+Subscript[\[Alpha], i] Subscript[a, l]+Subscript[\[Eta], i] Subscript[y, j]+Subscript[\[Xi], i] Subscript[x, m]];
+
+
+(* ::Input::Initialization:: *)
+(* CU-algebra objects *)
+
+
+(* ::Input::Initialization:: *)
+c\[CapitalLambda]=(Subscript[\[Eta], i]+(E^(-\[Gamma] Subscript[\[Alpha], i]-\[Epsilon] Subscript[\[Beta], i]) Subscript[\[Eta], j])/(1+\[Gamma] \[Epsilon] Subscript[\[Eta], j] Subscript[\[Xi], i]))Subscript[y, k]+(Subscript[\[Beta], i]+Subscript[\[Beta], j]+Log[1+\[Gamma] \[Epsilon] Subscript[\[Eta], j] Subscript[\[Xi], i]]/\[Epsilon])Subscript[b, k]+(Subscript[\[Alpha], i]+Subscript[\[Alpha], j]+Log[1+\[Gamma] \[Epsilon] Subscript[\[Eta], j] Subscript[\[Xi], i]]/\[Gamma])Subscript[a, k]+((E^(-\[Gamma] Subscript[\[Alpha], j]-\[Epsilon] Subscript[\[Beta], j]) Subscript[\[Xi], i])/(1+\[Gamma] \[Epsilon] Subscript[\[Eta], j] Subscript[\[Xi], i])+Subscript[\[Xi], j])Subscript[x, k];
+Define[Subscript[cm, i,j->k]=\!\(\*SubscriptBox[\(\[DoubleStruckCapitalE]\), \({i, j} \[Rule] {k}\)]\)[c\[CapitalLambda]]]
+
+
+(* ::Input::Initialization:: *)
+Define[Subscript[c\[Sigma], i->j]=Subscript[s\[Sigma], i,j]/.Subscript[\[Tau], i]->0,Subscript[c\[Epsilon], i]=Subscript[s\[Epsilon], i], Subscript[c\[Eta], i]=Subscript[s\[Eta], i],Subscript[c\[CapitalDelta], i->j,k]=Subscript[s\[CapitalDelta], i->j,k],
+Subscript[cS, i]=Subscript[sS, i]//Subscript[s\[CapitalUpsilon], i->1,2,3,4]//Subscript[cm, 4,3->i]//Subscript[cm, i,2->i]//Subscript[cm, i,1->i]];
+
+
+(* ::Input::Initialization:: *)
+(* QU algebra as a Drinfel'd double *)
 
 
 (* ::Input::Initialization:: *)

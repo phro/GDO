@@ -155,7 +155,7 @@ TestID->"d Quasitriangular 3"]
 Block[{$k=testDeg},
 VerificationTest[
   Subscript[R, 1,2]//Subscript[aS, 2],
-  Subscript[OverscriptBox[R, _], 1,2],
+  Subscript[OverBar[R], 1,2],
 TestID->"d R-matrix inverse"]
 ]
 EndTestSection[];
