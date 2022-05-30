@@ -63,18 +63,18 @@ Module[{i, j},
 ]
 
 Module[
-  { pCW  = SXForm[{Loop[1,2]},{Xp[2,1]}]
-  , pCCW = SXForm[{Loop[1,2]},{Xp[1,2]}]
+  { pCW  = RVT[{Strand[1,2]},{Xp[2,1]},{{1,0},{2,1 }}]
+  , pCCW = RVT[{Strand[1,2]},{Xp[1,2]},{{1,0},{2,-1}}]
   },
   VerificationTest[
-    ZFramed[pCW],
-    ZFramed[pCCW],
+    ZFramed[pCW]//Simplify,
+    ZFramed[pCCW]//Simplify,
   TestID -> "ZFramed satisfies R1' for positive kinks."
   ]
 ]
 Module[
-  { mCW  = SXForm[{Loop[1,2]},{Xm[1,2]}]
-  , mCCW = SXForm[{Loop[1,2]},{Xm[2,1]}]
+  { mCW  = RVT[{Strand[1,2]},{Xm[1,2]},{{1,0},{2,1 }}]
+  , mCCW = RVT[{Strand[1,2]},{Xm[2,1]},{{1,0},{2,-1}}]
   },
   VerificationTest[
     ZFramed[mCW],

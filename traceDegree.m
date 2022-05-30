@@ -179,7 +179,10 @@ combineBySecond[lis___] := combineBySecond[Join[lis]]
 mergeWith[f_, l_] := {l[[1, 1]], f@(#[[2]] & /@ l)}
 
 (* Overloaded RVT as a typecaster should function on objects already in RVT form. *)
+RVT::usage := ""
+RVT::SXForm := "Conversion from SXForm not implemented in Mathematica™."
 RVT[L_RVT] := L
+RVT[L_SXForm] := Message[RVT::SXForm]
 
 (*
  * Modify each component of a link diagram to have writhe=0
@@ -306,36 +309,6 @@ CCn[i_][n_Integer]:=Module[{j},
  * Dror's GDO invariant of framed knots.
  * TODO: implement rotation number corrections
  *)
-ZFramed[L_SXForm] := Module[{RL, rs, s, xs, i, is, c, cs, z},
-  PrintTemporary["Reindexing..."];
-  RL = Reindex[L];
-  {s, xs} = List @@ RL;
-  PrintTemporary["Computing rotation numbers..."];
-  rs = RotationNumbers[RL];
-  (* PrintTemporary["Rotation numbers: ",rs]; *)
-  PrintTemporary["Building Hopf Algebraic expression..."];
-  z=Times@@xs/.{Xp[i_,j_]:>cR[i,j], Xm[i_,j_]:>cRi[i,j]};
-  PrintTemporary["Introducing strands..."];
-  z *= Product[Subscript[c\[Eta],i], {i, Flatten[List@@@s]}];
-  (* PrintTemporary["Adding ħ's..."]; *)
-  (* z = z // Product[Sħ[i[[1]]], {i, s}]; *)
-  PrintTemporary["Applying multiplication..."];
-  Do[
-    PrintTemporary["(",s[[i,1]],"\[LeftArrow]",s[[i,k]],")..."];
-    z = z // Subscript[cm, s[[i,1]],s[[i,k]] ->s[[i,1]]];
-    If[k==2,
-      PrintTemporary["Simplifying..."];
-      z = Simplify[z]
-    ],
-    {i, Length[s]},{k, 2, Length[s[[i]]]}
-  ];
-  is=#[[1]]&/@s;
-  (* Print[is]; *)
-  cs=MapThread[Module[{i}, CCn[i][#2]//Subscript[cm, i, #1 -> #1]]&, {is,rs}];
-  (* Print[cs]; *)
-  Do[z = z // c, {c, cs}];
-  z
-]
 ZFramed[RVT[cs_, xs_, rs0_]] := Module[{
     z,
     is = Flatten[List@@@cs],
@@ -359,7 +332,6 @@ ZFramed[RVT[cs_, xs_, rs0_]] := Module[{
     (* localprint["(", i, "<-", b[i], ")"]; *)
     z = z // Subscript[cm, b[i], i -> i],
     {i, First/@rs}
-  ];
   (* localprint["Applying multiplication..."]; *)
   Do[
     i1 = First[i];
@@ -372,8 +344,10 @@ ZFramed[RVT[cs_, xs_, rs0_]] := Module[{
     {i, cs},{k, List@@Rest[i]}
   ];
   z
+  ];
 ]
-ZFramed[L_] := ZFramed[PrintTemporary["Converting to SXForm..."]; SXForm[L]]
+ZFramed::NotRVT := "Argument `1` is not in RVT form."
+ZFramed[L_] := Message[ZFramed::NotRVT, L];ZFramed[toRVT[L]]
 
 (* ZFramed[E_GDOSeq] :=  *)
 
@@ -381,8 +355,9 @@ ZFramed[L_] := ZFramed[PrintTemporary["Converting to SXForm..."]; SXForm[L]]
  * Dror's GDO invariant, computed in the classical algebra together with a
  * writhe correction.
  *)
-Z[L_SXForm] := ZFramed[PrintTemporary["Unwrithing..."]; Unwrithe[L]]
+Z::SXForm := "Argument `1` is not in RVT form."
 Z[L_RVT] := ZFramed[PrintTemporary["Unwrithing..."]; Unwrithe[L]]
+Z[L_SXForm] := Message[Z::SXForm, L]
 Z[L_] := Z[PrintTemporary["Converting to SXForm..."]; SXForm[L]]
 
 (* trZ := ((Times @@ Table[tr[i][2], {i, #[[0, 2, 2]]}])[#] & )@* Simplify@*(TruncateToDegree[4, #] &)@*Z) & *)
