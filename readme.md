@@ -11,7 +11,7 @@ Additional code implementing a trace operator by Jesse Frohlich.
 - [X] Consolidate all GDO and trace code to one repository.
 - [ ] Define types and descriptions for each function.
   - [X] `coinv`
-  - [ ] `trGenFunc`
+  - [X] `trGenFunc`
   - [ ] `tr`
   - [ ] `ScaleByLambda`
   - [ ] `TruncateToDegree`
