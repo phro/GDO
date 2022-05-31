@@ -10,7 +10,7 @@ Additional code implementing a trace operator by Jesse Frohlich.
 ## Code clean-up & test suite to do ##
 - [X] Consolidate all GDO and trace code to one repository.
 - [ ] Define types and descriptions for each function.
-  - [ ] `coinv`
+  - [X] `coinv`
   - [ ] `trGenFunc`
   - [ ] `tr`
   - [ ] `ScaleByLambda`
