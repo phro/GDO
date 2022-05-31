@@ -19,6 +19,31 @@ Module[
     3*2! Subscript[t, i]^2 + 5! Subscript[a, j] Subscript[a, i] Subscript[t, i]^5,
 TestID->"coinv[i] reduces functions on sums of monomials."]]
 
+Module[
+  {i,
+  yi, bi, ai, xi,
+  ti,
+  ηi, βi, αi, ξi
+  },
+  yi = Subscript[y, i];
+  bi = Subscript[b, i];
+  ai = Subscript[a, i];
+  xi = Subscript[x, i];
+  ti = Subscript[t, i];
+  ηi = Subscript[η, i];
+  βi = Subscript[β, i];
+  αi = Subscript[α, i];
+  ξi = Subscript[ξ, i];
+  VerificationTest[
+    trGenFunc[i][3],
+    Subscript[\[DoubleStruckCapitalE], {{i},{}} -> {{},{i}}][0,0,
+      ηi αi ξi (ai ti) + (1/2) βi αi^2 (2 ai ti - ti) + (1/6) αi^3 (ai^3) + 
+      ηi ξi (ti) + βi αi (ti) + (1/2) αi^2 (ai^2) + 
+      αi ai +
+      1
+    ],
+TestID->"trGenFunc[i] is correct up to degree 3."]]
+
 Module[{i, j},
   VerificationTest[
     Subscript[\[DoubleStruckCapitalE],{i}->{j}][

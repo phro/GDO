@@ -77,7 +77,7 @@ coinv[ii_][word_]:=Module[{i,j,k,l,\[Lambda]},
 
 trGenFunc::usage = "trGenFunc[i][m] generates the generating function for coinv[i] up to degree m, with (filtered) degree defined by giving weight 1 to each of y, b, a, and x."
 trGenFunc[ii_][m_] := Module[{i,j,k,l},
-  Subscript[\[DoubleStruckCapitalE], {ii} -> {}][0,0,
+  Subscript[\[DoubleStruckCapitalE], {{ii},{}} -> {{},{ii}}][0,0,
     Sum[coinv[ii][
         Subscript[y, ii]^i Subscript[b, ii]^j
         Subscript[a, ii]^k Subscript[x, ii]^l
