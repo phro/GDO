@@ -5,6 +5,20 @@ Module[
     Subscript[a, j] Subscript[t, i],
 TestID->"coinv[i] reduces xy to t"]]
 
+Module[
+  {i, j},
+  VerificationTest[
+    coinv[i][Subscript[a, j] Subscript[a, i] Subscript[y, i]^5 Subscript[x, i]^5],
+    5! Subscript[a, j] Subscript[a, i] Subscript[t, i]^5,
+TestID->"coinv[i] reduces a(xy)^5 to at^5"]]
+
+Module[
+  {i, j},
+  VerificationTest[
+    coinv[i][3 Subscript[x, i]^2 Subscript[y, i]^2 + Subscript[a, j] Subscript[a, i] Subscript[y, i]^5 Subscript[x, i]^5],
+    3*2! Subscript[t, i]^2 + 5! Subscript[a, j] Subscript[a, i] Subscript[t, i]^5,
+TestID->"coinv[i] reduces functions on sums of monomials."]]
+
 Module[{i, j},
   VerificationTest[
     Subscript[\[DoubleStruckCapitalE],{i}->{j}][
