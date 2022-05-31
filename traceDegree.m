@@ -55,9 +55,7 @@ Etest[n_] := Subscript[\[DoubleStruckCapitalE], {} -> Range[n]][
  * The coinvariants map defined on the (uncompleted) sl2-algebra expressed as a
  * non-standard multiplicative structure on a polynomial algebra.
  *)
-coinv::usage = "coinv[i][f] gives the coinvarant of expression f with respect\
- to variables indexed by i. It returns a(n in)finite sum of monomials when\
- given a(n in)finite sum."
+coinv::usage = "coinv[i][f] gives the coinvarant of expression f with respect to variables indexed by i. It returns a(n in)finite sum of monomials when given a(n in)finite sum."
 coinv[ii_][lincomb_Plus]:=coinv[ii]/@lincomb;
 coinv[ii_][word_]:=Module[{i,j,k,l,\[Lambda]},
   \[Lambda] = Total@Flatten@CoefficientList[word,{Subscript[y, ii],Subscript[b, ii],Subscript[a, ii],Subscript[x, ii]}];
