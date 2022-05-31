@@ -1,3 +1,10 @@
+Module[
+  {i, j},
+  VerificationTest[
+    coinv[i][Subscript[a, j] Subscript[y, i] Subscript[x, i]],
+    Subscript[a, j] Subscript[t, i],
+TestID->"coinv[i] reduces xy to t"]]
+
 Module[{i, j},
   VerificationTest[
     Subscript[\[DoubleStruckCapitalE],{i}->{j}][
