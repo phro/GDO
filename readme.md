@@ -12,7 +12,7 @@ Additional code implementing a trace operator by Jesse Frohlich.
 - [ ] Define types and descriptions for each function.
   - [X] `coinv`
   - [X] `trGenFunc`
-  - [ ] `tr`
+  - [ ] `trDeg`
   - [ ] `ScaleByLambda`
   - [ ] `TruncateToDegree`
   - [ ] `SXForm`

@@ -234,12 +234,12 @@ Module[
     (TruncateToDegree[4][
       Subscript[S\[HBar], i] Subscript[S\[HBar], j] //
       (Subscript[cm, i, j -> k] /. U2l)] //
-      ExpandAll) // tr[k][8]
+      ExpandAll) // trDeg[k][8]
     ,
     (TruncateToDegree[4][
       Subscript[S\[HBar], i] Subscript[S\[HBar], j] //
       (Subscript[cm, j, i -> k] /. U2l)] //
-      ExpandAll) // tr[k][8]
+      ExpandAll) // trDeg[k][8]
     ,
     TestID -> "trace is dyslexic up to degree 4."
   ]

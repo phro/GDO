@@ -98,15 +98,15 @@ trGenFunc[ii_][m_] := Module[{
         ]
 ]
 
-tr::usage = "tr[i][m] is the GDO element corresponding to trGenFunc[i][m]."
-tr[ii_][m_] :=Module[{i,j,k,l},
+trDeg::usage = "trDeg[i][m] is the GDO element corresponding to trGenFunc[i][m]."
+trDeg[ii_][m_] :=Module[{i,j,k,l},
         Subscript[\[DoubleStruckCapitalE], {{ii},{}} -> {{},{ii}}][
                 0,0, trGenFunc[i][m]
         ]
 ]
 
 (* Front-end beautification *)
-Subscript[tr, ii_][m_] := tr[ii][m]
+Subscript[trDeg, ii_][m_] := trDeg[ii][m]
 
 (*
  * Scale each variable by a factor of ħ
@@ -372,15 +372,15 @@ Z[L_RVT] := ZFramed[PrintTemporary["Unwrithing..."]; Unwrithe[L]]
 Z[L_SXForm] := Message[Z::SXForm, L]
 Z[L_] := Z[PrintTemporary["Converting to SXForm..."]; SXForm[L]]
 
-(* trZ := ((Times @@ Table[tr[i][2], {i, #[[0, 2, 2]]}])[#] & )@* Simplify@*(TruncateToDegree[4, #] &)@*Z) & *)
+(* trZ := ((Times @@ Table[trDeg[i][2], {i, #[[0, 2, 2]]}])[#] & )@* Simplify@*(TruncateToDegree[4, #] &)@*Z) & *)
 
 (*
  * The Z invariant restricted in degree, together with the trace applied to its elements
  *)
 Zdeg[deg_, L_] := CF[TruncateToDegree[deg][Z[L]]]
-(* trZ[deg_,L_] :=  (Times @@ Table[tr[i][deg], {i,      #[[0, 2, 2]]}])[#]&[Zdeg[deg, L]] *)
+(* trZ[deg_,L_] :=  (Times @@ Table[trDeg[i][deg], {i,      #[[0, 2, 2]]}])[#]&[Zdeg[deg, L]] *)
 Ztr[deg_,L_] := Zdeg[deg, L] // (Composition @@ Table[
-    tr[i][deg],
+    trDeg[i][deg],
     {i, Echo[Cases[(Unwrithe@L)[[1]], Loop[j_, __] -> j]]}
     ]
   )
@@ -393,7 +393,7 @@ ptr[deg_][L_] := Module[
   cod = getCodomain@ZL;
   Table[
     (Composition @@ Table[
-      tr[j][deg],
+      trDeg[j][deg],
       {j, Complement[cod,{i}]}
     ])[ZL]
     ,{i, cod}
