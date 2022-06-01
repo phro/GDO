@@ -58,7 +58,8 @@ coinv[ii_][word_]:=Module[{
         yii = Subscript[y, ii],
         bii = Subscript[b, ii],
         aii = Subscript[a, ii],
-        xii = Subscript[x, ii]
+        xii = Subscript[x, ii],
+        tii = Subscript[t, ii]
         },
         \[Lambda] = Total@Flatten@CoefficientList[word,{yii, bii, aii, xii}];
         {i,j,k,l}=Exponent[word,Subscript[#, ii]]&/@{y,b,a,x};
@@ -77,7 +78,7 @@ coinv[ii_][word_]:=Module[{
 
 trGenFunc::usage = "trGenFunc[i][m] generates the generating function for coinv[i] up to degree m, with (filtered) degree defined by giving weight 1 to each of y, b, a, and x."
 trGenFunc[ii_][m_] := Module[{
-        i,j,k,l
+        i,j,k,l,
         yii = Subscript[y, ii],
         bii = Subscript[b, ii],
         aii = Subscript[a, ii],
