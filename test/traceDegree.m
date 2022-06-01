@@ -36,8 +36,8 @@ Module[
   ξi = Subscript[ξ, i];
   VerificationTest[
     trGenFunc[i][3],
-    ηi αi ξi (ai ti) + (1/2) βi αi^2 (2 ai ti - ti) + (1/6) αi^3 (ai^3) + 
-    ηi ξi (ti) + βi αi (ti) + (1/2) αi^2 (ai^2) + 
+    ηi αi ξi (ai ti) + (1/2) βi αi^2 (2 ai ti - ti) + (1/6) αi^3 (ai^3) +
+    ηi ξi (ti) + βi αi (ti) + (1/2) αi^2 (ai^2) +
     αi ai +
     1,
 TestID->"trGenFunc[i] is correct up to degree 3."]]
