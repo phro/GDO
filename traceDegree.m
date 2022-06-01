@@ -57,8 +57,8 @@ Etest[n_] := Subscript[\[DoubleStruckCapitalE], {} -> Range[n]][
  *)
 coinv::usage = "coinv[i][f] gives the coinvarant of expression f with respect to variables indexed by i. It returns a(n in)finite sum of monomials when given a(n in)finite sum."
 coinv[ii_][lincomb_Plus]:=coinv[ii]/@lincomb;
-coinv[ii_][word_]:=Module[
-        {i,j,k,l,λ,
+coinv[ii_][word_]:=Module[{
+        i,j,k,l,λ,
         yii = Subscript[y, ii],
         bii = Subscript[b, ii],
         aii = Subscript[a, ii],
@@ -80,13 +80,20 @@ coinv[ii_][word_]:=Module[
 ]
 
 trGenFunc::usage = "trGenFunc[i][m] generates the generating function for coinv[i] up to degree m, with (filtered) degree defined by giving weight 1 to each of y, b, a, and x."
-trGenFunc[ii_][m_] := Module[{i,j,k,l},
-        Sum[coinv[ii][
-                Subscript[y, ii]^i Subscript[b, ii]^j
-                Subscript[a, ii]^k Subscript[x, ii]^l
-        ]
-        (Subscript[\[Eta], ii]^i Subscript[\[Beta], ii]^j
-        Subscript[\[Alpha], ii]^k Subscript[\[Xi], ii]^l)/(i!j!k!l!),
+trGenFunc[ii_][m_] := Module[{
+        i,j,k,l
+        yii = Subscript[y, ii],
+        bii = Subscript[b, ii],
+        aii = Subscript[a, ii],
+        xii = Subscript[x, ii],
+        ηii = Subscript[η, ii],
+        βii = Subscript[β, ii],
+        αii = Subscript[α, ii],
+        ξii = Subscript[ξ, ii]
+        },
+        Sum[
+                coinv[ii][yii^i bii^j aii^k xii^l]
+                (ηii^i βii^j αii^k ξii^l)/(i!j!k!l!),
         {i,0,m},{j,0,m-i},{k,0,m-i-j},{l,0,m-i-j-k}
         ]
 ]
