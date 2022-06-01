@@ -57,22 +57,26 @@ Etest[n_] := Subscript[\[DoubleStruckCapitalE], {} -> Range[n]][
  *)
 coinv::usage = "coinv[i][f] gives the coinvarant of expression f with respect to variables indexed by i. It returns a(n in)finite sum of monomials when given a(n in)finite sum."
 coinv[ii_][lincomb_Plus]:=coinv[ii]/@lincomb;
-coinv[ii_][word_]:=Module[{i,j,k,l,\[Lambda]},
-  \[Lambda] = Total@Flatten@CoefficientList[word,{Subscript[y, ii],Subscript[b, ii],Subscript[a, ii],Subscript[x, ii]}];
-  {i,j,k,l}=Exponent[word,Subscript[#, ii]]&/@{y,b,a,x};
-  If[i==l && j<=k,
-    If[j==0,
-      \[Lambda] i! Subscript[a, ii]^k Subscript[t, ii]^i,
-      coinv[ii]@Expand[
-        \[Lambda]/(i+1) *
-        Subscript[y, ii]^(i + 1) *
-        Subscript[b, ii]^(j-1) *
-        (Subscript[a, ii]^k-(Subscript[a, ii]-1)^k) *
-        Subscript[x, ii]^(i+1)
-      ]
-    ],
-    0
-  ]
+coinv[ii_][word_]:=Module[
+        {i,j,k,l,λ,
+        yii = Subscript[y, ii],
+        bii = Subscript[b, ii],
+        aii = Subscript[a, ii],
+        xii = Subscript[x, ii]
+        },
+        \[Lambda] = Total@Flatten@CoefficientList[word,{yii, bii, aii, xii}];
+        {i,j,k,l}=Exponent[word,Subscript[#, ii]]&/@{y,b,a,x};
+        If[i==l && j<=k,
+                If[j==0,
+                        λ i! aii^k tii^i,
+                        coinv[ii]@Expand[
+                                λ/(i+1) *
+                                yii^(i + 1) * bii^(j-1) *
+                                (aii^k-(aii-1)^k) * xii^(i+1)
+                        ]
+                ],
+                0
+        ]
 ]
 
 trGenFunc::usage = "trGenFunc[i][m] generates the generating function for coinv[i] up to degree m, with (filtered) degree defined by giving weight 1 to each of y, b, a, and x."
