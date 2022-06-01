@@ -77,19 +77,21 @@ coinv[ii_][word_]:=Module[{i,j,k,l,\[Lambda]},
 
 trGenFunc::usage = "trGenFunc[i][m] generates the generating function for coinv[i] up to degree m, with (filtered) degree defined by giving weight 1 to each of y, b, a, and x."
 trGenFunc[ii_][m_] := Module[{i,j,k,l},
-  Subscript[\[DoubleStruckCapitalE], {{ii},{}} -> {{},{ii}}][0,0,
-    Sum[coinv[ii][
-        Subscript[y, ii]^i Subscript[b, ii]^j
-        Subscript[a, ii]^k Subscript[x, ii]^l
-      ]
-      (Subscript[\[Eta], ii]^i Subscript[\[Beta], ii]^j
-      Subscript[\[Alpha], ii]^k Subscript[\[Xi], ii]^l)/(i!j!k!l!),
-      {i,0,m},{j,0,m-i},{k,0,m-i-j},{l,0,m-i-j-k}
-    ]
-  ]
+        Sum[coinv[ii][
+                Subscript[y, ii]^i Subscript[b, ii]^j
+                Subscript[a, ii]^k Subscript[x, ii]^l
+        ]
+        (Subscript[\[Eta], ii]^i Subscript[\[Beta], ii]^j
+        Subscript[\[Alpha], ii]^k Subscript[\[Xi], ii]^l)/(i!j!k!l!),
+        {i,0,m},{j,0,m-i},{k,0,m-i-j},{l,0,m-i-j-k}
+        ]
 ]
-tr[ii_][m_][GDO_] :=Module[{i,j,k,l},
-  trGenFunc[ii][m][GDO]//toMixed//addClosedCodomain[{ii}]
+
+tr::usage = "tr[i][m] is the GDO element corresponding to trGenFunc[i][m]."
+tr[ii_][m_] :=Module[{i,j,k,l},
+        Subscript[\[DoubleStruckCapitalE], {{ii},{}} -> {{},{ii}}][
+                0,0, trGenFunc[i][m]
+        ]
 ]
 
 (* Front-end beautification *)
