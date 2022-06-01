@@ -42,6 +42,13 @@ Module[
     1,
 TestID->"trGenFunc[i] is correct up to degree 3."]]
 
+Module[
+        {i},
+        VerificationTest[
+                trDeg[i][4][[3]],
+                trGenFunc[i][4],
+TestID->"trDeg produces trGenFunc's output."]]
+
 Module[{i, j},
   VerificationTest[
     Subscript[\[DoubleStruckCapitalE],{i}->{j}][
