@@ -96,10 +96,8 @@ trGenFunc[ii_][m_] := Module[{
 ]
 
 trDeg::usage = "trDeg[i][m] is the GDO element corresponding to trGenFunc[i][m]."
-trDeg[ii_][m_] :=Module[{i,j,k,l},
-        Subscript[\[DoubleStruckCapitalE], {{ii},{}} -> {{},{ii}}][
-                0,0, trGenFunc[i][m]
-        ]
+trDeg[ii_][m_] := Subscript[\[DoubleStruckCapitalE], {{ii},{}} -> {{},{ii}}][
+        0, 0, trGenFunc[ii][m]
 ]
 
 (* Front-end beautification *)
