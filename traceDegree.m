@@ -51,7 +51,7 @@ Etest[n_] := Subscript[\[DoubleStruckCapitalE], {} -> Range[n]][
 ]
 
 
-coinv::usage = "coinv[i][f] gives the coinvarant of expression in sl2+ f with respect to variables indexed by i. It returns a(n in)finite sum of monomials when given a(n in)finite sum."
+coinv::usage = "coinv[i][f] gives the coinvarant of expression in sl2+ f with respect to variables indexed by i. It returns a finite sum of monomials when given a finite sum."
 coinv[ii_][lincomb_Plus]:=coinv[ii]/@lincomb;
 coinv[ii_][word_]:=Module[{
         i,j,k,l,λ,
