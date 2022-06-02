@@ -100,6 +100,7 @@ trDeg[ii_][m_] := Subscript[\[DoubleStruckCapitalE], {{ii},{}} -> {{},{ii}}][
         0, 0, trGenFunc[ii][m]
 ]
 
+(* FIXME: BEGIN DEPRECATED CODE *)
 (* Front-end beautification *)
 Subscript[trDeg, ii_][m_] := trDeg[ii][m]
 
@@ -114,6 +115,7 @@ Sħ[i_] := Subscript[\[DoubleStruckCapitalE], {i} -> {i}][
 ];
 Subscript[Sħ, is_List]:= Sħ[is];
 Subscript[Sħ, i_] := Sħ[i];
+(* FIXME: END DEPRECATED CODE *)
 
 (*
  * Convert a GDO series to a polynomial
