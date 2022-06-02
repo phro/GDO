@@ -120,7 +120,7 @@ Subscript[Sħ, i_] := Sħ[i];
 (*
  * Convert a GDO series to a polynomial
  *)
-
+ScaleByLambda::usage = "ScaleByLambda[i] rescales all variables of a GDO expression in tensor factor i by a factor of λ."
 ScaleByLambda[i_] := Subscript[\[DoubleStruckCapitalE],{i} -> {i}][
   \[Lambda] (
     Subscript[a, i] Subscript[\[Alpha], i] +
