@@ -1,45 +1,55 @@
 Module[
-  {i, j},
-  VerificationTest[
-    coinv[i][Subscript[a, j] Subscript[y, i] Subscript[x, i]],
-    Subscript[a, j] Subscript[t, i],
+        {i, j, yi, xi, ti, aj},
+        yi = Subscript[y, i];
+        xi = Subscript[x, i];
+        ti = Subscript[t, i];
+        aj = Subscript[a, j];
+        VerificationTest[
+                coinv[i][aj yi xi],
+                aj ti,
 TestID->"coinv[i] reduces xy to t"]]
 
 Module[
-  {i, j},
-  VerificationTest[
-    coinv[i][Subscript[a, j] Subscript[a, i] Subscript[y, i]^5 Subscript[x, i]^5],
-    5! Subscript[a, j] Subscript[a, i] Subscript[t, i]^5,
+        {i, j, yi, ai, xi, ti, aj},
+        yi = Subscript[y, i];
+        ai = Subscript[a, i];
+        xi = Subscript[x, i];
+        ti = Subscript[t, i];
+        aj = Subscript[a, j];
+        VerificationTest[
+                coinv[i][aj ai yi^5 xi^5],
+                5! aj ai ti^5,
 TestID->"coinv[i] reduces a(xy)^5 to at^5"]]
 
 Module[
-  {i, j},
-  VerificationTest[
-    coinv[i][3 Subscript[x, i]^2 Subscript[y, i]^2 + Subscript[a, j] Subscript[a, i] Subscript[y, i]^5 Subscript[x, i]^5],
-    3*2! Subscript[t, i]^2 + 5! Subscript[a, j] Subscript[a, i] Subscript[t, i]^5,
+        {i, j, yi, ai, xi, ti, aj},
+        yi = Subscript[y, i];
+        ai = Subscript[a, i];
+        xi = Subscript[x, i];
+        ti = Subscript[t, i];
+        aj = Subscript[a, j];
+        VerificationTest[
+                coinv[i][3 xi^2 yi^2 + aj ai yi^5 xi^5],
+                3*2! ti^2 + 5! aj ai ti^5,
 TestID->"coinv[i] reduces functions on sums of monomials."]]
 
 Module[
-  {i,
-  yi, bi, ai, xi,
-  ti,
-  ηi, βi, αi, ξi
-  },
-  yi = Subscript[y, i];
-  bi = Subscript[b, i];
-  ai = Subscript[a, i];
-  xi = Subscript[x, i];
-  ti = Subscript[t, i];
-  ηi = Subscript[η, i];
-  βi = Subscript[β, i];
-  αi = Subscript[α, i];
-  ξi = Subscript[ξ, i];
-  VerificationTest[
-    trGenFunc[i][3],
-    ηi αi ξi (ai ti) + (1/2) βi αi^2 (2 ai ti - ti) + (1/6) αi^3 (ai^3) +
-    ηi ξi (ti) + βi αi (ti) + (1/2) αi^2 (ai^2) +
-    αi ai +
-    1,
+        {i, yi, bi, ai, xi, ti, ηi, βi, αi, ξi},
+        yi = Subscript[y, i];
+        bi = Subscript[b, i];
+        ai = Subscript[a, i];
+        xi = Subscript[x, i];
+        ti = Subscript[t, i];
+        ηi = Subscript[η, i];
+        βi = Subscript[β, i];
+        αi = Subscript[α, i];
+        ξi = Subscript[ξ, i];
+        VerificationTest[
+                trGenFunc[i][3],
+                ηi αi ξi (ai ti) + 1/2 βi αi^2 (2 ai ti - ti) + 1/6 αi^3 ai^3 +
+                ηi ξi (ti) + βi αi (ti) + 1/2 αi^2 (ai^2) +
+                αi ai +
+                1,
 TestID->"trGenFunc[i] is correct up to degree 3."]]
 
 Module[
@@ -49,37 +59,25 @@ Module[
                 trGenFunc[i][4],
 TestID->"trDeg produces trGenFunc's output."]]
 
-Module[{i, j},
-  VerificationTest[
-    Subscript[\[DoubleStruckCapitalE],{i}->{j}][
-      Subscript[α, i]Subscript[b,j],
-      0,
-      1
-    ] // ScaleByLambda[j],
-    Subscript[\[DoubleStruckCapitalE],{i}->{j}][
-      λ Subscript[α, i]Subscript[b,j],
-      0,
-      1
-    ],
-    TestID -> "ScaleByLambda scales b by the weight-tracker."
-  ]
-]
+Module[
+        {i, j, ai, bj},
+        ai = Subscript[a, i];
+        bj = Subscript[b, j];
+        VerificationTest[
+                Subscript[\[DoubleStruckCapitalE],{i}->{j}][αi bj, 0, 1] //
+                        ScaleByLambda[j],
+                Subscript[\[DoubleStruckCapitalE],{i}->{j}][λ αi bj, 0, 1],
+TestID -> "ScaleByLambda scales b by the weight-tracker."]]
 
-Module[{i, j},
-  VerificationTest[
-    Subscript[\[DoubleStruckCapitalE],{i}->{j}][
-      Subscript[β, i]Subscript[a,j],
-      0,
-      1
-    ] // ScaleByLambda[j],
-    Subscript[\[DoubleStruckCapitalE],{i}->{j}][
-      λ Subscript[β, i]Subscript[a,j],
-      0,
-      1
-    ],
-    TestID -> "ScaleByLambda scales a by the weight-tracker."
-  ]
-]
+Module[
+        {i, j, βi, aj},
+        βi = Subscript[β, i];
+        aj = Subscript[a, j];
+        VerificationTest[
+                Subscript[\[DoubleStruckCapitalE],{i}->{j}][βi aj , 0, 1] //
+                        ScaleByLambda[j],
+		Subscript[\[DoubleStruckCapitalE],{i}->{j}][λ βi aj, 0, 1],
+TestID -> "ScaleByLambda scales a by the weight-tracker."]]
 
 Module[{i, j},
   VerificationTest[
