@@ -79,87 +79,66 @@ Module[
 		Subscript[\[DoubleStruckCapitalE],{i}->{j}][λ βi aj, 0, 1],
 TestID -> "ScaleByLambda scales a by the weight-tracker."]]
 
-Module[{i, j},
-  VerificationTest[
-    Subscript[\[DoubleStruckCapitalE],{i}->{j}][
-      0,
-      Subscript[ξ, i]Subscript[y,j],
-      1
-    ] // ScaleByLambda[j],
-    Subscript[\[DoubleStruckCapitalE],{i}->{j}][
-      0,
-      λ Subscript[ξ, i]Subscript[y,j],
-      1
-    ],
-    TestID -> "ScaleByLambda scales y by the weight-tracker."
-  ]
-]
-
-Module[{i, j},
-  VerificationTest[
-    Subscript[\[DoubleStruckCapitalE],{i}->{j}][
-      0,
-      Subscript[β, i]Subscript[x,j],
-      1
-    ] // ScaleByLambda[j],
-    Subscript[\[DoubleStruckCapitalE],{i}->{j}][
-      0,
-      λ Subscript[β, i]Subscript[x,j],
-      1
-    ],
-    TestID -> "ScaleByLambda scales x by the weight-tracker."
-  ]
-]
+Module[
+        {i, j, ξi, yj},
+        ξi = Subscript[ξ, i];
+        yj = Subscript[y, j];
+	VerificationTest[
+                Subscript[\[DoubleStruckCapitalE],{i}->{j}][0, ξi yj, 1] //
+                        ScaleByLambda[j],
+		Subscript[\[DoubleStruckCapitalE],{i}->{j}][0, λ ξi yj, 1],
+TestID -> "ScaleByLambda scales y by the weight-tracker."]]
 
 Module[
-  { pCW  = RVT[{Strand[1,2]},{Xp[2,1]},{{1,0},{2,1 }}]
-  , pCCW = RVT[{Strand[1,2]},{Xp[1,2]},{{1,0},{2,-1}}]
-  },
-  VerificationTest[
-    ZFramed[pCW]//Simplify,
-    ZFramed[pCCW]//Simplify,
-  TestID -> "ZFramed satisfies R1' for positive kinks."
-  ]
-]
-Module[
-  { mCW  = RVT[{Strand[1,2]},{Xm[1,2]},{{1,0},{2,1 }}]
-  , mCCW = RVT[{Strand[1,2]},{Xm[2,1]},{{1,0},{2,-1}}]
-  },
-  VerificationTest[
-    ZFramed[mCW],
-    ZFramed[mCCW],
-  TestID -> "ZFramed satisfies R1' for negative kinks."
-  ]
-]
-Module[
-  { doubleTwist = RVT[
-    {Strand[1,2,3,4]},
-    {Xp[1,2], Xm[4,3]},
-    {{2,-1},{4,-1},{1,0},{3,0}}]
-  , straightStrand = RVT[{Strand[1]},{},{{1,0}}]
-  },
-  VerificationTest[
-    Z[doubleTwist],
-    Z[straightStrand],
-  TestID -> "R1' ZFramed with cancelling negative kinks."
-  ]
-]
+        {i, j, βi, xj},
+        βi = Subscript[ξ, i];
+        xj = Subscript[y, j];
+	VerificationTest[
+                Subscript[\[DoubleStruckCapitalE],{i}->{j}][0, βi xj, 1] //
+                        ScaleByLambda[j],
+		Subscript[\[DoubleStruckCapitalE],{i}->{j}][0, λ βi xj, 1],
+TestID -> "ScaleByLambda scales x by the weight-tracker."]]
 
-VerificationTest[
-  Module[
-    { i
-    , j
-    , k
-    , l
-    , testSX = SXForm[{Loop[i,j], Strand[k,l]},{Xp[j, l], Xm[k, i]}]
-    },
-    Reindex[testSX]
-  ],
-  SXForm[{Loop[1,2], Strand[3,4]},{Xp[2, 4], Xm[3, 1]}],
-  TestID ->
-    "Reindex replaces SXForm indices with sequentially ordered positive
-    integers. (1)"
-]
+Module[
+	{ pCW  = RVT[{Strand[1,2]},{Xp[2,1]},{{1,0},{2, 1}}]
+	, pCCW = RVT[{Strand[1,2]},{Xp[1,2]},{{1,0},{2,-1}}]
+	},
+	VerificationTest[
+		ZFramed[pCW]//Simplify,
+		ZFramed[pCCW]//Simplify,
+TestID -> "ZFramed satisfies R1' for positive kinks."]]
+
+Module[
+	{ mCW  = RVT[{Strand[1,2]},{Xm[1,2]},{{1,0},{2, 1}}]
+	, mCCW = RVT[{Strand[1,2]},{Xm[2,1]},{{1,0},{2,-1}}]
+	},
+	VerificationTest[
+		ZFramed[mCW],
+		ZFramed[mCCW],
+TestID -> "ZFramed satisfies R1' for negative kinks."]]
+
+Module[
+	{ doubleTwist = RVT[
+		{Strand[1,2,3,4]},
+		{Xp[1,2], Xm[4,3]},
+		{{2,-1},{4,-1},{1,0},{3,0}}]
+	, straightStrand = RVT[{Strand[1]},{},{{1,0}}]
+	},
+	VerificationTest[
+		Z[doubleTwist],
+		Z[straightStrand],
+TestID -> "R1' ZFramed with cancelling negative kinks."]]
+
+Module[
+        { i, j, k, l,
+        testSX = SXForm[{Loop[i,j], Strand[k,l]},{Xp[j, l], Xm[k, i]}]
+        },
+        VerificationTest[
+                Reindex[testSX],
+                SXForm[{Loop[1,2], Strand[3,4]},{Xp[2, 4], Xm[3, 1]}],
+TestID -> "Reindex replaces SXForm indices with sequentially ordered positive integers. (1)"
+]]
+
 VerificationTest[
   Module[
     { ii
