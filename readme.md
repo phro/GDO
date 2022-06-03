@@ -13,7 +13,13 @@ Additional code implementing a trace operator by Jesse Frohlich.
   - [X] `coinv`
   - [X] `trGenFunc`
   - [X] `trDeg`
-  - [ ] `ScaleByLambda`
+  - [X] `ScaleByLambda`
+  - [ ] `getDomain`
+  - [ ] `getCodomain`
+  - [ ] `getExponent`
+  - [ ] `getIndices`
+  - [ ] `isolateSubscripts`
+  - [ ] `getPLength`
   - [ ] `TruncateToDegree`
   - [ ] `SXForm`
   - [ ] `RVT`

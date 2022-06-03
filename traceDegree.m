@@ -8,6 +8,31 @@
 
 $k = 0; \[Gamma] = 1;
 
+getDomain[Subscript[\[DoubleStruckCapitalE], is_->js_][L_,Q_,P_]]:=is;
+getCodomain[Subscript[\[DoubleStruckCapitalE], is_->js_][L_,Q_,P_]]:=js;
+getExponent[Subscript[\[DoubleStruckCapitalE], is_->js_][L_,Q_,P_]]:={L,Q,P};
+getIndices[GDO_]:=Union@Flatten@{getDomain[GDO],getCodomain[GDO]};
+isolateSubscripts[a_->b_]:=Subscript[x_, a]->Subscript[x, b];
+getPLength[GDO_] := Map[Length,ExpandAll[GDO],{1}][[3]];
+
+
+Reindex\[DoubleStruckCapitalE][GDO_]:=Module[{
+                replacementRules,
+                subscriptReplacementRules,
+                indices,
+                is=getDomain[GDO],
+                js=getCodomain[GDO],
+                Q=getExponent[GDO],
+                is2,js2,Q2
+        },
+        indices=getIndices[GDO];
+        replacementRules = Thread[indices->Range[Length[indices]]];
+        subscriptReplacementRules = Thread[isolateSubscripts[replacementRules]];
+        is2=is/.replacementRules;
+        js2=js/.replacementRules;
+        Q2=Q/.subscriptReplacementRules;
+        Subscript[\[DoubleStruckCapitalE], is2->js2]@@Q2
+]
 
 MatrixForm[Subscript[\[DoubleStruckCapitalE], {} -> ss_][L_,Q_,P_]] ^:=
   Subscript[\[DoubleStruckCapitalE], {} -> ss][
@@ -133,8 +158,12 @@ ScaleByLambda[i_] := Subscript[\[DoubleStruckCapitalE],{i} -> {i}][
 ]
 
 TruncateToDegree::usage = "TruncateToDegree[n] takes a GDO element and writes it as a finite polynomial of degree at most n."
-TruncateToDegree[n_][
-  Subscript[\[DoubleStruckCapitalE], is__->js__][L_,Q_,P_]]:=
+TruncateToDegree[n_][GDO_]:=Module[
+        {i},
+        Times@@Table[ScaleByLambda[i],{i,}]
+]
+
+Subscript[\[DoubleStruckCapitalE], is__->js__][L_,Q_,P_]
   Subscript[\[DoubleStruckCapitalE], is->js][0,0,
     Expand@Normal[Series[Exp[L+Q]*P/.U2l,{ħ,0,n}]]
 ]

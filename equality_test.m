@@ -20,31 +20,6 @@
 
 
 (* ::Input::Initialization:: *)
-getDomain[Subscript[\[DoubleStruckCapitalE], is_->js_][L_,Q_,P_]]:=is;
-getCodomain[Subscript[\[DoubleStruckCapitalE], is_->js_][L_,Q_,P_]]:=js;
-getExponent[Subscript[\[DoubleStruckCapitalE], is_->js_][L_,Q_,P_]]:={L,Q,P};
-getIndices[GDO_]:=Union@Flatten@{getDomain[GDO],getCodomain[GDO]};
-isolateSubscripts[a_->b_]:=Subscript[x_, a]->Subscript[x, b];
-getPLength[GDO_] := Map[Length,ExpandAll[GDO],{1}][[3]];
-
-
-Reindex\[DoubleStruckCapitalE][GDO_]:=Module[{
-		replacementRules,
-		subscriptReplacementRules,
-		indices,
-		is=getDomain[GDO],
-		js=getCodomain[GDO],
-		Q=getExponent[GDO],
-		is2,js2,Q2
-	},
-	indices=getIndices[GDO];
-	replacementRules = Thread[indices->Range[Length[indices]]];
-	subscriptReplacementRules = Thread[isolateSubscripts[replacementRules]];
-	is2=is/.replacementRules;
-	js2=js/.replacementRules;
-	Q2=Q/.subscriptReplacementRules;
-	Subscript[\[DoubleStruckCapitalE], is2->js2]@@Q2
-]
 
 
 Permute\[DoubleStruckCapitalE][GDO_][perm_]:= Module[
