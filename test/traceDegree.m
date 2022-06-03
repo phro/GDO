@@ -119,7 +119,7 @@ Module[
                         1 +
                         (αi ai + βi bi + ξi xi + ηi yi) +
                         1/2 (αi ai + βi bi + ξi xi + ηi yi)^2
-                ],
+                ]//ExpandAll,
 TestID->"TruncateToDegree truncates the identity appropriately"]]
 
 Module[

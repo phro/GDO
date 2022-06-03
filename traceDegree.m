@@ -10,7 +10,7 @@ $k = 0; \[Gamma] = 1;
 
 getDomain[Subscript[\[DoubleStruckCapitalE], is_->js_][L_,Q_,P_]]:=is;
 getCodomain[Subscript[\[DoubleStruckCapitalE], is_->js_][L_,Q_,P_]]:=js;
-getExponent[Subscript[\[DoubleStruckCapitalE], is_->js_][L_,Q_,P_]]:={L,Q,P};
+getSeries[Subscript[\[DoubleStruckCapitalE], is_->js_][L_,Q_,P_]]:={L,Q,P};
 getIndices[GDO_]:=Union@Flatten@{getDomain[GDO],getCodomain[GDO]};
 isolateSubscripts[a_->b_]:=Subscript[x_, a]->Subscript[x, b];
 getPLength[GDO_] := Map[Length,ExpandAll[GDO],{1}][[3]];
@@ -159,8 +159,16 @@ ScaleByLambda[i_] := Subscript[\[DoubleStruckCapitalE],{i} -> {i}][
 
 TruncateToDegree::usage = "TruncateToDegree[n] takes a GDO element and writes it as a finite polynomial of degree at most n."
 TruncateToDegree[n_][GDO_]:=Module[
-        {i},
-        Times@@Table[ScaleByLambda[i],{i,}]
+        {i,
+        is = getDomain[GDO],
+        js = getCodomain[GDO],
+        scaler
+        },
+        scaler=Product[ScaleByLambda[i],{i, Flatten@is}];
+        {L, Q, P} = getSeries[GDO//scaler];
+        Subscript[\[DoubleStruckCapitalE], is->js][0,0,
+                Expand@Normal[Series[Exp[L+Q]*P/.U2l,{λ,0,n}]]
+        ]/.(λ->1)
 ]
 
 Subscript[\[DoubleStruckCapitalE], is__->js__][L_,Q_,P_]
