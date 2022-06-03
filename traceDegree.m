@@ -132,13 +132,7 @@ ScaleByLambda[i_] := Subscript[\[DoubleStruckCapitalE],{i} -> {i}][
   1
 ]
 
-AddWeight[Subscript[\[DoubleStruckCapitalE], is__->js__][L_,Q_,P_]] := Module[
-  {
-    L2, Q2, P2
-  },
-  Subscript[\[DoubleStruckCapitalE], is->js][L2, Q2, P2]
-]
-
+TruncateToDegree::usage = "TruncateToDegree[n] takes a GDO element and writes it as a finite polynomial of degree at most n."
 TruncateToDegree[n_][
   Subscript[\[DoubleStruckCapitalE], is__->js__][L_,Q_,P_]]:=
   Subscript[\[DoubleStruckCapitalE], is->js][0,0,

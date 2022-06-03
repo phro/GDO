@@ -100,6 +100,29 @@ Module[
 TestID -> "ScaleByLambda scales x by the weight-tracker."]]
 
 Module[
+        {i, id, yi, bi, ai, xi, ti, ηi, βi, αi, ξi},
+        yi = Subscript[y, i];
+        bi = Subscript[b, i];
+        ai = Subscript[a, i];
+        xi = Subscript[x, i];
+        ti = Subscript[t, i];
+        ηi = Subscript[η, i];
+        βi = Subscript[β, i];
+        αi = Subscript[α, i];
+        ξi = Subscript[ξ, i];
+        id = Subscript[\[DoubleStruckCapitalE],{i}->{i}][
+                αi ai + βi bi, ξi xi + ηi yi, 1
+        ];
+        VerificationTest[
+                TruncateToDegree[2][id],
+                Subscript[\[DoubleStruckCapitalE],{i}->{i}][0,0,
+                        1 +
+                        (αi ai + βi bi + ξi xi + ηi yi) +
+                        1/2 (αi ai + βi bi + ξi xi + ηi yi)^2
+                ],
+TestID->"TruncateToDegree truncates the identity appropriately"]]
+
+Module[
 	{ pCW  = RVT[{Strand[1,2]},{Xp[2,1]},{{1,0},{2, 1}}]
 	, pCCW = RVT[{Strand[1,2]},{Xp[1,2]},{{1,0},{2,-1}}]
 	},
