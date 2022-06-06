@@ -123,11 +123,11 @@ Module[
 TestID->"TruncateToDegree truncates the identity appropriately"]]
 
 Module[
-  {i, j, k},
+  {i, j, k, n=2},
   VerificationTest[
-    (TruncateToDegree[4][Subscript[cm, i, j -> k]]) // trDeg[k][4],
-    (TruncateToDegree[4][Subscript[cm, j, i -> k]]) // trDeg[k][4],
-TestID -> "trace is dyslexic up to degree 4."]]
+    (TruncateToDegree[n][Subscript[cm, i, j -> k]]) // trDeg[k][n],
+    (TruncateToDegree[n][Subscript[cm, j, i -> k]]) // trDeg[k][n],
+TestID -> "trace is dyslexic up to degree "<>ToString[n]<>"."]]
 
 Module[
 	{ pCW  = RVT[{Strand[1,2]},{Xp[2,1]},{{1,0},{2, 1}}]

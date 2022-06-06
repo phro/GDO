@@ -173,11 +173,6 @@ TruncateToDegree[n_][GDO_]:=Module[
         ]/.(λ->1)
 ]
 
-Subscript[\[DoubleStruckCapitalE], is__->js__][L_,Q_,P_]
-  Subscript[\[DoubleStruckCapitalE], is->js][0,0,
-    Expand@Normal[Series[Exp[L+Q]*P/.U2l,{ħ,0,n}]]
-]
-
 GDOToList[Subscript[\[DoubleStruckCapitalE], is_->js_][L_,Q_,P_]] := {is, js, L, Q, P};
 GDOFromList[is_, js_, L_, Q_, P_] := Subscript[\[DoubleStruckCapitalE], is->js][L,Q,P]
 
