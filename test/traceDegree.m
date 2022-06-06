@@ -123,6 +123,13 @@ Module[
 TestID->"TruncateToDegree truncates the identity appropriately"]]
 
 Module[
+  {i, j, k},
+  VerificationTest[
+    (TruncateToDegree[4][Subscript[cm, i, j -> k]]) // trDeg[k][4],
+    (TruncateToDegree[4][Subscript[cm, j, i -> k]]) // trDeg[k][4],
+TestID -> "trace is dyslexic up to degree 4."]]
+
+Module[
 	{ pCW  = RVT[{Strand[1,2]},{Xp[2,1]},{{1,0},{2, 1}}]
 	, pCCW = RVT[{Strand[1,2]},{Xp[1,2]},{{1,0},{2,-1}}]
 	},
@@ -234,21 +241,3 @@ VerificationTest[
     "Reindex replaces RVT integer indices with sequentially ordered
     positive integers."
 ]
-
-Module[
-  {i, j, k},
-  VerificationTest[
-    (TruncateToDegree[4][
-      Subscript[S\[HBar], i] Subscript[S\[HBar], j] //
-      (Subscript[cm, i, j -> k] /. U2l)] //
-      ExpandAll) // trDeg[k][8]
-    ,
-    (TruncateToDegree[4][
-      Subscript[S\[HBar], i] Subscript[S\[HBar], j] //
-      (Subscript[cm, j, i -> k] /. U2l)] //
-      ExpandAll) // trDeg[k][8]
-    ,
-    TestID -> "trace is dyslexic up to degree 4."
-  ]
-]
-
