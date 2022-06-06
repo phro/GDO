@@ -167,7 +167,7 @@ TruncateToDegree[n_][GDO_]:=Module[
         scaler
         },
         scaler=Product[ScaleByLambda[i],{i, Flatten@is}];
-        {L, Q, P} = getSeries[GDO//scaler];
+        {L, Q, P} = getSeries[scaler//GDO];
         Subscript[\[DoubleStruckCapitalE], is->js][0,0,
                 Expand@Normal[Series[Exp[L+Q]*P/.U2l,{λ,0,n}]]
         ]/.(λ->1)
