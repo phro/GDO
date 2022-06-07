@@ -1,20 +1,20 @@
 Module[
   {i, j, L, Q, P},
   VerificationTest[
-    getDomain@toMixed[Subscript[\[DoubleStruckCapitalE], {i}->{j}][L,Q,P]],
+    getDomain@toMixed[GDO[{i}->{j}][L,Q,P]],
     {{i},{}},
 TestID->"toMixed adds empty indices for closed components to domain"]]
 
 Module[
   {i, j, L, Q, P},
   VerificationTest[
-    getCodomain@toMixed[Subscript[\[DoubleStruckCapitalE], {i}->{j}][L,Q,P]],
+    getCodomain@toMixed[GDO[{i}->{j}][L,Q,P]],
     {{j},{}},
 TestID->"toMixed adds empty indices for closed components to domain"]]
 
 Module[
   { L, P, Q,
-    EE = Subscript[\[DoubleStruckCapitalE], {{1,2},{3,4}}->{{1},{2,3,4}}][L,Q,P]
+    EE = GDO[{{1,2},{3,4}}->{{1},{2,3,4}}][L,Q,P]
   },
   VerificationTest[
     toMixed@EE,
@@ -23,7 +23,7 @@ TestID->"toMixed is null operation on expressions with closed domain"]]
 
 Module[
   { L, P, Q,
-    EE = Subscript[\[DoubleStruckCapitalE], {{1,2},{3,4}}->{{1},{2,3,4}}][L,Q,P]
+    EE = GDO[{{1,2},{3,4}}->{{1},{2,3,4}}][L,Q,P]
   },
   VerificationTest[
     getDomain@addClosedDomain[{2,5}]@EE,
@@ -32,7 +32,7 @@ TestID->"addClosedDomain adds new components to GDO"]]
 
 Module[
   { L, P, Q,
-    EE = Subscript[\[DoubleStruckCapitalE], {{1,2},{3,4}}->{{1},{2,3,4}}][L,Q,P]
+    EE = GDO[{{1,2},{3,4}}->{{1},{2,3,4}}][L,Q,P]
   },
   VerificationTest[
     addClosedDomain[{3}]@EE,
@@ -41,7 +41,7 @@ TestID->"addClosedDomain is identity when domain is already present."]]
 
 Module[
   { L, P, Q,
-    EE = Subscript[\[DoubleStruckCapitalE], {{1,2},{3,4}}->{{1},{2,3,4}}][L,Q,P]
+    EE = GDO[{{1,2},{3,4}}->{{1},{2,3,4}}][L,Q,P]
   },
   VerificationTest[
     getCodomain@addClosedCodomain[{4,5,6}]@EE,
@@ -50,7 +50,7 @@ TestID->"addClosedCodomain adds new components to GDO"]]
 
 Module[
   { L, P, Q,
-    EE = Subscript[\[DoubleStruckCapitalE], {{1,2},{3,4}}->{{1},{2,3,4}}][L,Q,P]
+    EE = GDO[{{1,2},{3,4}}->{{1},{2,3,4}}][L,Q,P]
   },
   VerificationTest[
     addClosedCodomain[{3}]@EE,
