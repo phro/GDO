@@ -1,4 +1,20 @@
 Module[
+        {i, j,
+        ηi = Subscript[η, i];
+        βi = Subscript[β, i];
+        αi = Subscript[α, i];
+        ξi = Subscript[ξ, i];
+        yj = Subscript[y, j];
+        bj = Subscript[b, j];
+        aj = Subscript[a, j];
+        xj = Subscript[x, j];
+        },
+        VerificationTest[
+                GDO[{i}->{j}][αi aj+ βi bj,ξi xj + ηi yj, 1],
+                Subscript[sσ,i ->j],
+TestID->"GDO notation returns \[DoubleStruckCapitalE] notation."]]
+
+Module[
         {i, j, yi, xi, ti, aj},
         yi = Subscript[y, i];
         xi = Subscript[x, i];

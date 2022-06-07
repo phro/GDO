@@ -8,6 +8,9 @@
 
 $k = 0; \[Gamma] = 1;
 
+GDO::usage = "GDO[is -> js][Qs] is shorthand for Subscript[\[DoubleStruckCapitalE], is -> js][Qs]."
+GDO[ijs_][Qs_] := Subscript[\[DoubleStruckCapitalE], ijs][Qs]
+
 getDomain[Subscript[\[DoubleStruckCapitalE], is_->js_][L_,Q_,P_]]:=is;
 getCodomain[Subscript[\[DoubleStruckCapitalE], is_->js_][L_,Q_,P_]]:=js;
 getSeries[Subscript[\[DoubleStruckCapitalE], is_->js_][L_,Q_,P_]]:={L,Q,P};
