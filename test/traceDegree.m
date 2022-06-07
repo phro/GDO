@@ -84,9 +84,9 @@ Module[
         ai = Subscript[a, i];
         bj = Subscript[b, j];
         VerificationTest[
-                Subscript[\[DoubleStruckCapitalE],{i}->{j}][αi bj, 0, 1] //
+                GDO[{i}->{j}][αi bj, 0, 1] //
                         ScaleByLambda[j],
-                Subscript[\[DoubleStruckCapitalE],{i}->{j}][λ αi bj, 0, 1],
+                GDO[{i}->{j}][λ αi bj, 0, 1],
 TestID -> "ScaleByLambda scales b by the weight-tracker."]]
 
 Module[
@@ -94,9 +94,9 @@ Module[
         βi = Subscript[β, i];
         aj = Subscript[a, j];
         VerificationTest[
-                Subscript[\[DoubleStruckCapitalE],{i}->{j}][βi aj , 0, 1] //
+                GDO[{i}->{j}][βi aj , 0, 1] //
                         ScaleByLambda[j],
-		Subscript[\[DoubleStruckCapitalE],{i}->{j}][λ βi aj, 0, 1],
+		GDO[{i}->{j}][λ βi aj, 0, 1],
 TestID -> "ScaleByLambda scales a by the weight-tracker."]]
 
 Module[
@@ -104,9 +104,9 @@ Module[
         ξi = Subscript[ξ, i];
         yj = Subscript[y, j];
 	VerificationTest[
-                Subscript[\[DoubleStruckCapitalE],{i}->{j}][0, ξi yj, 1] //
+                GDO[{i}->{j}][0, ξi yj, 1] //
                         ScaleByLambda[j],
-		Subscript[\[DoubleStruckCapitalE],{i}->{j}][0, λ ξi yj, 1],
+		GDO[{i}->{j}][0, λ ξi yj, 1],
 TestID -> "ScaleByLambda scales y by the weight-tracker."]]
 
 Module[
@@ -114,9 +114,9 @@ Module[
         βi = Subscript[ξ, i];
         xj = Subscript[y, j];
 	VerificationTest[
-                Subscript[\[DoubleStruckCapitalE],{i}->{j}][0, βi xj, 1] //
+                GDO[{i}->{j}][0, βi xj, 1] //
                         ScaleByLambda[j],
-		Subscript[\[DoubleStruckCapitalE],{i}->{j}][0, λ βi xj, 1],
+		GDO[{i}->{j}][0, λ βi xj, 1],
 TestID -> "ScaleByLambda scales x by the weight-tracker."]]
 
 Module[
@@ -130,12 +130,12 @@ Module[
         βi = Subscript[β, i];
         αi = Subscript[α, i];
         ξi = Subscript[ξ, i];
-        id = Subscript[\[DoubleStruckCapitalE],{i}->{i}][
+        id = GDO[{i}->{i}][
                 αi ai + βi bi, ξi xi + ηi yi, 1
         ];
         VerificationTest[
                 TruncateToDegree[2][id],
-                Subscript[\[DoubleStruckCapitalE],{i}->{i}][0,0,
+                GDO[{i}->{i}][0,0,
                         1 +
                         (αi ai + βi bi + ξi xi + ηi yi) +
                         1/2 (αi ai + βi bi + ξi xi + ηi yi)^2
@@ -153,12 +153,12 @@ Module[
         βi = Subscript[β, i];
         αi = Subscript[α, i];
         ξi = Subscript[ξ, i];
-        id = Subscript[\[DoubleStruckCapitalE],{i}->{i}][
+        id = GDO[{i}->{i}][
                 0,0, Exp[αi ai + βi bi + ηi yi + ξi xi]
         ];
         VerificationTest[
                 TruncateToDegree[2][id],
-                Subscript[\[DoubleStruckCapitalE],{i}->{i}][0,0,
+                GDO[{i}->{i}][0,0,
                         1 +
                         (αi ai + βi bi + ξi xi + ηi yi) +
                         1/2 (αi ai + βi bi + ξi xi + ηi yi)^2
@@ -168,19 +168,26 @@ TestID->"TruncateToDegree truncates an exponent appropriately"]]
 Module[
         {
                 n = 2,
-                GDO = Subscript[cm, 1,2->3]
+                gdo = Subscript[cm, 1,2->3]
         },
         VerificationTest[
-                TruncateToDegree[n]@TruncateToDegree[n]@GDO,
-                TruncateToDegree[n]@GDO,
+                TruncateToDegree[n]@TruncateToDegree[n]@gdo,
+                TruncateToDegree[n]@gdo,
 TestID->"TruncateToDegree is idempotent."]]
+
+Module[
+        {i, j, k},
+        VerificationTest[
+                Subscript[cm, j, i -> k] // trGuess[k],
+                Subscript[cm, i, j -> k] // trGuess[k],
+TestID->"trGuess is dyslexic."]]
 
 Module[
   {i, j, k, n=3},
   VerificationTest[
     (TruncateToDegree[n][Subscript[cm, i, j -> k]]) // trDeg[k][n],
     (TruncateToDegree[n][Subscript[cm, j, i -> k]]) // trDeg[k][n],
-TestID -> "trace is dyslexic up to degree "<>ToString[n]<>"."]]
+TestID -> "trDeg is dyslexic up to degree "<>ToString[n]<>"."]]
 
 (*
 Module[
