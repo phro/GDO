@@ -1,18 +1,22 @@
 Module[
         {i, j,
+        ηi, βi, αi, ξi,
+        yj, bj, aj, xj
+        },
         ηi = Subscript[η, i];
         βi = Subscript[β, i];
         αi = Subscript[α, i];
         ξi = Subscript[ξ, i];
+        τi = Subscript[τ, i];
         yj = Subscript[y, j];
         bj = Subscript[b, j];
         aj = Subscript[a, j];
         xj = Subscript[x, j];
-        },
+        tj = Subscript[t, j];
         VerificationTest[
-                GDO[{i}->{j}][αi aj+ βi bj,ξi xj + ηi yj, 1],
+                GDO[{i}->{j}][αi aj+ βi bj + τi tj,ξi xj + ηi yj, 1],
                 Subscript[sσ,i ->j],
-TestID->"GDO notation returns \[DoubleStruckCapitalE] notation."]]
+TestID->"GDO-notation returns \[DoubleStruckCapitalE]-notation."]]
 
 Module[
         {i, j, yi, xi, ti, aj},
@@ -178,6 +182,7 @@ Module[
     (TruncateToDegree[n][Subscript[cm, j, i -> k]]) // trDeg[k][n],
 TestID -> "trace is dyslexic up to degree "<>ToString[n]<>"."]]
 
+(*
 Module[
 	{ pCW  = RVT[{Strand[1,2]},{Xp[2,1]},{{1,0},{2, 1}}]
 	, pCCW = RVT[{Strand[1,2]},{Xp[1,2]},{{1,0},{2,-1}}]
@@ -290,3 +295,4 @@ VerificationTest[
     "Reindex replaces RVT integer indices with sequentially ordered
     positive integers."
 ]
+*)
