@@ -11,15 +11,15 @@ $k = 0; \[Gamma] = 1;
 GDO::usage = "GDO[is -> js][Qs] is shorthand for Subscript[\[DoubleStruckCapitalE], is -> js][Qs]."
 GDO[ijs___][Qs___] := Subscript[\[DoubleStruckCapitalE], ijs][Qs]
 
-getDomain[Subscript[\[DoubleStruckCapitalE], is_->js_][L_,Q_,P_]]:=is;
-getCodomain[Subscript[\[DoubleStruckCapitalE], is_->js_][L_,Q_,P_]]:=js;
-getSeries[Subscript[\[DoubleStruckCapitalE], is_->js_][L_,Q_,P_]]:={L,Q,P};
-getIndices[GDO_]:=Union@Flatten@{getDomain[GDO],getCodomain[GDO]};
+getDomain[GDO[is_->js_][L_,Q_,P_]]:=is;
+getCodomain[GDO[is_->js_][L_,Q_,P_]]:=js;
+getSeries[GDO[is_->js_][L_,Q_,P_]]:={L,Q,P};
+getIndices[gdo_]:=Union@Flatten@{getDomain[GDO],getCodomain[GDO]};
 isolateSubscripts[a_->b_]:=Subscript[x_, a]->Subscript[x, b];
-getPLength[GDO_] := Map[Length,ExpandAll[GDO],{1}][[3]];
+getPLength[gdo_] := Map[Length,ExpandAll[GDO],{1}][[3]];
 
 
-Reindex\[DoubleStruckCapitalE][GDO_]:=Module[
+Reindex\[DoubleStruckCapitalE][gdo_]:=Module[
         {
         replacementRules,
         subscriptReplacementRules,
@@ -35,11 +35,11 @@ Reindex\[DoubleStruckCapitalE][GDO_]:=Module[
         is2 = is/.replacementRules;
         js2 = js/.replacementRules;
         Q2 = Q/.subscriptReplacementRules;
-        Subscript[\[DoubleStruckCapitalE], is2->js2]@@Q2
+        GDO[is2->js2]@@Q2
 ]
 
-MatrixForm[Subscript[\[DoubleStruckCapitalE], {} -> ss_][L_,Q_,P_]] ^:=
-  Subscript[\[DoubleStruckCapitalE], {} -> ss][
+MatrixForm[GDO[{} -> ss_][L_,Q_,P_]] ^:=
+  GDO[{} -> ss][
     MatrixForm[Table[Table[
       D[L,Subscript[a, i], Subscript[b, j]],
       {i,ss}],
@@ -56,7 +56,7 @@ MatrixForm[Subscript[\[DoubleStruckCapitalE], {} -> ss_][L_,Q_,P_]] ^:=
 (*
  * Generic \[CurlyEpsilon]=0 elements of GDO
  *)
-EtestScal[n_] := Subscript[\[DoubleStruckCapitalE], {} -> Range[n]][
+EtestScal[n_] := GDO[{} -> Range[n]][
   Sum[
     ħ Subscript[l, i,j] Subscript[b, i] Subscript[a, j],
     {i,1,n}, {j,1,n}
@@ -68,7 +68,7 @@ EtestScal[n_] := Subscript[\[DoubleStruckCapitalE], {} -> Range[n]][
   1
 ]
 
-Etest[n_] := Subscript[\[DoubleStruckCapitalE], {} -> Range[n]][
+Etest[n_] := GDO[{} -> Range[n]][
   Sum[
     ħ Subscript[l, i,j] Subscript[b, i] Subscript[a, j],
     {i,1,n}, {j,1,n}
@@ -125,7 +125,7 @@ trGenFunc[ii_][m_] := Module[{
 ]
 
 trDeg::usage = "trDeg[i][m] is the GDO element corresponding to trGenFunc[i][m]."
-trDeg[ii_][m_] := Subscript[\[DoubleStruckCapitalE], {{ii},{}} -> {{},{ii}}][
+trDeg[ii_][m_] := GDO[{{ii},{}} -> {{},{ii}}][
         0, 0, trGenFunc[ii][m]
 ]
 
@@ -137,7 +137,7 @@ Subscript[trDeg, ii_][m_] := trDeg[ii][m]
  * Scale each variable by a factor of ħ
  *)
 Sħ[is_List] := Product[Sħ[i],{i, is}]//Simplify;
-Sħ[i_] := Subscript[\[DoubleStruckCapitalE], {i} -> {i}][
+Sħ[i_] := GDO[{i} -> {i}][
   ħ(Subscript[\[Alpha], i] Subscript[a, i] +Subscript[\[Beta], i] Subscript[b, i]),
   ħ(Subscript[\[Xi], i] Subscript[x, i] +Subscript[\[Eta], i] Subscript[y, i]),
   1
@@ -151,7 +151,7 @@ Subscript[Sħ, i_] := Sħ[i];
  *)
 (*  TODO: the following should only track the y- and the b- degrees: *)
 ScaleByLambda::usage = "ScaleByLambda[i] rescales all variables of a GDO expression in tensor factor i by a factor of λ."
-ScaleByLambda[i_] := Subscript[\[DoubleStruckCapitalE],{i} -> {i}][
+ScaleByLambda[i_] := GDO[{i} -> {i}][
   \[Lambda] (
     Subscript[a, i] Subscript[\[Alpha], i] +
     Subscript[b, i] Subscript[\[Beta], i] +
@@ -163,28 +163,28 @@ ScaleByLambda[i_] := Subscript[\[DoubleStruckCapitalE],{i} -> {i}][
 ]
 
 TruncateToDegree::usage = "TruncateToDegree[n] takes a GDO element and writes it as a finite polynomial of degree at most n."
-TruncateToDegree[n_][GDO_]:=Module[
+TruncateToDegree[n_][gdo_]:=Module[
         {i,
-        is = getDomain[GDO],
-        js = getCodomain[GDO],
+        is = getDomain[gdo],
+        js = getCodomain[gdo],
         scaler
         },
         scaler=Product[ScaleByLambda[i],{i, Flatten@is}];
-        {L, Q, P} = getSeries[scaler//GDO];
-        Subscript[\[DoubleStruckCapitalE], is->js][0,0,
+        {L, Q, P} = getSeries[scaler//gdo];
+        GDO[is->js][0,0,
                 Expand@Normal[Series[Exp[L+Q]*P/.U2l,{λ,0,n}]]
         ]/.(λ->1)
 ]
 
-GDOToList[Subscript[\[DoubleStruckCapitalE], is_->js_][L_,Q_,P_]] := {is, js, L, Q, P};
-GDOFromList[is_, js_, L_, Q_, P_] := Subscript[\[DoubleStruckCapitalE], is->js][L,Q,P]
+GDOToList[GDO[is_->js_][L_,Q_,P_]] := {is, js, L, Q, P};
+GDOFromList[is_, js_, L_, Q_, P_] := GDO[is->js][L,Q,P]
 
-(* TruncateToDegreeWrong[n_][GDO_] := Module[
+(* TruncateToDegreeWrong[n_][gdo_] := Module[
   {is, js, ks, L, Q, P},
   ks = GDOToList[GDO][[2]];
   [>{is, js, L, Q, P} = GDOToList[Sħ[ks] // GDO];<]
   {is, js, L, Q, P} = GDOToList[GDO // Sħ[ks]];
-  Subscript[\[DoubleStruckCapitalE], is->js][0,0, Normal[Series[Exp[L+Q]*P/.U2l,{ħ,0,n}]]]
+  GDO[is->js][0,0, Normal[Series[Exp[L+Q]*P/.U2l,{ħ,0,n}]]]
 ] *)
 
 (* Skeleton-Xing form *)
@@ -294,12 +294,12 @@ Reindex[RVT[cs_, xs_, rs_]] := Module[
 (*
  * The classical R-matrices, both in human-typable form and in front-end form
  *)
-cR[i_,j_] := Subscript[\[DoubleStruckCapitalE],{}->{i,j}][
+cR[i_,j_] := GDO[{}->{i,j}][
   ħ Subscript[a, j] Subscript[b, i],
   (Subscript[B, i]-1)/(-Subscript[b, i]) Subscript[x, j] Subscript[y, i],
   1
 ]
-cRi[i_,j_] := Subscript[\[DoubleStruckCapitalE],{}->{i,j}][
+cRi[i_,j_] := GDO[{}->{i,j}][
   -ħ Subscript[a, j] Subscript[b, i],
   (Subscript[B, i]-1)/(Subscript[B, i] Subscript[b, i]) Subscript[x, j] Subscript[y, i],
   1
@@ -331,7 +331,7 @@ RotationNumbers[L_SXForm] := Module[{s, xs},
 
 CCn[i_][n_Integer]:=Module[{j},
   If[n==0,
-    Subscript[\[DoubleStruckCapitalE], {} -> {i}][0,0,1],
+    GDO[{} -> {i}][0,0,1],
     If[n>0,
       If[n==1,
         CC[i],
