@@ -129,6 +129,18 @@ trDeg[ii_][m_] := GDO[{{ii},{}} -> {{},{ii}}][
         0, 0, trGenFunc[ii][m]
 ]
 
+trGuess::usage = "trGuess[i] is a placeholder guess for a GDO expression which represents a trace."
+trGuess[i_] := Module[
+        {ηi, βi, αi, ξi, ai, ti},
+        ηi = Subscript[η, i];
+        βi = Subscript[β, i];
+        αi = Subscript[α, i];
+        ξi = Subscript[ξ, i];
+        ai = Subscript[a, i];
+        ti = Subscript[t, i];
+        GDO[{{i},{}}->{{},{i}}][αi ai, ηi ξi ti, βi (1-Exp[-αi]) ti]
+]
+
 (* FIXME: BEGIN DEPRECATED CODE *)
 (* Front-end beautification *)
 Subscript[trDeg, ii_][m_] := trDeg[ii][m]

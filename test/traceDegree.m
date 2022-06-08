@@ -176,7 +176,7 @@ Module[
 TestID->"TruncateToDegree is idempotent."]]
 
 Module[
-        {i, j, k},
+        {i="i", j="j", k="k"},
         VerificationTest[
                 Subscript[cm, j, i -> k] // trGuess[k],
                 Subscript[cm, i, j -> k] // trGuess[k],
