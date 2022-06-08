@@ -178,6 +178,13 @@ TestID->"TruncateToDegree is idempotent."]]
 Module[
         {i="i", j="j", k="k"},
         VerificationTest[
+                cR[i,j]//Subscript[cm, j, i -> k] // trGuess[k],
+                cR[i,j]//Subscript[cm, i, j -> k] // trGuess[k],
+TestID->"trGuess is dyslexic on a tangle."]]
+
+Module[
+        {i="i", j="j", k="k"},
+        VerificationTest[
                 Subscript[cm, j, i -> k] // trGuess[k],
                 Subscript[cm, i, j -> k] // trGuess[k],
 TestID->"trGuess is dyslexic."]]
