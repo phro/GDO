@@ -306,15 +306,25 @@ Reindex[RVT[cs_, xs_, rs_]] := Module[
 (*
  * The classical R-matrices, both in human-typable form and in front-end form
  *)
-cR[i_,j_] := GDO[{}->{i,j}][
-  ℏ Subscript[a, j] Subscript[b, i],
-  (Subscript[B, i]-1)/(-Subscript[b, i]) Subscript[x, j] Subscript[y, i],
-  1
+cR[i_,j_] := Module[
+        {
+                yi = Subscript[y, i],
+                bi = Subscript[b, i],
+                Bi = Subscript[B, i],
+                aj = Subscript[a, j],
+                xj = Subscript[x, j]
+        },
+        GDO[{}->{i,j}][ℏ aj bi, (Bi-1)/(-bi) xj yi, 1]
 ]
-cRi[i_,j_] := GDO[{}->{i,j}][
-  -ℏ Subscript[a, j] Subscript[b, i],
-  (Subscript[B, i]-1)/(Subscript[B, i] Subscript[b, i]) Subscript[x, j] Subscript[y, i],
-  1
+cRi[i_,j_] := Module[
+        {
+                yi = Subscript[y, i],
+                bi = Subscript[b, i],
+                Bi = Subscript[B, i],
+                aj = Subscript[a, j],
+                xj = Subscript[x, j]
+        },
+        GDO[{}->{i,j}][-ℏ aj bi, (Bi-1)/(Bi bi) xj yi, 1]
 ]
 
 CC[i_] := Subscript[C, i];
