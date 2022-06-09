@@ -125,7 +125,7 @@ trGenFunc[ii_][m_] := Module[{
 ]
 
 trDeg::usage = "trDeg[i][m] is the GDO element corresponding to trGenFunc[i][m]."
-trDeg[ii_][m_] := GDO[{{ii},{}} -> {{},{ii}}][
+trDeg[m_][ii_] := GDO[{{ii},{}} -> {{},{ii}}][
         0, 0, trGenFunc[ii][m]
 ]
 
@@ -143,7 +143,7 @@ trGuess[i_] := Module[
 
 (* FIXME: BEGIN DEPRECATED CODE *)
 (* Front-end beautification *)
-Subscript[trDeg, ii_][m_] := trDeg[ii][m]
+Subscript[trDeg, ii_][m_] := trDeg[m][ii]
 
 (*
  * Scale each variable by a factor of ħ

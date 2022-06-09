@@ -75,7 +75,7 @@ TestID->"trGenFunc[i] is correct up to degree 3."]]
 Module[
         {i},
         VerificationTest[
-                trDeg[i][4][[3]],
+                trDeg[4][i][[3]],
                 trGenFunc[i][4],
 TestID->"trDeg produces trGenFunc's output."]]
 
@@ -208,6 +208,14 @@ Module[
 TestID->"TruncateToDegree is idempotent."]]
 
 Module[
+        {i, n=4},
+        VerificationTest[
+                TruncateToDegree[n]@trGuess[i]//ExpandAll,
+                trDeg[n][i]//ExpandAll,
+TestID->"trGuess matches trDeg[" <> ToString[n] <> "] up to degree"
+        <> ToString[n] <> "."]]
+
+Module[
         {i="i", j="j", k="k"},
         VerificationTest[
                 cR[i,j]//Subscript[cm, j, i -> k] // trGuess[k],
@@ -224,8 +232,8 @@ TestID->"trGuess is dyslexic."]]
 Module[
   {i, j, k, n=3},
   VerificationTest[
-    (TruncateToDegree[n][Subscript[cm, i, j -> k]]) // trDeg[k][n],
-    (TruncateToDegree[n][Subscript[cm, j, i -> k]]) // trDeg[k][n],
+    (TruncateToDegree[n][Subscript[cm, i, j -> k]]) // trDeg[n][k],
+    (TruncateToDegree[n][Subscript[cm, j, i -> k]]) // trDeg[n][k],
 TestID -> "trDeg is dyslexic up to degree "<>ToString[n]<>"."]]
 
 (*
