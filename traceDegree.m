@@ -105,8 +105,8 @@ coinv[ii_][word_]:=Module[{
         ]
 ]
 
-trGenFunc::usage = "trGenFunc[i][m] generates the generating function for coinv[i] up to degree m, with (filtered) degree defined by giving weight 1 to each of y, b, a, and x."
-trGenFunc[ii_][m_] := Module[{
+trGenFunc::usage = "trGenFunc[m][i] generates the generating function for coinv[i] up to degree m, with (filtered) degree defined by giving weight 1 to each of y, b, a, and x."
+trGenFunc[m_][ii_] := Module[{
         i,j,k,l,
         yii = Subscript[y, ii],
         bii = Subscript[b, ii],
@@ -124,9 +124,9 @@ trGenFunc[ii_][m_] := Module[{
         ]
 ]
 
-trDeg::usage = "trDeg[i][m] is the GDO element corresponding to trGenFunc[i][m]."
+trDeg::usage = "trDeg[m][i] is the component-i trace up to degree m as a GDO element."
 trDeg[m_][ii_] := GDO[{{ii},{}} -> {{},{ii}}][
-        0, 0, trGenFunc[ii][m]
+        0, 0, trGenFunc[m][ii]
 ]
 
 trGuess::usage = "trGuess[i] is a placeholder guess for a GDO expression which represents a trace."

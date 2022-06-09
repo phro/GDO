@@ -65,7 +65,7 @@ Module[
         αi = Subscript[α, i];
         ξi = Subscript[ξ, i];
         VerificationTest[
-                trGenFunc[i][3],
+                trGenFunc[3][i],
                 ηi αi ξi (ai ti) + 1/2 βi αi^2 (2 ai ti - ti) + 1/6 αi^3 ai^3 +
                 ηi ξi (ti) + βi αi (ti) + 1/2 αi^2 (ai^2) +
                 αi ai +
@@ -76,7 +76,7 @@ Module[
         {i},
         VerificationTest[
                 trDeg[4][i][[3]],
-                trGenFunc[i][4],
+                trGenFunc[4][i],
 TestID->"trDeg produces trGenFunc's output."]]
 
 Module[
