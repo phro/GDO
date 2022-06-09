@@ -130,9 +130,7 @@ Module[
         βi = Subscript[β, i];
         αi = Subscript[α, i];
         ξi = Subscript[ξ, i];
-        id = GDO[{i}->{i}][
-                αi ai + βi bi, ξi xi + ηi yi, 1
-        ];
+        id = GDO[{i}->{i}][αi ai + βi bi, ξi xi + ηi yi, 1];
         VerificationTest[
                 TruncateToDegree[2][id],
                 GDO[{i}->{i}][0,0,
@@ -141,6 +139,40 @@ Module[
                         1/2 (αi ai + βi bi + ξi xi + ηi yi)^2
                 ]//ExpandAll,
 TestID->"TruncateToDegree truncates the identity appropriately"]]
+
+Module[
+        {i, id, yi, bi, ai, xi, ti, ηi, βi, αi, ξi},
+        yi = Subscript[y, i];
+        bi = Subscript[b, i];
+        ai = Subscript[a, i];
+        xi = Subscript[x, i];
+        ti = Subscript[t, i];
+        ηi = Subscript[η, i];
+        βi = Subscript[β, i];
+        αi = Subscript[α, i];
+        ξi = Subscript[ξ, i];
+        as = GDO[{i}->{i}][αi ai , 0, 1];
+        VerificationTest[
+                TruncateToDegree[2][as],
+                GDO[{i}->{i}][0,0, 1 + αi ai + 1/2 (αi ai)^2]//ExpandAll,
+TestID->"TruncateToDegree truncates Exp[a] appropriately."]]
+
+Module[
+        {i, id, yi, bi, ai, xi, ti, ηi, βi, αi, ξi},
+        yi = Subscript[y, i];
+        bi = Subscript[b, i];
+        ai = Subscript[a, i];
+        xi = Subscript[x, i];
+        ti = Subscript[t, i];
+        ηi = Subscript[η, i];
+        βi = Subscript[β, i];
+        αi = Subscript[α, i];
+        ξi = Subscript[ξ, i];
+        as = GDO[{i}->{i}][αi ai , 0, 1];
+        VerificationTest[
+                TruncateToDegree[2][as],
+                GDO[{i}->{i}][0,0, 1 + αi ai + 1/2 (αi ai)^2]//ExpandAll,
+TestID->"TruncateToDegree truncates Exp[a] appropriately."]]
 
 Module[
         {i, id, yi, bi, ai, xi, ti, ηi, βi, αi, ξi},

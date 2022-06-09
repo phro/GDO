@@ -138,7 +138,7 @@ trGuess[i_] := Module[
         ξi = Subscript[ξ, i];
         ai = Subscript[a, i];
         ti = Subscript[t, i];
-        GDO[{{i},{}}->{{},{i}}][αi ai, ηi ξi ti, βi (1-Exp[-αi]) ti]
+        GDO[{{i},{}}->{{},{i}}][αi ai, ηi ξi ti, Exp[βi (1-Exp[-αi]) ti]]
 ]
 
 (* FIXME: BEGIN DEPRECATED CODE *)
