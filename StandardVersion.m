@@ -31,7 +31,7 @@ Once[<<KnotTheory`];
 
 
 (* ::Input::Initialization:: *)
- $k=1;\[Gamma]=1;(*\[HBar]=1;*)
+ $k=1;\[Gamma]=1;\[HBar]=1;
 
 
 (* ::Input::Initialization:: *)
