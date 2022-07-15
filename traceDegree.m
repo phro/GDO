@@ -125,9 +125,10 @@ trGenFunc[m_][ii_] := Module[{
 ]
 
 trDeg::usage = "trDeg[m][i] is the component-i trace up to degree m as a GDO element."
-trDeg[m_][ii_] := GDO[{{ii},{}} -> {{},{ii}}][
+(* trDeg[m_][ii_] := GDO[{{ii},{}} -> {{},{ii}}][
         0, 0, trGenFunc[m][ii]
-]
+] *)
+trDeg[m_][i_] := TruncateToDegree[m]@trGuess[i]
 
 trGuess::usage = "trGuess[i] is a placeholder guess for a GDO expression which represents a trace."
 trGuess[i_] := Module[
@@ -138,7 +139,7 @@ trGuess[i_] := Module[
         ξi = Subscript[ξ, i];
         ai = Subscript[a, i];
         ti = Subscript[t, i];
-        GDO[{{i},{}}->{{},{i}}][αi ai, ηi ξi ti, Exp[βi (1-Exp[-αi]) ti]]/.l2U
+        GDO[{{i},{}}->{{},{i}}][αi ai, ηi ξi ti, Exp[βi (1-Exp[-αi]) ti]]
         (* GDO[{{i},{}}->{{},{i}}][αi ai, ηi ξi ti, 1 + βi (1-Exp[-αi]) ti]/.l2U *)
 ]
 
@@ -167,8 +168,7 @@ ScaleByLambda::usage = "ScaleByLambda[i] rescales all variables of a GDO express
 ScaleByLambda[i_] := GDO[{i} -> {i}][
   \[Lambda] (
     Subscript[a, i] Subscript[\[Alpha], i] +
-    Subscript[b, i] Subscript[\[Beta], i] +
-    Subscript[t, i] Subscript[\[Tau], i]),
+    Subscript[b, i] Subscript[\[Beta], i]),
   \[Lambda] (
     Subscript[y, i] Subscript[\[Eta], i] +
     Subscript[x, i] Subscript[\[Xi], i]),
@@ -185,7 +185,7 @@ TruncateToDegree[n_][gdo_]:=Module[
         scaler=Product[ScaleByLambda[i],{i, Flatten@is}];
         {L, Q, P} = getSeries[scaler//gdo];
         GDO[is->js][0,0,
-                Expand@Normal[Series[Exp[L+Q]*P/.U2l,{λ,0,n}]]
+                Expand@Normal[Series[(Exp[L+Q]*P)/.U2l,{λ,0,n}]]
         ]/.(λ->1)
 ]
 
