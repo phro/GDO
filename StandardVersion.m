@@ -31,7 +31,7 @@ Once[<<KnotTheory`];
 
 
 (* ::Input::Initialization:: *)
- $k=1;\[Gamma]=1;\[HBar]=1;
+ $k=1;\[Gamma]=1;(*\[HBar]=1;*)
 
 
 (* ::Input::Initialization:: *)
@@ -202,7 +202,7 @@ nisp->{is}/.{i->ii_,j->jj_,k->kk_}
 Subscript[sm, i_,j_->k_]:=\!\(\*SubscriptBox[\(\[DoubleStruckCapitalE]\), \({i, j} \[Rule] {k}\)]\)[Subscript[b, k](Subscript[\[Beta], i]+Subscript[\[Beta], j])+Subscript[t, k](Subscript[\[Tau], i]+Subscript[\[Tau], j])+Subscript[a, k](Subscript[\[Alpha], i]+Subscript[\[Alpha], j])+Subscript[y, k](Subscript[\[Eta], i]+Subscript[\[Eta], j])+Subscript[x, k](Subscript[\[Xi], i]+Subscript[\[Xi], j])];
 Subscript[s\[CapitalDelta], i_->j_,k_]:=\!\(\*SubscriptBox[\(\[DoubleStruckCapitalE]\), \({i} \[Rule] {j, k}\)]\)[Subscript[\[Beta], i](Subscript[b, j]+Subscript[b, k])+Subscript[\[Tau], i](Subscript[t, j]+Subscript[t, k])+Subscript[\[Alpha], i](Subscript[a, j]+Subscript[a, k])+Subscript[\[Eta], i](Subscript[y, j]+Subscript[y, k])+Subscript[\[Xi], i](Subscript[x, j]+Subscript[x, k])];
 Subscript[sS, i_]:=\!\(\*SubscriptBox[\(\[DoubleStruckCapitalE]\), \({i} \[Rule] {i}\)]\)[-Subscript[\[Beta], i] Subscript[b, i]-Subscript[\[Tau], i] Subscript[t, i]-Subscript[\[Alpha], i] Subscript[a, i]-Subscript[\[Eta], i] Subscript[y, i]-Subscript[\[Xi], i] Subscript[x, i]];
-Subscript[s\[Epsilon], i_]:=\!\(\*SubscriptBox[\(\[DoubleStruckCapitalE]\), \({} \[Rule] {i}\)]\)[0];Subscript[s\[Eta], i_]:=\!\(\*SubscriptBox[\(\[DoubleStruckCapitalE]\), \({i} \[Rule] {}\)]\)[0];
+Subscript[s\[Eta], i_]:=\!\(\*SubscriptBox[\(\[DoubleStruckCapitalE]\), \({} \[Rule] {i}\)]\)[0];Subscript[s\[Epsilon], i_]:=\!\(\*SubscriptBox[\(\[DoubleStruckCapitalE]\), \({i} \[Rule] {}\)]\)[0];
 
 
 (* ::Input::Initialization:: *)
