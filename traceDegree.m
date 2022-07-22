@@ -396,6 +396,7 @@ ZFramed[RVT[cs_, xs_, rs0_]] := Module[{
     z = z // Subscript[cm, b[i], i -> i],
     {i, First/@rs}
   (* localprint["Applying multiplication..."]; *)
+  ];
   Do[
     i1 = First[i];
     (* localprint["(", i1,"\[LeftArrow]", k,")..."]; *)
@@ -407,7 +408,6 @@ ZFramed[RVT[cs_, xs_, rs0_]] := Module[{
     {i, cs},{k, List@@Rest[i]}
   ];
   z
-  ];
 ]
 ZFramed::NotRVT := "Argument `1` is not in RVT form."
 ZFramed[L_] := Message[ZFramed::NotRVT, L];ZFramed[toRVT[L]]

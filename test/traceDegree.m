@@ -236,7 +236,15 @@ Module[
     (TruncateToDegree[n][Subscript[cm, j, i -> k]]) // trDeg[n][k],
 TestID -> "trDeg is dyslexic up to degree "<>ToString[n]<>"."]]
 
-(*
+Module[
+        {
+                rvt=RVT[{Strand[1]},{},{{1,0}}]
+        },
+        VerificationTest[
+                Head[ZFramed[rvt]][[1]],
+                \[DoubleStruckCapitalE],
+TestID->"ZFramed returns a \[DoubleStruckCapitalE]-element."]]
+
 Module[
         { pCW  = RVT[{Strand[1,2]},{Xp[2,1]},{{1,0},{2, 1}}]
         , pCCW = RVT[{Strand[1,2]},{Xp[1,2]},{{1,0},{2,-1}}]
@@ -258,15 +266,28 @@ TestID -> "ZFramed satisfies R1' for negative kinks."]]
 Module[
         { doubleTwist = RVT[
                 {Strand[1,2,3,4]},
-                {Xp[1,2], Xm[4,3]},
-                {{2,-1},{4,-1},{1,0},{3,0}}]
-        , straightStrand = RVT[{Strand[1]},{},{{1,0}}]
+                {Xp[1,2], Xm[3,4]},
+                {{1,0},{2,-1},{3,0},{4,1}}]
+        , doubleSpiral = RVT[{Strand[1]},{},{{1,0}}]
         },
         VerificationTest[
-                Z[doubleTwist],
-                Z[straightStrand],
-TestID -> "R1' ZFramed with cancelling negative kinks."]]
+                ZFramed[doubleTwist],
+                ZFramed[doubleSpiral],
+TestID -> "ZFramed satisfies cancelling kinks."]]
 
+Module[
+        { doubleTwist = RVT[
+                {Strand[1,2,3,4]},
+                {Xp[1,2], Xm[4,3]},
+                {{2,-1},{4,-1},{1,0},{3,0}}]
+        , doubleSpiral = RVT[{Strand[1]},{},{{1,-2}}]
+        },
+        VerificationTest[
+                ZFramed[doubleTwist],
+                ZFramed[doubleSpiral],
+TestID -> "ZFramed satisfies R1' with cancelling negative kinks."]]
+
+(*
 Module[
         { i, j, k, l,
         testSX = SXForm[{Loop[i,j], Strand[k,l]},{Xp[j, l], Xm[k, i]}]
