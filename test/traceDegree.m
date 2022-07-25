@@ -132,13 +132,13 @@ Module[
         ξi = Subscript[ξ, i];
         id = GDO[{i}->{i}][αi ai + βi bi, ξi xi + ηi yi, 1];
         VerificationTest[
-                TruncateToDegree[2][id],
+                GDOTruncateToDegree[2][id],
                 GDO[{i}->{i}][0,0,
                         1 +
                         (αi ai + βi bi + ξi xi + ηi yi) +
                         1/2 (αi ai + βi bi + ξi xi + ηi yi)^2
                 ]//ExpandAll,
-TestID->"TruncateToDegree truncates the identity appropriately"]]
+TestID->"GDOTruncateToDegree truncates the identity appropriately"]]
 
 Module[
         {i, id, yi, bi, ai, xi, ti, ηi, βi, αi, ξi},
@@ -153,9 +153,9 @@ Module[
         ξi = Subscript[ξ, i];
         as = GDO[{i}->{i}][αi ai , 0, 1];
         VerificationTest[
-                TruncateToDegree[2][as],
+                GDOTruncateToDegree[2][as],
                 GDO[{i}->{i}][0,0, 1 + αi ai + 1/2 (αi ai)^2]//ExpandAll,
-TestID->"TruncateToDegree truncates Exp[a] appropriately."]]
+TestID->"GDOTruncateToDegree truncates Exp[a] appropriately."]]
 
 Module[
         {i, id, yi, bi, ai, xi, ti, ηi, βi, αi, ξi},
@@ -170,9 +170,9 @@ Module[
         ξi = Subscript[ξ, i];
         as = GDO[{i}->{i}][αi ai , 0, 1];
         VerificationTest[
-                TruncateToDegree[2][as],
+                GDOTruncateToDegree[2][as],
                 GDO[{i}->{i}][0,0, 1 + αi ai + 1/2 (αi ai)^2]//ExpandAll,
-TestID->"TruncateToDegree truncates Exp[a] appropriately."]]
+TestID->"GDOTruncateToDegree truncates Exp[a] appropriately."]]
 
 Module[
         {i, id, yi, bi, ai, xi, ti, ηi, βi, αi, ξi},
@@ -189,13 +189,13 @@ Module[
                 0,0, Exp[αi ai + βi bi + ηi yi + ξi xi]
         ];
         VerificationTest[
-                TruncateToDegree[2][id],
+                GDOTruncateToDegree[2][id],
                 GDO[{i}->{i}][0,0,
                         1 +
                         (αi ai + βi bi + ξi xi + ηi yi) +
                         1/2 (αi ai + βi bi + ξi xi + ηi yi)^2
                 ]//ExpandAll,
-TestID->"TruncateToDegree truncates an exponent appropriately"]]
+TestID->"GDOTruncateToDegree truncates an exponent appropriately"]]
 
 Module[
         {
@@ -203,14 +203,14 @@ Module[
                 gdo = Subscript[cm, 1,2->3]
         },
         VerificationTest[
-                TruncateToDegree[n]@TruncateToDegree[n]@gdo,
-                TruncateToDegree[n]@gdo,
-TestID->"TruncateToDegree is idempotent."]]
+                GDOTruncateToDegree[n]@GDOTruncateToDegree[n]@gdo,
+                GDOTruncateToDegree[n]@gdo,
+TestID->"GDOTruncateToDegree is idempotent."]]
 
 Module[
         {i, n=4},
         VerificationTest[
-                TruncateToDegree[n]@trGuess[i]//ExpandAll,
+                GDOTruncateToDegree[n]@trGuess[i]//ExpandAll,
                 trDeg[n][i]//ExpandAll,
 TestID->"trGuess matches trDeg[" <> ToString[n] <> "] up to degree"
         <> ToString[n] <> "."]]
@@ -232,8 +232,8 @@ TestID->"trGuess is dyslexic."]]
 Module[
   {i, j, k, n=3},
   VerificationTest[
-    (TruncateToDegree[n][Subscript[cm, i, j -> k]]) // trDeg[n][k],
-    (TruncateToDegree[n][Subscript[cm, j, i -> k]]) // trDeg[n][k],
+    (GDOTruncateToDegree[n][Subscript[cm, i, j -> k]]) // trDeg[n][k],
+    (GDOTruncateToDegree[n][Subscript[cm, j, i -> k]]) // trDeg[n][k],
 TestID -> "trDeg is dyslexic up to degree "<>ToString[n]<>"."]]
 
 Module[

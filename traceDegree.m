@@ -128,7 +128,7 @@ trDeg::usage = "trDeg[m][i] is the component-i trace up to degree m as a GDO ele
 (* trDeg[m_][ii_] := GDO[{{ii},{}} -> {{},{ii}}][
         0, 0, trGenFunc[m][ii]
 ] *)
-trDeg[m_][i_] := TruncateToDegree[m]@trGuess[i]
+trDeg[m_][i_] := GDOTruncateToDegree[m]@trGuess[i]
 
 trGuess::usage = "trGuess[i] is a placeholder guess for a GDO expression which represents a trace."
 trGuess[i_] := Module[
@@ -175,8 +175,8 @@ ScaleByLambda[i_] := GDO[{i} -> {i}][
   1
 ]
 
-TruncateToDegree::usage = "TruncateToDegree[n] takes a GDO element and writes it as a finite polynomial of degree at most n."
-TruncateToDegree[n_][gdo_]:=Module[
+GDOTruncateToDegree::usage = "GDOTruncateToDegree[n] takes a GDO element and writes it as a finite polynomial of degree at most n."
+GDOTruncateToDegree[n_][gdo_]:=Module[
         {i,
         is = getDomain[gdo],
         js = getCodomain[gdo],
@@ -192,7 +192,7 @@ TruncateToDegree[n_][gdo_]:=Module[
 GDOToList[GDO[is_->js_][L_,Q_,P_]] := {is, js, L, Q, P};
 GDOFromList[is_, js_, L_, Q_, P_] := GDO[is->js][L,Q,P]
 
-(* TruncateToDegreeWrong[n_][gdo_] := Module[
+(* GDOTruncateToDegreeWrong[n_][gdo_] := Module[
   {is, js, ks, L, Q, P},
   ks = GDOToList[GDO][[2]];
   [>{is, js, L, Q, P} = GDOToList[Sħ[ks] // GDO];<]
@@ -423,12 +423,12 @@ Z[L_RVT] := ZFramed[PrintTemporary["Unwrithing..."]; Unwrithe[L]]
 Z[L_SXForm] := Message[Z::SXForm, L]
 Z[L_] := Z[PrintTemporary["Converting to SXForm..."]; SXForm[L]]
 
-(* trZ := ((Times @@ Table[trDeg[i][2], {i, #[[0, 2, 2]]}])[#] & )@* Simplify@*(TruncateToDegree[4, #] &)@*Z) & *)
+(* trZ := ((Times @@ Table[trDeg[i][2], {i, #[[0, 2, 2]]}])[#] & )@* Simplify@*(GDOTruncateToDegree[4, #] &)@*Z) & *)
 
 (*
  * The Z invariant restricted in degree, together with the trace applied to its elements
  *)
-Zdeg[deg_, L_] := CF[TruncateToDegree[deg][Z[L]]]
+Zdeg[deg_, L_] := CF[GDOTruncateToDegree[deg][Z[L]]]
 (* trZ[deg_,L_] :=  (Times @@ Table[trDeg[i][deg], {i,      #[[0, 2, 2]]}])[#]&[Zdeg[deg, L]] *)
 Ztr[deg_,L_] := Zdeg[deg, L] // (Composition @@ Table[
     trDeg[i][deg],
