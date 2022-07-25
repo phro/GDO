@@ -164,8 +164,8 @@ Subscript[Sħ, i_] := Sħ[i];
  * Convert a GDO series to a polynomial
  *)
 (*  TODO: the following should only track the y- and the b- degrees: *)
-ScaleByLambda::usage = "ScaleByLambda[i] rescales all variables of a GDO expression in tensor factor i by a factor of λ."
-ScaleByLambda[i_] := GDO[{i} -> {i}][
+ScaleBy[λ_]::usage = "ScaleBy[λ][i] rescales all variables of a GDO expression in tensor factor i by a factor of λ."
+ScaleBy[λ_][i_] := GDO[{i} -> {i}][
   \[Lambda] (
     Subscript[a, i] Subscript[\[Alpha], i] +
     Subscript[b, i] Subscript[\[Beta], i]),
@@ -185,7 +185,7 @@ GDOTruncateToDegree[n_][gdo_]:=Module[
         js = getCodomain[gdo],
         scaler
         },
-        scaler=Product[ScaleByLambda[i],{i, Flatten@is}];
+        scaler=Product[ScaleBy[λ][i],{i, Flatten@is}];
         {L, Q, P} = getSeries[scaler//gdo];
         GDO[is->js][0, 0, TruncateToDegree[n][λ][(Exp[L+Q]*P)/.U2l]]/.(λ->1)
 ]

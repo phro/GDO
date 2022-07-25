@@ -80,44 +80,44 @@ Module[
 TestID->"trDeg produces trGenFunc's output."]]
 
 Module[
-        {i, j, ai, bj},
+        {i, j, ai, bj, λ},
         ai = Subscript[a, i];
         bj = Subscript[b, j];
         VerificationTest[
                 GDO[{i}->{j}][αi bj, 0, 1] //
-                        ScaleByLambda[j],
+                        ScaleBy[λ][j],
                 GDO[{i}->{j}][λ αi bj, 0, 1],
-TestID -> "ScaleByLambda scales b by the weight-tracker."]]
+TestID -> "ScaleBy[λ] scales b by the weight-tracker."]]
 
 Module[
-        {i, j, βi, aj},
+        {i, j, βi, aj, λ},
         βi = Subscript[β, i];
         aj = Subscript[a, j];
         VerificationTest[
                 GDO[{i}->{j}][βi aj , 0, 1] //
-                        ScaleByLambda[j],
+                        ScaleBy[λ][j],
                 GDO[{i}->{j}][λ βi aj, 0, 1],
-TestID -> "ScaleByLambda scales a by the weight-tracker."]]
+TestID -> "ScaleBy[λ] scales a by the weight-tracker."]]
 
 Module[
-        {i, j, ξi, yj},
+        {i, j, ξi, yj, λ},
         ξi = Subscript[ξ, i];
         yj = Subscript[y, j];
         VerificationTest[
                 GDO[{i}->{j}][0, ξi yj, 1] //
-                        ScaleByLambda[j],
+                        ScaleBy[λ][j],
                 GDO[{i}->{j}][0, λ ξi yj, 1],
-TestID -> "ScaleByLambda scales y by the weight-tracker."]]
+TestID -> "ScaleBy[λ] scales y by the weight-tracker."]]
 
 Module[
-        {i, j, βi, xj},
+        {i, j, βi, xj, λ},
         βi = Subscript[ξ, i];
         xj = Subscript[y, j];
         VerificationTest[
                 GDO[{i}->{j}][0, βi xj, 1] //
-                        ScaleByLambda[j],
+                        ScaleBy[λ][j],
                 GDO[{i}->{j}][0, λ βi xj, 1],
-TestID -> "ScaleByLambda scales x by the weight-tracker."]]
+TestID -> "ScaleBy[λ] scales x by the weight-tracker."]]
 
 Module[
         {f, λ, n=5},
