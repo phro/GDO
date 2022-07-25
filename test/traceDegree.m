@@ -120,6 +120,27 @@ Module[
 TestID -> "ScaleByLambda scales x by the weight-tracker."]]
 
 Module[
+        {f, λ, n=5},
+        VerificationTest[
+                TruncateToDegree[n][λ][f],
+                f,
+TestID->"TruncateToDegree is the identity on constants."]]
+
+Module[
+        {λ, x},
+        VerificationTest[
+                TruncateToDegree[2][λ][x[0]+x[1]λ+x[2]λ^2+x[3]λ^3],
+                x[0]+x[1]λ+x[2]λ^2,
+TestID->"TruncateToDegree restricts polynomials appropriately."]]
+
+Module[
+        {λ, x},
+        VerificationTest[
+                TruncateToDegree[2][λ][1/(1-x λ)],
+                1 + x λ + x^2 λ^2,
+TestID->"TruncateToDogree restricts Taylor-expandable series."]]
+
+Module[
         {i, id, yi, bi, ai, xi, ti, ηi, βi, αi, ξi},
         yi = Subscript[y, i];
         bi = Subscript[b, i];

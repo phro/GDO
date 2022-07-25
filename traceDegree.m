@@ -175,6 +175,9 @@ ScaleByLambda[i_] := GDO[{i} -> {i}][
   1
 ]
 
+TruncateToDegree::usage = "TruncateToDegree[n][λ] takes a Taylor-expandable series and truncates it to λ-degree at most n."
+TruncateToDegree[n_][λ_][f_] := Expand@Normal[Series[f,{λ,0,n}]]
+
 GDOTruncateToDegree::usage = "GDOTruncateToDegree[n] takes a GDO element and writes it as a finite polynomial of degree at most n."
 GDOTruncateToDegree[n_][gdo_]:=Module[
         {i,
@@ -184,9 +187,7 @@ GDOTruncateToDegree[n_][gdo_]:=Module[
         },
         scaler=Product[ScaleByLambda[i],{i, Flatten@is}];
         {L, Q, P} = getSeries[scaler//gdo];
-        GDO[is->js][0,0,
-                Expand@Normal[Series[(Exp[L+Q]*P)/.U2l,{λ,0,n}]]
-        ]/.(λ->1)
+        GDO[is->js][0, 0, TruncateToDegree[n][λ][(Exp[L+Q]*P)/.U2l]]/.(λ->1)
 ]
 
 GDOToList[GDO[is_->js_][L_,Q_,P_]] := {is, js, L, Q, P};
