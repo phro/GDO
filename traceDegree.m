@@ -143,6 +143,43 @@ trGuess[i_] := Module[
         (* GDO[{{i},{}}->{{},{i}}][αi ai, ηi ξi ti, 1 + βi (1-Exp[-αi]) ti]/.l2U *)
 ]
 
+tr::usage = "tr[i] computes the trace of a GDO element on component i."
+tr::nonzeroSigma = "tr[`1`]: Component `1` has writhe: `2`, expected: 0."
+tr[i_][GDO_] := Module[
+        {
+                η = GetEta[i][GDO],
+                β = GetBeta[i][GDO],
+                α = GetAlpha[i][GDO],
+                ξ = GetXi[i][GDO],
+                λ,
+                σ = GetSigma[i][GDO],
+                ins = getDomain[GDO],
+                outs = getDomain[GDO],
+                yi, bi, ai, xi, ti, ηi, βi, αi, ξi
+                ta
+        },
+        yi = Subscript[y, i];
+        bi = Subscript[b, i];
+        ai = Subscript[a, i];
+        xi = Subscript[x, i];
+        ti = Subscript[t, i];
+        ηi = Subscript[η, i];
+        βi = Subscript[β, i];
+        αi = Subscript[α, i];
+        ξi = Subscript[ξ, i];
+        ta = (1-Exp[-α]) ti;
+        λ[b_] := GetLambda[i][GDO]/.{Subscript[b, i] -> b};
+        GDO[ins -> closeComponent[i][outs]][
+                α ai + β ta + ti (η ξ + λ[ta])/(1-ti λ[ta])
+        ]
+] /; Module[
+        {σ = GetSigma[i][GDO]},
+        If[σ == 0,
+                True,
+                Message[tr:nonzeroSigma, i, σ]; False
+        ]
+]
+
 (* FIXME: BEGIN DEPRECATED CODE *)
 (* Front-end beautification *)
 Subscript[trDeg, ii_][m_] := trDeg[m][ii]
@@ -164,7 +201,7 @@ Subscript[Sħ, i_] := Sħ[i];
  * Convert a GDO series to a polynomial
  *)
 (*  TODO: the following should only track the y- and the b- degrees: *)
-ScaleBy[λ_]::usage = "ScaleBy[λ][i] rescales all variables of a GDO expression in tensor factor i by a factor of λ."
+ScaleBy::usage = "ScaleBy[λ][i] rescales all variables of a GDO expression in tensor factor i by a factor of λ."
 ScaleBy[λ_][i_] := GDO[{i} -> {i}][
   \[Lambda] (
     Subscript[a, i] Subscript[\[Alpha], i] +

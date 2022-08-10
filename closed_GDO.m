@@ -29,6 +29,8 @@ addClosedCodomain[codc_][
 addClosedIndices[domc_,codc_][GDO_] :=
   GDO//addClosedDomain[domc]//addClosedCodomain[codc];
 
+closeComponent[i_][{os_List, cs_List}] := {Complement[os,{i}], Union[cs,{i}]}
+
 
 (* ::Input::Initialization:: *)
 (*Subscript[B, is_List][Subscript[\[DoubleStruckCapitalE], d1_->r1_][L1_,Q1_,P1_],Subscript[\[DoubleStruckCapitalE], d2_->r2_][L2_,Q2_,P2_]]:=Subscript[\[DoubleStruckCapitalE], (d1\[Union]Complement[d2,is])->(r2\[Union]Complement[r1,is])]@@Subscript[B, is][\[DoubleStruckCapitalE][L1,Q1,P1],\[DoubleStruckCapitalE][L2,Q2,P2]];*)

@@ -56,3 +56,10 @@ Module[
     addClosedCodomain[{3}]@EE,
     EE,
 TestID->"addClosedCodomain is identity when codomain is already present."]]
+
+Module[
+        {i = "i", j = "j", k = "k"},
+        VerificationTest[
+                closeComponent[i][{{i, j, k},{1, 2, 3}}],
+                {{j, k},{1, 2, 3, i}},
+TestID->"closeComponent moves indices from open to closed."]]

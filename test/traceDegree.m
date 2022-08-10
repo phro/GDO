@@ -244,11 +244,20 @@ Module[
 TestID->"trGuess is dyslexic on a tangle."]]
 
 Module[
+        {n = 5, i = "i", j = "j", k = "k"},
+        VerificationTest[
+                cR[i,j] // Subscript[cm, i, j -> k] // tr[k]
+                        //GDOTruncateToDegree[n],
+                cR[i,j] // Subscript[cm, i, j -> k] // trGuess[k]
+                        //GDOTruncateToDegree[n],
+TestID->"tr matches trGuess on their common domain."]]
+
+Module[
         {i="i", j="j", k="k"},
         VerificationTest[
-                Subscript[cm, j, i -> k] // trGuess[k],
-                Subscript[cm, i, j -> k] // trGuess[k],
-TestID->"trGuess is dyslexic."]]
+                Subscript[cm, j, i -> k] // tr[k],
+                Subscript[cm, i, j -> k] // tr[k],
+TestID->"tr is dyslexic."]]
 
 Module[
   {i, j, k, n=3},
