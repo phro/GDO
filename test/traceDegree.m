@@ -253,6 +253,28 @@ Module[
 TestID->"tr matches trGuess on their common domain."]]
 
 Module[
+        {
+                i,
+                η, β, α, ξ, λ,
+                yi, bi, ai, xi, ti, ηi, βi, αi, ξi,
+                ta
+        },
+        yi = Subscript[y, i];
+        bi = Subscript[b, i];
+        ai = Subscript[a, i];
+        xi = Subscript[x, i];
+        ti = Subscript[t, i];
+        ta = (1-Exp[-α]) ti;
+        VerificationTest[
+                GDO[{{},{}}->{{i},{}}][
+                        α ai + η[bi] yi + β bi + ξ[bi] xi + λ[bi] xi yi]
+                        //tr[i],
+                GDO[{{},{}}->{{i},{}}][
+                        α ai + β ta + ti (η[ta] ξ[ta] + λ[ta])/(1-ti λ[ta])
+                ],
+TestID->"tr acts as expected on generic GDO element"]]
+
+Module[
         {i="i", j="j", k="k"},
         VerificationTest[
                 Subscript[cm, j, i -> k] // tr[k],

@@ -147,12 +147,11 @@ tr::usage = "tr[i] computes the trace of a GDO element on component i."
 tr::nonzeroSigma = "tr[`1`]: Component `1` has writhe: `2`, expected: 0."
 tr[i_][GDO_] := Module[
         {
-                η = GetEta[i][GDO],
+                η,
                 β = GetBeta[i][GDO],
                 α = GetAlpha[i][GDO],
-                ξ = GetXi[i][GDO],
+                ξ,
                 λ,
-                σ = GetSigma[i][GDO],
                 ins = getDomain[GDO],
                 outs = getDomain[GDO],
                 yi, bi, ai, xi, ti, ηi, βi, αi, ξi
@@ -163,14 +162,12 @@ tr[i_][GDO_] := Module[
         ai = Subscript[a, i];
         xi = Subscript[x, i];
         ti = Subscript[t, i];
-        ηi = Subscript[η, i];
-        βi = Subscript[β, i];
-        αi = Subscript[α, i];
-        ξi = Subscript[ξ, i];
         ta = (1-Exp[-α]) ti;
+        η[b_] = GetEta[i][GDO]/.{Subscript[b, i] -> b};
+        ξ[b_] = GetXi[i][GDO]/.{Subscript[b, i] -> b};
         λ[b_] := GetLambda[i][GDO]/.{Subscript[b, i] -> b};
-        GDO[ins -> closeComponent[i][outs]][
-                α ai + β ta + ti (η ξ + λ[ta])/(1-ti λ[ta])
+        toMixed@GDO[ins -> closeComponent[i][outs]][
+                α ai + β ta + ti (η[ta] ξ[ta] + λ[ta])/(1-ti λ[ta])
         ]
 ] /; Module[
         {σ = GetSigma[i][GDO]},
