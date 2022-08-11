@@ -143,7 +143,7 @@ trGuess[i_] := Module[
         (* GDO[{{i},{}}->{{},{i}}][αi ai, ηi ξi ti, 1 + βi (1-Exp[-αi]) ti]/.l2U *)
 ]
 
-tr::usage = "tr[i] computes the trace of a GDO element on component i."
+tr::usage = "tr[i] computes the trace of a GDO element on component i. Current implementation assumes the Subscript[a, i] Subscript[b, i] term vanishes and $k=0."
 tr::nonzeroSigma = "tr[`1`]: Component `1` has writhe: `2`, expected: 0."
 tr[i_][gdo_] := Module[
         {
