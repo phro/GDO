@@ -145,15 +145,16 @@ trGuess[i_] := Module[
 
 tr::usage = "tr[i] computes the trace of a GDO element on component i."
 tr::nonzeroSigma = "tr[`1`]: Component `1` has writhe: `2`, expected: 0."
-tr[i_][GDO_] := Module[
+tr[i_][gdo_] := Module[
         {
-                η,
-                β = GetBeta[i][GDO],
-                α = GetAlpha[i][GDO],
-                ξ,
-                λ,
-                ins = getDomain[GDO],
-                outs = getDomain[GDO],
+                c = getConstCoef[i][gdo],
+                η = getyCoef[i][gdo],
+                β = getbCoef[i][gdo],
+                α = getaCoef[i][gdo],
+                ξ = getxCoef[i][gdo],
+                λ = getxyCoef[i][gdo],
+                ins = getDomain[gdo],
+                outs = getDomain[gdo],
                 yi, bi, ai, xi, ti, ηi, βi, αi, ξi
                 ta
         },
@@ -163,14 +164,11 @@ tr[i_][GDO_] := Module[
         xi = Subscript[x, i];
         ti = Subscript[t, i];
         ta = (1-Exp[-α]) ti;
-        η[b_] = GetEta[i][GDO]/.{Subscript[b, i] -> b};
-        ξ[b_] = GetXi[i][GDO]/.{Subscript[b, i] -> b};
-        λ[b_] := GetLambda[i][GDO]/.{Subscript[b, i] -> b};
         toMixed@GDO[ins -> closeComponent[i][outs]][
-                α ai + β ta + ti (η[ta] ξ[ta] + λ[ta])/(1-ti λ[ta])
+                c + α ai + β ta + ti (η[ta] ξ[ta] + λ[ta])/(1-ti λ[ta])
         ]
 ] /; Module[
-        {σ = GetSigma[i][GDO]},
+        {σ = getabCoef[i][gdo]},
         If[σ == 0,
                 True,
                 Message[tr:nonzeroSigma, i, σ]; False

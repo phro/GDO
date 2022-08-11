@@ -244,6 +244,102 @@ Module[
 TestID->"trGuess is dyslexic on a tangle."]]
 
 Module[
+        {
+                i, j,
+                η, β, α, ξ,
+                yi, bi, ai, xi, 
+                gdo
+        },
+        yi = Subscript[y, i];
+        bi = Subscript[b, i];
+        ai = Subscript[a, i];
+        aj = Subscript[a, j];
+        xi = Subscript[x, i];
+        gdo = cR[i,j];
+        VerificationTest[
+                getyCoef[i][gdo],
+                0,
+TestID->"getyCoef obtains the linear y-term of an R-matrix."];
+        VerificationTest[
+                getbCoef[i][gdo],
+                ℏ aj,
+TestID->"getbCoef obtains the linear b-term of an R-matrix."];
+        VerificationTest[
+                getaCoef[j][gdo],
+                ℏ bi,
+TestID->"getaCoef obtains the linear a-term of an R-matrix."];
+        VerificationTest[
+                getxCoef[j][gdo],
+                0,
+TestID->"getxCoef obtains the linear x-term of an R-matrix."]
+        VerificationTest[
+                getxyCoef[i][gdo],
+                0,
+TestID->"getxyCoef obtains the xy-term of an R-matrix."]
+        VerificationTest[
+                getabCoef[i][gdo],
+                0,
+TestID->"getabCoef obtains the linear ab-term of an R-matrix."]
+]
+
+Module[
+        {
+                i,
+                η, β, α, ξ,
+                c,
+                yi, bi, ai, xi, 
+                gdo
+        },
+        yi = Subscript[y, i];
+        bi = Subscript[b, i];
+        ai = Subscript[a, i];
+        xi = Subscript[x, i];
+        gdo = GDO[{}->{i}][
+                c + η[bi] yi + β bi + α ai + ξ[bi] xi + σ ai bi + λ[bi] xi yi
+        ];
+        VerificationTest[
+                getyCoef[i][gdo][bi],
+                η[bi],
+TestID->"getyCoef obtains the linear y-term of a generic GDO expression."];
+        VerificationTest[
+                getbCoef[i][gdo],
+                β,
+TestID->"getbCoef obtains the linear b-term of a generic GDO expression."];
+        VerificationTest[
+                getaCoef[i][gdo],
+                α,
+TestID->"getaCoef obtains the linear a-term of a generic GDO expression."];
+        VerificationTest[
+                getxCoef[i][gdo][bi],
+                ξ[bi],
+TestID->"getxCoef obtains the linear x-term of a generic GDO expression."];
+        VerificationTest[
+                getxyCoef[i][gdo][bi],
+                λ[bi],
+TestID->"getxyCoef obtains the xy-term of a generic GDO expression."];
+        VerificationTest[
+                getabCoef[i][gdo][bi],
+                σ[bi],
+TestID->"getabCoef obtains the ab-term of a generic GDO expression."];
+        VerificationTest[
+                getConstCoef[i][gdo][bi],
+                c,
+TestID->"getConstCoef obtains the constant term of a generic GDO expression."];
+VerificationTest[
+        GDO[{}->{i}][
+                getConstCoef[i][gdo]
+                + getyCoef[i][gdo][bi]  yi
+                + getbCoef[i][gdo]      bi
+                + getaCoef[i][gdo]      ai
+                + getxCoef[i][gdo][bi]  xi
+                + getabCoef[i][gdo]     ai bi
+                + getxyCoef[i][gdo][bi] xi yi
+                ],
+        gdo,
+TestID->"Extracting coefficients then reforming a GDO element is the identity."]
+        ]
+
+Module[
         {n = 5, i = "i", j = "j", k = "k"},
         VerificationTest[
                 cR[i,j] // Subscript[cm, i, j -> k] // tr[k]
