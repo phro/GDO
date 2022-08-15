@@ -340,6 +340,27 @@ TestID->"Extracting coefficients then reforming a GDO element is the identity."]
         ]
 
 Module[
+        {
+                i,
+                gdo,
+                t1, t2, t3, t4,
+                yi, yj,
+                bi,
+                xi, xj
+        },
+        yi = Subscript[y, i];
+        yj = Subscript[y, j];
+        bi = Subscript[b, i];
+        xi = Subscript[x, i];
+        xj = Subscript[x, j];
+        gdo = GDO[{}->{i,j}][t1[bi] yi yj + t2[bi] yj yj + t3[bi] yi xj
+        + t4[bi] yj xj];
+        VerificationTest[
+                getyCoef[i][gdo][bi],
+                t1[bi] yj + t3[bi] xj,
+TestID->"getyCoef[i] only extracts values from index-i terms."]]
+
+Module[
         {n = 5, i = "i", j = "j", k = "k"},
         VerificationTest[
                 cR[i,j] // Subscript[cm, i, j -> k] // tr[k]
