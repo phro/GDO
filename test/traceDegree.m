@@ -175,7 +175,7 @@ Module[
         VerificationTest[
                 cR[i,j]//Subscript[cm, j, i -> k] // trGuess[k],
                 cR[i,j]//Subscript[cm, i, j -> k] // trGuess[k],
-TestID->"trGuess is dyslex[i]c on a tangle."]]
+TestID->"trGuess is dyslexic on a tangle."]]
 
 Module[
         {
@@ -324,14 +324,14 @@ Module[
         VerificationTest[
                 Subscript[cm, j, i -> k] // tr[k],
                 Subscript[cm, i, j -> k] // tr[k],
-TestID->"tr is dyslex[i]c."]]
+TestID->"tr is dyslexic."]]
 
 Module[
   {i, j, k, n=3},
   VerificationTest[
     (GDOTruncateToDegree[n][Subscript[cm, i, j -> k]]) // trDeg[n][k],
     (GDOTruncateToDegree[n][Subscript[cm, j, i -> k]]) // trDeg[n][k],
-TestID -> "trDeg is dyslex[i]c up to degree "<>ToString[n]<>"."]]
+TestID -> "trDeg is dyslexic up to degree "<>ToString[n]<>"."]]
 
 Module[
         {
