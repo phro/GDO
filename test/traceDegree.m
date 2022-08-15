@@ -282,7 +282,7 @@ Module[
         {
                 i,
                 gdo,
-                t1, t2, t3, t4,
+                t1, t2, t3, t4
         },
         gdo = GDO[{}->{i,j}][
                 t1[b[i]] y[i] y[j] + t2[b[i]] y[j] y[j] +
