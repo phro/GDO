@@ -353,6 +353,27 @@ Module[
         bi = Subscript[b, i];
         xi = Subscript[x, i];
         xj = Subscript[x, j];
+        gdo = GDO[{}->{i,j}][t1[bi] xi xj + t2[bi] xj xj + t3[bi] xi yj
+        + t4[bi] xj yj];
+        VerificationTest[
+                getyCoef[i][gdo][bi],
+                t1[bi] xj + t3[bi] yj,
+TestID->"getxCoef[i] only extracts values from index-i terms."]]
+
+Module[
+        {
+                i,
+                gdo,
+                t1, t2, t3, t4,
+                yi, yj,
+                bi,
+                xi, xj
+        },
+        yi = Subscript[y, i];
+        yj = Subscript[y, j];
+        bi = Subscript[b, i];
+        xi = Subscript[x, i];
+        xj = Subscript[x, j];
         gdo = GDO[{}->{i,j}][t1[bi] yi yj + t2[bi] yj yj + t3[bi] yi xj
         + t4[bi] yj xj];
         VerificationTest[
