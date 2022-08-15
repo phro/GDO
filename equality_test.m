@@ -29,7 +29,7 @@ Permute\[DoubleStruckCapitalE][GDO_][perm_]:= Module[
 		subscriptReplacementRules,
 		is=getDomain[GDO],
 		js=getCodomain[GDO],
-		Q=getExponent[GDO],
+		Q=getSeries[GDO],
 		is2,js2,Q2
 	},
 	replacementRules=Thread[indices->Permute[indices,perm]];

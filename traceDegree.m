@@ -26,7 +26,7 @@ Reindex\[DoubleStruckCapitalE][gdo_]:=Module[
         indices = getIndices[gdo],
         is = getDomain[gdo],
         js = getCodomain[gdo],
-        Q =  getExponent[gdo],
+        Q =  getSeries[gdo],
         is2,js2,Q2
         },
         replacementRules = Thread[indices->Range[Length[indices]]];
