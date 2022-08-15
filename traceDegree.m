@@ -23,13 +23,12 @@ Reindex\[DoubleStruckCapitalE][gdo_]:=Module[
         {
         replacementRules,
         subscriptReplacementRules,
-        indices,
-        is=getDomain[GDO],
-        js=getCodomain[GDO],
-        Q=getExponent[GDO],
+        indices = getIndices[gdo],
+        is = getDomain[gdo],
+        js = getCodomain[gdo],
+        Q =  getExponent[gdo],
         is2,js2,Q2
         },
-        indices = getIndices[GDO];
         replacementRules = Thread[indices->Range[Length[indices]]];
         subscriptReplacementRules = Thread[isolateSubscripts[replacementRules]];
         is2 = is/.replacementRules;
@@ -142,6 +141,22 @@ trGuess[i_] := Module[
         GDO[{{i},{}}->{{},{i}}][αi ai, ηi ξi ti, Exp[βi (1-Exp[-αi]) ti]]
         (* GDO[{{i},{}}->{{},{i}}][αi ai, ηi ξi ti, 1 + βi (1-Exp[-αi]) ti]/.l2U *)
 ]
+
+(* Coefficient-extraction functions *)
+
+getConstCoef::usage = "getConstCoeff[i][gdo] returns the terms in a GDO expression which are not a function of y[i], b[i], a[i], nor x[i]."
+
+getyCoef::usage = "getyCoef[i][gdo] returns the linear coefficient of y[i]."
+
+getbCoef::usage = "getbCoef[i][gdo] returns the linear coefficient of b[i]."
+
+getaCoef::usage = "getaCoef[i][gdo] returns the linear coefficient of a[i]."
+
+getxCoef::usage = "getxCoef[i][gdo] returns the linear coefficient of x[i]."
+
+getabCoef::usage = "getabCoef[i][gdo] returns the linear coefficient of a[i]b[i]."
+
+getxyCoef::usage = "getxyCoef[i][gdo] returns the linear coefficient of x[i]y[i]."
 
 tr::usage = "tr[i] computes the trace of a GDO element on component i. Current implementation assumes the Subscript[a, i] Subscript[b, i] term vanishes and $k=0."
 tr::nonzeroSigma = "tr[`1`]: Component `1` has writhe: `2`, expected: 0."
