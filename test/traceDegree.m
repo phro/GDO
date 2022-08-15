@@ -1,74 +1,52 @@
+η[i_] := Subscript[η, i];
+β[i_] := Subscript[β, i];
+α[i_] := Subscript[α, i];
+ξ[i_] := Subscript[ξ, i];
+τ[i_] := Subscript[τ, i];
+y[i_] := Subscript[y, i];
+b[i_] := Subscript[b, i];
+a[i_] := Subscript[a, i];
+x[i_] := Subscript[x, i];
+t[i_] := Subscript[t, i];
+
 Module[
-        {i, j,
-        ηi, βi, αi, ξi,
-        yj, bj, aj, xj
-        },
-        ηi = Subscript[η, i];
-        βi = Subscript[β, i];
-        αi = Subscript[α, i];
-        ξi = Subscript[ξ, i];
-        τi = Subscript[τ, i];
-        yj = Subscript[y, j];
-        bj = Subscript[b, j];
-        aj = Subscript[a, j];
-        xj = Subscript[x, j];
-        tj = Subscript[t, j];
+        {i, j},
         VerificationTest[
-                GDO[{i}->{j}][αi aj+ βi bj + τi tj,ξi xj + ηi yj, 1],
+                GDO[{i}->{j}][
+                        α[i]a[j]+ β[i]b[j] + τ[i]t[j], ξ[i] x[j] + η[i]y[j], 1
+                ],
                 Subscript[sσ,i ->j],
 TestID->"GDO-notation returns \[DoubleStruckCapitalE]-notation."]]
 
 Module[
-        {i, j, yi, xi, ti, aj},
-        yi = Subscript[y, i];
-        xi = Subscript[x, i];
-        ti = Subscript[t, i];
-        aj = Subscript[a, j];
+        {i, j},
         VerificationTest[
-                coinv[i][aj yi xi],
-                aj ti,
+                coinv[i][a[j] y[i] x[i]],
+                a[j] t[i],
 TestID->"coinv[i] reduces xy to t"]]
 
 Module[
-        {i, j, yi, ai, xi, ti, aj},
-        yi = Subscript[y, i];
-        ai = Subscript[a, i];
-        xi = Subscript[x, i];
-        ti = Subscript[t, i];
-        aj = Subscript[a, j];
+        {i, j},
         VerificationTest[
-                coinv[i][aj ai yi^5 xi^5],
-                5! aj ai ti^5,
+                coinv[i][a[j] a[i] y[i]^5 x[i]^5],
+                5! a[j] a[i] t[i]^5,
 TestID->"coinv[i] reduces a(xy)^5 to at^5"]]
 
 Module[
-        {i, j, yi, ai, xi, ti, aj},
-        yi = Subscript[y, i];
-        ai = Subscript[a, i];
-        xi = Subscript[x, i];
-        ti = Subscript[t, i];
-        aj = Subscript[a, j];
+        {i, j},
         VerificationTest[
-                coinv[i][3 xi^2 yi^2 + aj ai yi^5 xi^5],
-                3*2! ti^2 + 5! aj ai ti^5,
+                coinv[i][3 x[i]^2 y[i]^2 + a[j] a[i] y[i]^5 x[i]^5],
+                3*2! t[i]^2 + 5! a[j] a[i] t[i]^5,
 TestID->"coinv[i] reduces functions on sums of monomials."]]
 
 Module[
-        {i, yi, bi, ai, xi, ti, ηi, βi, αi, ξi},
-        yi = Subscript[y, i];
-        bi = Subscript[b, i];
-        ai = Subscript[a, i];
-        xi = Subscript[x, i];
-        ti = Subscript[t, i];
-        ηi = Subscript[η, i];
-        βi = Subscript[β, i];
-        αi = Subscript[α, i];
-        ξi = Subscript[ξ, i];
+        {i},
         VerificationTest[
                 trGenFunc[3][i],
-                ηi αi ξi (ai ti) + 1/2 βi αi^2 (2 ai ti - ti) + 1/6 αi^3 ai^3 +
-                ηi ξi (ti) + βi αi (ti) + 1/2 αi^2 (ai^2) +
-                αi ai +
+                η[i]α[i]ξ[i](a[i]t[i]) + 1/2β[i]α[i]^2(2a[i]t[i] - t[i])
+                        + 1/6 α[i]^3 a[i]^3 +
+                η[i] ξ[i] (t[i]) + β[i] α[i] (t[i]) + 1/2 α[i]^2 (a[i]^2) +
+                α[i] a[i] +
                 1,
 TestID->"trGenFunc[i] is correct up to degree 3."]]
 
@@ -80,43 +58,35 @@ Module[
 TestID->"trDeg produces trGenFunc's output."]]
 
 Module[
-        {i, j, ai, bj, λ},
-        ai = Subscript[a, i];
-        bj = Subscript[b, j];
+        {i, j, λ},
         VerificationTest[
-                GDO[{i}->{j}][αi bj, 0, 1] //
+                GDO[{i}->{j}][α[i] b[j], 0, 1] //
                         ScaleBy[λ][j],
-                GDO[{i}->{j}][λ αi bj, 0, 1],
+                GDO[{i}->{j}][λ α[i] b[j], 0, 1],
 TestID -> "ScaleBy[λ] scales b by the weight-tracker."]]
 
 Module[
-        {i, j, βi, aj, λ},
-        βi = Subscript[β, i];
-        aj = Subscript[a, j];
+        {i, j, λ},
         VerificationTest[
-                GDO[{i}->{j}][βi aj , 0, 1] //
+                GDO[{i}->{j}][β[i] a[j] , 0, 1] //
                         ScaleBy[λ][j],
-                GDO[{i}->{j}][λ βi aj, 0, 1],
+                GDO[{i}->{j}][λ β[i] a[j], 0, 1],
 TestID -> "ScaleBy[λ] scales a by the weight-tracker."]]
 
 Module[
-        {i, j, ξi, yj, λ},
-        ξi = Subscript[ξ, i];
-        yj = Subscript[y, j];
+        {i, j,λ},
         VerificationTest[
-                GDO[{i}->{j}][0, ξi yj, 1] //
+                GDO[{i}->{j}][0, ξ[i] y[j], 1] //
                         ScaleBy[λ][j],
-                GDO[{i}->{j}][0, λ ξi yj, 1],
+                GDO[{i}->{j}][0, λ ξ[i] y[j], 1],
 TestID -> "ScaleBy[λ] scales y by the weight-tracker."]]
 
 Module[
-        {i, j, βi, xj, λ},
-        βi = Subscript[ξ, i];
-        xj = Subscript[y, j];
+        {i, j, λ},
         VerificationTest[
-                GDO[{i}->{j}][0, βi xj, 1] //
+                GDO[{i}->{j}][0, β[i] x[j], 1] //
                         ScaleBy[λ][j],
-                GDO[{i}->{j}][0, λ βi xj, 1],
+                GDO[{i}->{j}][0, λ β[i] x[j], 1],
 TestID -> "ScaleBy[λ] scales x by the weight-tracker."]]
 
 Module[
@@ -141,80 +111,44 @@ Module[
 TestID->"TruncateToDogree restricts Taylor-expandable series."]]
 
 Module[
-        {i, id, yi, bi, ai, xi, ti, ηi, βi, αi, ξi},
-        yi = Subscript[y, i];
-        bi = Subscript[b, i];
-        ai = Subscript[a, i];
-        xi = Subscript[x, i];
-        ti = Subscript[t, i];
-        ηi = Subscript[η, i];
-        βi = Subscript[β, i];
-        αi = Subscript[α, i];
-        ξi = Subscript[ξ, i];
-        id = GDO[{i}->{i}][αi ai + βi bi, ξi xi + ηi yi, 1];
+        {i, id},
+        id = GDO[{i}->{i}][α[i] a[i] + β[i] b[i], ξ[i] x[i] + η[i] y[i], 1];
         VerificationTest[
                 GDOTruncateToDegree[2][id],
                 GDO[{i}->{i}][0,0,
                         1 +
-                        (αi ai + βi bi + ξi xi + ηi yi) +
-                        1/2 (αi ai + βi bi + ξi xi + ηi yi)^2
+                        (α[i] a[i] + β[i] b[i] + ξ[i] x[i] + η[i] y[i]) +
+                        1/2 (α[i] a[i] + β[i] b[i] + ξ[i] x[i] + η[i] y[i])^2
                 ]//ExpandAll,
 TestID->"GDOTruncateToDegree truncates the identity appropriately"]]
 
 Module[
-        {i, id, yi, bi, ai, xi, ti, ηi, βi, αi, ξi},
-        yi = Subscript[y, i];
-        bi = Subscript[b, i];
-        ai = Subscript[a, i];
-        xi = Subscript[x, i];
-        ti = Subscript[t, i];
-        ηi = Subscript[η, i];
-        βi = Subscript[β, i];
-        αi = Subscript[α, i];
-        ξi = Subscript[ξ, i];
-        as = GDO[{i}->{i}][αi ai , 0, 1];
+        {i, id},
+        as = GDO[{i}->{i}][α[i] a[i] , 0, 1];
         VerificationTest[
                 GDOTruncateToDegree[2][as],
-                GDO[{i}->{i}][0,0, 1 + αi ai + 1/2 (αi ai)^2]//ExpandAll,
+                GDO[{i}->{i}][0,0, 1 + α[i] a[i] + 1/2 (α[i] a[i])^2]//ExpandAll,
 TestID->"GDOTruncateToDegree truncates Exp[a] appropriately."]]
 
 Module[
-        {i, id, yi, bi, ai, xi, ti, ηi, βi, αi, ξi},
-        yi = Subscript[y, i];
-        bi = Subscript[b, i];
-        ai = Subscript[a, i];
-        xi = Subscript[x, i];
-        ti = Subscript[t, i];
-        ηi = Subscript[η, i];
-        βi = Subscript[β, i];
-        αi = Subscript[α, i];
-        ξi = Subscript[ξ, i];
-        as = GDO[{i}->{i}][αi ai , 0, 1];
+        {i, id},
+        as = GDO[{i}->{i}][α[i] a[i] , 0, 1];
         VerificationTest[
                 GDOTruncateToDegree[2][as],
-                GDO[{i}->{i}][0,0, 1 + αi ai + 1/2 (αi ai)^2]//ExpandAll,
+                GDO[{i}->{i}][0,0, 1 + α[i] a[i] + 1/2 (α[i] a[i])^2]//ExpandAll,
 TestID->"GDOTruncateToDegree truncates Exp[a] appropriately."]]
 
 Module[
-        {i, id, yi, bi, ai, xi, ti, ηi, βi, αi, ξi},
-        yi = Subscript[y, i];
-        bi = Subscript[b, i];
-        ai = Subscript[a, i];
-        xi = Subscript[x, i];
-        ti = Subscript[t, i];
-        ηi = Subscript[η, i];
-        βi = Subscript[β, i];
-        αi = Subscript[α, i];
-        ξi = Subscript[ξ, i];
+        {i, id},
         id = GDO[{i}->{i}][
-                0,0, Exp[αi ai + βi bi + ηi yi + ξi xi]
+                0,0, Exp[α[i] a[i] + β[i] b[i] + η[i] y[i] + ξ[i] x[i]]
         ];
         VerificationTest[
                 GDOTruncateToDegree[2][id],
                 GDO[{i}->{i}][0,0,
                         1 +
-                        (αi ai + βi bi + ξi xi + ηi yi) +
-                        1/2 (αi ai + βi bi + ξi xi + ηi yi)^2
+                        (α[i] a[i] + β[i] b[i] + ξ[i] x[i] + η[i] y[i]) +
+                        1/2 (α[i] a[i] + β[i] b[i] + ξ[i] x[i] + η[i] y[i])^2
                 ]//ExpandAll,
 TestID->"GDOTruncateToDegree truncates an exponent appropriately"]]
 
@@ -241,20 +175,14 @@ Module[
         VerificationTest[
                 cR[i,j]//Subscript[cm, j, i -> k] // trGuess[k],
                 cR[i,j]//Subscript[cm, i, j -> k] // trGuess[k],
-TestID->"trGuess is dyslexic on a tangle."]]
+TestID->"trGuess is dyslex[i]c on a tangle."]]
 
 Module[
         {
                 i, j,
                 η, β, α, ξ,
-                yi, bi, ai, xi, 
                 gdo
         },
-        yi = Subscript[y, i];
-        bi = Subscript[b, i];
-        ai = Subscript[a, i];
-        aj = Subscript[a, j];
-        xi = Subscript[x, i];
         gdo = cR[i,j];
         VerificationTest[
                 getyCoef[i][gdo],
@@ -262,11 +190,11 @@ Module[
 TestID->"getyCoef obtains the linear y-term of an R-matrix."];
         VerificationTest[
                 getbCoef[i][gdo],
-                ℏ aj,
+                ℏ a[j],
 TestID->"getbCoef obtains the linear b-term of an R-matrix."];
         VerificationTest[
                 getaCoef[j][gdo],
-                ℏ bi,
+                ℏ b[i],
 TestID->"getaCoef obtains the linear a-term of an R-matrix."];
         VerificationTest[
                 getxCoef[j][gdo],
@@ -285,55 +213,51 @@ TestID->"getabCoef obtains the linear ab-term of an R-matrix."]
 Module[
         {
                 i,
-                η, β, α, ξ,
-                c,
-                yi, bi, ai, xi, 
+                ηi, βi, αi, ξi,
+                ci,
                 gdo
         },
-        yi = Subscript[y, i];
-        bi = Subscript[b, i];
-        ai = Subscript[a, i];
-        xi = Subscript[x, i];
         gdo = GDO[{}->{i}][
-                c + η[bi] yi + β bi + α ai + ξ[bi] xi + σ ai bi + λ[bi] xi yi
+                ci + ηi [b[i]]y[i] + βi b[i] + αi a[i] + ξi [b[i]]x[i] +
+                σi a[i]b[i] + λi[b[i]] x[i]y[i]
         ];
         VerificationTest[
-                getyCoef[i][gdo][bi],
-                η[bi],
+                getyCoef[i][gdo][b[i]],
+                ηi[b[i]],
 TestID->"getyCoef obtains the linear y-term of a generic GDO expression."];
         VerificationTest[
                 getbCoef[i][gdo],
-                β,
+                βi,
 TestID->"getbCoef obtains the linear b-term of a generic GDO expression."];
         VerificationTest[
                 getaCoef[i][gdo],
-                α,
+                αi,
 TestID->"getaCoef obtains the linear a-term of a generic GDO expression."];
         VerificationTest[
-                getxCoef[i][gdo][bi],
-                ξ[bi],
+                getxCoef[i][gdo][b[i]],
+                ξi[b[i]],
 TestID->"getxCoef obtains the linear x-term of a generic GDO expression."];
         VerificationTest[
-                getxyCoef[i][gdo][bi],
-                λ[bi],
+                getxyCoef[i][gdo][b[i]],
+                λi[b[i]],
 TestID->"getxyCoef obtains the xy-term of a generic GDO expression."];
         VerificationTest[
-                getabCoef[i][gdo][bi],
-                σ[bi],
+                getabCoef[i][gdo][b[i]],
+                σi[b[i]],
 TestID->"getabCoef obtains the ab-term of a generic GDO expression."];
         VerificationTest[
-                getConstCoef[i][gdo][bi],
-                c,
+                getConstCoef[i][gdo][b[i]],
+                ci,
 TestID->"getConstCoef obtains the constant term of a generic GDO expression."];
 VerificationTest[
         GDO[{}->{i}][
                 getConstCoef[i][gdo]
-                + getyCoef[i][gdo][bi]  yi
-                + getbCoef[i][gdo]      bi
-                + getaCoef[i][gdo]      ai
-                + getxCoef[i][gdo][bi]  xi
-                + getabCoef[i][gdo]     ai bi
-                + getxyCoef[i][gdo][bi] xi yi
+                + getyCoef[i][gdo][b[i]]  y[i]
+                + getbCoef[i][gdo]        b[i]
+                + getaCoef[i][gdo]        a[i]
+                + getxCoef[i][gdo][b[i]]  x[i]
+                + getabCoef[i][gdo]       a[i] b[i]
+                + getxyCoef[i][gdo][b[i]] x[i] y[i]
                 ],
         gdo,
 TestID->"Extracting coefficients then reforming a GDO element is the identity."]
@@ -343,21 +267,15 @@ Module[
         {
                 i,
                 gdo,
-                t1, t2, t3, t4,
-                yi, yj,
-                bi,
-                xi, xj
+                t1, t2, t3, t4
         },
-        yi = Subscript[y, i];
-        yj = Subscript[y, j];
-        bi = Subscript[b, i];
-        xi = Subscript[x, i];
-        xj = Subscript[x, j];
-        gdo = GDO[{}->{i,j}][t1[bi] xi xj + t2[bi] xj xj + t3[bi] xi yj
-        + t4[bi] xj yj];
+        gdo = GDO[{}->{i,j}][
+                t1[b[i]] x[i] x[j] + t2[b[i]] x[j] x[j] +
+                t3[b[i]] x[i] y[j] + t4[b[i]] x[j] y[j]
+        ];
         VerificationTest[
-                getyCoef[i][gdo][bi],
-                t1[bi] xj + t3[bi] yj,
+                getyCoef[i][gdo][b[i]],
+                t1[b[i]] x[j] + t3[b[i]] y[j],
 TestID->"getxCoef[i] only extracts values from index-i terms."]]
 
 Module[
@@ -365,20 +283,14 @@ Module[
                 i,
                 gdo,
                 t1, t2, t3, t4,
-                yi, yj,
-                bi,
-                xi, xj
         },
-        yi = Subscript[y, i];
-        yj = Subscript[y, j];
-        bi = Subscript[b, i];
-        xi = Subscript[x, i];
-        xj = Subscript[x, j];
-        gdo = GDO[{}->{i,j}][t1[bi] yi yj + t2[bi] yj yj + t3[bi] yi xj
-        + t4[bi] yj xj];
+        gdo = GDO[{}->{i,j}][
+                t1[b[i]] y[i] y[j] + t2[b[i]] y[j] y[j] +
+                t3[b[i]] y[i] x[j] + t4[b[i]] y[j] x[j]
+        ];
         VerificationTest[
-                getyCoef[i][gdo][bi],
-                t1[bi] yj + t3[bi] xj,
+                getyCoef[i][gdo][b[i]],
+                t1[b[i]] y[j] + t3[b[i]] x[j],
 TestID->"getyCoef[i] only extracts values from index-i terms."]]
 
 Module[
@@ -394,21 +306,16 @@ Module[
         {
                 i,
                 η, β, α, ξ, λ,
-                yi, bi, ai, xi, ti, ηi, βi, αi, ξi,
                 ta
         },
-        yi = Subscript[y, i];
-        bi = Subscript[b, i];
-        ai = Subscript[a, i];
-        xi = Subscript[x, i];
-        ti = Subscript[t, i];
-        ta = (1-Exp[-α]) ti;
+        ta = (1-Exp[-α]) t[i];
         VerificationTest[
                 GDO[{{},{}}->{{i},{}}][
-                        α ai + η[bi] yi + β bi + ξ[bi] xi + λ[bi] xi yi]
-                        //tr[i],
+                        α a[i] + η[b[i]] y[i] + β b[i] +
+                        ξ[b[i]] x[i] + λ[b[i]] x[i] y[i]
+                ] //tr[i],
                 GDO[{{},{}}->{{i},{}}][
-                        α ai + β ta + ti (η[ta] ξ[ta] + λ[ta])/(1-ti λ[ta])
+                        α a[i] + β ta + t[i](η[ta] ξ[ta] + λ[ta])/(1-t[i] λ[ta])
                 ],
 TestID->"tr acts as expected on generic GDO element"]]
 
@@ -417,14 +324,14 @@ Module[
         VerificationTest[
                 Subscript[cm, j, i -> k] // tr[k],
                 Subscript[cm, i, j -> k] // tr[k],
-TestID->"tr is dyslexic."]]
+TestID->"tr is dyslex[i]c."]]
 
 Module[
   {i, j, k, n=3},
   VerificationTest[
     (GDOTruncateToDegree[n][Subscript[cm, i, j -> k]]) // trDeg[n][k],
     (GDOTruncateToDegree[n][Subscript[cm, j, i -> k]]) // trDeg[n][k],
-TestID -> "trDeg is dyslexic up to degree "<>ToString[n]<>"."]]
+TestID -> "trDeg is dyslex[i]c up to degree "<>ToString[n]<>"."]]
 
 Module[
         {
