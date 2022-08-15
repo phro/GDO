@@ -1,14 +1,3 @@
-η[i_] := Subscript[η, i];
-β[i_] := Subscript[β, i];
-α[i_] := Subscript[α, i];
-ξ[i_] := Subscript[ξ, i];
-τ[i_] := Subscript[τ, i];
-y[i_] := Subscript[y, i];
-b[i_] := Subscript[b, i];
-a[i_] := Subscript[a, i];
-x[i_] := Subscript[x, i];
-t[i_] := Subscript[t, i];
-
 Module[
         {i, j},
         VerificationTest[
