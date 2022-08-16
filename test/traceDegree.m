@@ -201,14 +201,18 @@ TestID->"getabCoef obtains the linear ab-term of an R-matrix."]
 
 Module[
         {
-                i,
-                ηi, βi, αi, ξi,
-                ci,
+                i="i",
+                ηi="ηi",
+                βi="βi",
+                αi="αi",
+                ξi="ξi",
+                ci="ci",
                 gdo
         },
         gdo = GDO[{}->{i}][
-                ci + ηi [b[i]]y[i] + βi b[i] + αi a[i] + ξi [b[i]]x[i] +
-                σi a[i]b[i] + λi[b[i]] x[i]y[i]
+                βi b[i] + αi a[i] + σi a[i]b[i],
+                ηi [b[i]]y[i] + ξi [b[i]]x[i] + λi[b[i]] x[i]y[i],
+                ci
         ];
         VerificationTest[
                 getyCoef[i][gdo][b[i]],
@@ -235,18 +239,18 @@ TestID->"getxyCoef obtains the xy-term of a generic GDO expression."];
                 σi,
 TestID->"getabCoef obtains the ab-term of a generic GDO expression."];
         VerificationTest[
-                getConstCoef[i][gdo][b[i]],
+                getConstCoef[i][gdo],
                 ci,
 TestID->"getConstCoef obtains the constant term of a generic GDO expression."];
 VerificationTest[
         GDO[{}->{i}][
+                getbCoef[i][gdo]        b[i] +
+                getaCoef[i][gdo]        a[i] +
+                getabCoef[i][gdo]       a[i] b[i],
+                getyCoef[i][gdo][b[i]]  y[i] +
+                getxCoef[i][gdo][b[i]]  x[i] +
+                getxyCoef[i][gdo][b[i]] x[i] y[i],
                 getConstCoef[i][gdo]
-                + getyCoef[i][gdo][b[i]]  y[i]
-                + getbCoef[i][gdo]        b[i]
-                + getaCoef[i][gdo]        a[i]
-                + getxCoef[i][gdo][b[i]]  x[i]
-                + getabCoef[i][gdo]       a[i] b[i]
-                + getxyCoef[i][gdo][b[i]] x[i] y[i]
                 ],
         gdo,
 TestID->"Extracting coefficients then reforming a GDO element is the identity."]
