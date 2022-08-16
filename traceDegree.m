@@ -15,9 +15,11 @@ $k = 0; \[Gamma] = 1;
 τ[i_] := Subscript[τ, i];
 y[i_] := Subscript[y, i];
 b[i_] := Subscript[b, i];
+B[i_] := Subscript[B, i];
 a[i_] := Subscript[a, i];
 x[i_] := Subscript[x, i];
 t[i_] := Subscript[t, i];
+T[i_] := Subscript[T, i];
 
 GDO::usage = "GDO[is -> js][Qs] is shorthand for Subscript[\[DoubleStruckCapitalE], is -> js][Qs]."
 GDO[ijs___][Qs___] := Subscript[\[DoubleStruckCapitalE], ijs][Qs]

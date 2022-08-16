@@ -288,12 +288,17 @@ Module[
 TestID->"getyCoef[i] only extracts values from index-i terms."]]
 
 Module[
-        {n = 5, i = "i", j = "j", k = "k"},
+        {n = 5,
+        gdo = GDO[{} -> {1, 3}][
+                -ℏ(a[3] b[1] + a[1] b[3]),
+                ((-1 + B[1]) x[3] y[1])/( b[1] B[1]) +
+                ((-1 + B[3]) x[1] y[3])/( b[3] B[3]),
+                B[3]^Rational[1, 2]
+        ]
+        },
         VerificationTest[
-                cR[i,j] // Subscript[cm, i, j -> k] // tr[k]
-                        //GDOTruncateToDegree[n],
-                cR[i,j] // Subscript[cm, i, j -> k] // trGuess[k]
-                        //GDOTruncateToDegree[n],
+                gdo // tr[1] // GDOTruncateToDegree[n],
+                gdo // trGuess[1] // GDOTruncateToDegree[n],
 TestID->"tr matches trGuess on their common domain."]]
 
 Module[
