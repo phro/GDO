@@ -187,7 +187,7 @@ TestID->"getbCoef obtains the linear b-term of an R-matrix."];
 TestID->"getaCoef obtains the linear a-term of an R-matrix."];
         VerificationTest[
                 getxCoef[j][gdo][b[i]],
-                ((1 - E^(-ℏ b[i])) y[i])/b[i],
+                -((-1 + E^(-ℏ b[i])) y[i])/b[i],
 TestID->"getxCoef obtains the linear x-term of an R-matrix."]
         VerificationTest[
                 getxyCoef[i][gdo][b[i]],
@@ -263,7 +263,7 @@ Module[
                 t3[b[i]] x[i] y[j] + t4[b[i]] x[j] y[j]
         ];
         VerificationTest[
-                getyCoef[i][gdo][b[i]],
+                getxCoef[i][gdo][b[i]],
                 t1[b[i]] x[j] + t3[b[i]] y[j],
 TestID->"getxCoef[i] only extracts values from index-i terms."]]
 
