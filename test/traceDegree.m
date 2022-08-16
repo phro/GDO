@@ -207,6 +207,7 @@ Module[
                 αi="αi",
                 ξi="ξi",
                 ci="ci",
+                b
                 gdo
         },
         gdo = GDO[{}->{i}][
@@ -215,8 +216,8 @@ Module[
                 ci
         ];
         VerificationTest[
-                getyCoef[i][gdo][b[i]],
-                ηi[b[i]],
+                getyCoef[i][gdo][b],
+                ηi[b],
 TestID->"getyCoef obtains the linear y-term of a generic GDO expression."];
         VerificationTest[
                 getbCoef[i][gdo],
@@ -227,12 +228,12 @@ TestID->"getbCoef obtains the linear b-term of a generic GDO expression."];
                 αi,
 TestID->"getaCoef obtains the linear a-term of a generic GDO expression."];
         VerificationTest[
-                getxCoef[i][gdo][b[i]],
-                ξi[b[i]],
+                getxCoef[i][gdo][b],
+                ξi[b],
 TestID->"getxCoef obtains the linear x-term of a generic GDO expression."];
         VerificationTest[
-                getxyCoef[i][gdo][b[i]],
-                λi[b[i]],
+                getxyCoef[i][gdo][b],
+                λi[b],
 TestID->"getxyCoef obtains the xy-term of a generic GDO expression."];
         VerificationTest[
                 getabCoef[i][gdo],
@@ -297,8 +298,12 @@ TestID->"tr matches trGuess on their common domain."]]
 
 Module[
         {
-                i,
-                η, β, α, ξ, λ,
+                i="i",
+                η="η",
+                β="β",
+                α="α",
+                ξ="ξ",
+                λ="λ",
                 ta
         },
         ta = (1-Exp[-α]) t[i];
@@ -307,7 +312,7 @@ Module[
                         α a[i] + η[b[i]] y[i] + β b[i] +
                         ξ[b[i]] x[i] + λ[b[i]] x[i] y[i]
                 ] //tr[i],
-                GDO[{{},{}}->{{i},{}}][
+                GDO[{{},{}}->{{},{i}}][
                         α a[i] + β ta + t[i](η[ta] ξ[ta] + λ[ta])/(1-t[i] λ[ta])
                 ],
 TestID->"tr acts as expected on generic GDO element"]]

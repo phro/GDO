@@ -191,19 +191,13 @@ tr[i_][gdo_] := Module[
                 α = getaCoef[i][gdo],
                 ξ = getxCoef[i][gdo],
                 λ = getxyCoef[i][gdo],
-                ins = getDomain[gdo],
-                outs = getDomain[gdo],
-                yi, bi, ai, xi, ti, ηi, βi, αi, ξi
+                ins  = toMixed@getDomain[gdo],
+                outs = toMixed@getCodomain[gdo],
                 ta
         },
-        yi = Subscript[y, i];
-        bi = Subscript[b, i];
-        ai = Subscript[a, i];
-        xi = Subscript[x, i];
-        ti = Subscript[t, i];
-        ta = (1-Exp[-α]) ti;
-        toMixed@GDO[ins -> closeComponent[i][outs]][
-                c + α ai + β ta + ti (η[ta] ξ[ta] + λ[ta])/(1-ti λ[ta])
+        ta = (1-Exp[-α]) t[i];
+        GDO[ins -> closeComponent[i][outs]][
+                c + α a[i] + β ta + t[i] (η[ta] ξ[ta] + λ[ta])/(1-t[i] λ[ta])
         ]
 ] /; Module[
         {σ = getabCoef[i][gdo]},

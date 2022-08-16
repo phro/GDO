@@ -4,6 +4,8 @@ toMixed[
         ]:= Subscript[\[DoubleStruckCapitalE], {o1, c1} -> {o2, c2}][L,Q,P];
 toMixed[Subscript[\[DoubleStruckCapitalE], o1_->o2_][L_,Q_,P_]]:=
         Subscript[\[DoubleStruckCapitalE], {o1, {}} -> {o2, {}}][L,Q,P];
+toMixed[{o_List, c_List}]:= {o, c};
+toMixed[is_List]:={is,{}};
 
 addClosedDomain[domc_][
         Subscript[\[DoubleStruckCapitalE],
@@ -30,6 +32,7 @@ addClosedIndices[domc_,codc_][GDO_] :=
   GDO//addClosedDomain[domc]//addClosedCodomain[codc];
 
 closeComponent[i_][{os_List, cs_List}] := {Complement[os,{i}], Union[cs,{i}]}
+closeComponent[i_][is_List] := {Complement[is,{i}], {i}}
 
 
 (* ::Input::Initialization:: *)
