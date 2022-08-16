@@ -158,6 +158,8 @@ trGuess[i_] := Module[
 getConstCoef::usage = "getConstCoeff[i][gdo] returns the terms in a GDO expression which are not a function of y[i], b[i], a[i], nor x[i]."
 
 getyCoef::usage = "getyCoef[i][gdo] returns the linear coefficient of y[i]."
+getyCoef[i_][gdo_][b_] := Coefficient[getSeries[gdo][[2]]/.{x[i]->0}, y[i],
+1]/.U2l/.{b[i]->b}
 
 getbCoef::usage = "getbCoef[i][gdo] returns the linear coefficient of b[i]."
 

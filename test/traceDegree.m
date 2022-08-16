@@ -174,8 +174,8 @@ Module[
         },
         gdo = cR[i,j];
         VerificationTest[
-                getyCoef[i][gdo],
-                0,
+                getyCoef[i][gdo][b[i]],
+                -((-1 + E^(-ℏ b[i])) x[j])/b[i],
 TestID->"getyCoef obtains the linear y-term of an R-matrix."];
         VerificationTest[
                 getbCoef[i][gdo],
@@ -186,15 +186,15 @@ TestID->"getbCoef obtains the linear b-term of an R-matrix."];
                 ℏ b[i],
 TestID->"getaCoef obtains the linear a-term of an R-matrix."];
         VerificationTest[
-                getxCoef[j][gdo],
-                0,
+                getxCoef[j][gdo][b[i]],
+                ((1 - E^(-ℏ b[i])) y[i])/b[i],
 TestID->"getxCoef obtains the linear x-term of an R-matrix."]
         VerificationTest[
-                getxyCoef[i][gdo],
+                getxyCoef[i][gdo][b[i]],
                 0,
 TestID->"getxyCoef obtains the xy-term of an R-matrix."]
         VerificationTest[
-                getabCoef[i][gdo],
+                getabCoef[i][gdo][b[i]],
                 0,
 TestID->"getabCoef obtains the linear ab-term of an R-matrix."]
 ]
