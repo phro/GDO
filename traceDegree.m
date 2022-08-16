@@ -203,7 +203,7 @@ tr[i_][gdo_] := Module[
         {σ = getabCoef[i][gdo]},
         If[σ == 0,
                 True,
-                Message[tr:nonzeroSigma, i, σ]; False
+                Message[tr::nonzeroSigma, i, ToString[σ]]; False
         ]
 ]
 
