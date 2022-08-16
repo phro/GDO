@@ -194,7 +194,7 @@ TestID->"getxCoef obtains the linear x-term of an R-matrix."]
                 0,
 TestID->"getxyCoef obtains the xy-term of an R-matrix."]
         VerificationTest[
-                getabCoef[i][gdo][b[i]],
+                getabCoef[i][gdo],
                 0,
 TestID->"getabCoef obtains the linear ab-term of an R-matrix."]
 ]
@@ -231,8 +231,8 @@ TestID->"getxCoef obtains the linear x-term of a generic GDO expression."];
                 λi[b[i]],
 TestID->"getxyCoef obtains the xy-term of a generic GDO expression."];
         VerificationTest[
-                getabCoef[i][gdo][b[i]],
-                σi[b[i]],
+                getabCoef[i][gdo],
+                σi,
 TestID->"getabCoef obtains the ab-term of a generic GDO expression."];
         VerificationTest[
                 getConstCoef[i][gdo][b[i]],
