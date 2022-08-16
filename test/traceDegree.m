@@ -207,7 +207,7 @@ Module[
                 αi="αi",
                 ξi="ξi",
                 ci="ci",
-                b
+                bb,
                 gdo
         },
         gdo = GDO[{}->{i}][
@@ -216,8 +216,8 @@ Module[
                 ci
         ];
         VerificationTest[
-                getyCoef[i][gdo][b],
-                ηi[b],
+                getyCoef[i][gdo][bb],
+                ηi[bb],
 TestID->"getyCoef obtains the linear y-term of a generic GDO expression."];
         VerificationTest[
                 getbCoef[i][gdo],
@@ -228,12 +228,12 @@ TestID->"getbCoef obtains the linear b-term of a generic GDO expression."];
                 αi,
 TestID->"getaCoef obtains the linear a-term of a generic GDO expression."];
         VerificationTest[
-                getxCoef[i][gdo][b],
-                ξi[b],
+                getxCoef[i][gdo][bb],
+                ξi[bb],
 TestID->"getxCoef obtains the linear x-term of a generic GDO expression."];
         VerificationTest[
-                getxyCoef[i][gdo][b],
-                λi[b],
+                getxyCoef[i][gdo][bb],
+                λi[bb],
 TestID->"getxyCoef obtains the xy-term of a generic GDO expression."];
         VerificationTest[
                 getabCoef[i][gdo],
