@@ -157,27 +157,27 @@ trGuess[i_] := Module[
 
 getConstCoef::usage = "getConstCoeff[i][gdo] returns the terms in a GDO expression which are not a function of y[i], b[i], a[i], nor x[i]."
 
-getyCoef::usage = "getyCoef[i][gdo] returns the linear coefficient of y[i]."
+getyCoef::usage = "getyCoef[i][gdo][b[i]] returns the linear coefficient of y[i] as a function of b[i]."
 getyCoef[i_][gdo_][b_] := Coefficient[getSeries[gdo][[2]]/.{x[i]->0}, y[i],
-1]/.U2l/.{b[i]->b}
+        1]/.U2l/.{b[i]->b}
 
 getbCoef::usage = "getbCoef[i][gdo] returns the linear coefficient of b[i]."
-getbCoef[i_][gdo_] := Coefficient[getSeries[gdo][[1]]/.U2l/.{a[i]->0}, b[i],
-1]
+getbCoef[i_][gdo_] := Coefficient[getSeries[gdo][[1]]/.U2l/.{a[i]->0}, b[i], 1]
 
 getaCoef::usage = "getaCoef[i][gdo] returns the linear coefficient of a[i]."
-getaCoef[i_][gdo_] := Coefficient[getSeries[gdo][[1]]/.U2l/.{b[i]->0}, a[i],
-1]
+getaCoef[i_][gdo_] := Coefficient[getSeries[gdo][[1]]/.U2l/.{b[i]->0}, a[i], 1]
 
-getxCoef::usage = "getxCoef[i][gdo] returns the linear coefficient of x[i]."
+getxCoef::usage = "getxCoef[i][gdo][b[i]] returns the linear coefficient of x[i] as a function of b[i]."
 getxCoef[i_][gdo_][b_] := Coefficient[getSeries[gdo][[2]]/.{y[i]->0}, x[i],
-1]/.U2l/.{b[i]->b}
+        1]/.U2l/.{b[i]->b}
 
 getabCoef::usage = "getabCoef[i][gdo] returns the linear coefficient of a[i]b[i]."
-getabCoef[i_][gdo_] := (Coefficient[#, b[i], 1]&) @* (Coefficient[#, a[i], 1]&) @
+getabCoef[i_][gdo_] := (Coefficient[#,b[i],1]&) @* (Coefficient[#,a[i],1]&) @
         (getSeries[gdo][[1]]/.U2l)
 
-getxyCoef::usage = "getxyCoef[i][gdo] returns the linear coefficient of x[i]y[i]."
+getxyCoef::usage = "getxyCoef[i][gdo][b[i]] returns the linear coefficient of x[i]y[i] as a function of b[i]."
+getxyCoef[i_][gdo_][b_] := (Coefficient[#,x[i],1]&) @* (Coefficient[#,y[i],1]&)@
+        (getSeries[gdo][[2]]/.U2l)/.{b[i]->b}
 
 tr::usage = "tr[i] computes the trace of a GDO element on component i. Current implementation assumes the Subscript[a, i] Subscript[b, i] term vanishes and $k=0."
 tr::nonzeroSigma = "tr[`1`]: Component `1` has writhe: `2`, expected: 0."
