@@ -274,19 +274,19 @@ TestID->"getxCoef understands capital B variables."];
                 k(Exp[-ℏ bb]-1)/bb,
 TestID->"getxyCoef understands capital B variables."];
         VerificationTest[
-                getbCoef[i][putIntoL[(a[i] + r)((B[i]^k - 1)/b[i])]],
+                getbCoef[i][putIntoL[(a[i] + r)((B[i]^k - 1)/b[i])]]/.ℏ->1,
                 k^2 r/2,
 TestID->"getbCoef understands capital B variables."];
         VerificationTest[
-                getaCoef[i][putIntoL[a[i](B[i]^k - 1)/b[i]]],
-                k,
+                getaCoef[i][putIntoL[a[i](B[i]^k - 1)/b[i]]]/.ℏ->1,
+                (ℏ k),
 TestID->"getaCoef understands capital B variables."];
         VerificationTest[
-                getaCoef[i][putIntoL[k B[i]^k a[i] + r b[i] a[i]]],
+                getaCoef[i][putIntoL[(k B[i]^k + r b[i]) a[i]]]/.ℏ->1,
                 k,
 TestID->"getaCoef understands simple capital B variables."];
         VerificationTest[
-                getabCoef[i][putIntoL[k B[i]^k a[i] + r b[i] a[i]]],
+                getabCoef[i][putIntoL[(k B[i]^k + r b[i]) a[i]]]/.ℏ->1,
                 k^2 + r,
 TestID->"getabCoef understands simple capital B variables."];
         VerificationTest[
