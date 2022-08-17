@@ -258,37 +258,39 @@ TestID->"Extracting coefficients then reforming a GDO element is the identity."]
         ]
 
 Module[
-        {i, bb, k, r},
+        {i, bb, k, r, putIntoL, putIntoQ},
+        putIntoL[L_]:= GDO[{}->{i}][L, 0, 1];
+        putIntoQ[Q_]:= GDO[{}->{i}][0, Q, 1];
         VerificationTest[
-                getxCoef[i][y[i] (k x[i] + 1)((B[i] - 1)/b[i])][bb],
-                (Exp[-bb]-1)/bb,
+                getyCoef[i][putIntoQ[y[i](k x[i] + 1)(B[i] - 1)/b[i]]][bb],
+                (Exp[-ℏ bb]-1)/bb,
 TestID->"getyCoef understands capital B variables."];
         VerificationTest[
-                getxCoef[i][x[i] (k y[i] + 1)((B[i] - 1)/b[i])][bb],
-                (Exp[-bb]-1)/bb,
+                getxCoef[i][putIntoQ[x[i](k y[i] + 1)(B[i] - 1)/b[i]]][bb],
+                (Exp[-ℏ bb]-1)/bb,
 TestID->"getxCoef understands capital B variables."];
         VerificationTest[
-                getxyCoef[i][x[i] (k y[i] + 1)((B[i] - 1)/b[i])][bb],
-                k(Exp[-bb]-1)/bb,
+                getxyCoef[i][putIntoQ[x[i](k y[i] + 1)(B[i] - 1)/b[i]]][bb],
+                k(Exp[-ℏ bb]-1)/bb,
 TestID->"getxyCoef understands capital B variables."];
         VerificationTest[
-                getbCoef[i][(a[i] + r)((B[i]^k - 1)/b[i])],
+                getbCoef[i][putIntoL[(a[i] + r)((B[i]^k - 1)/b[i])]],
                 k^2 r/2,
 TestID->"getbCoef understands capital B variables."];
         VerificationTest[
-                getaCoef[i][a[i](B[i]^k - 1)/b[i]],
+                getaCoef[i][putIntoL[a[i](B[i]^k - 1)/b[i]]],
                 k,
 TestID->"getaCoef understands capital B variables."];
         VerificationTest[
-                getaCoef[i][k B[i]^k a[i] + r b[i] a[i]],
+                getaCoef[i][putIntoL[k B[i]^k a[i] + r b[i] a[i]]],
                 k,
 TestID->"getaCoef understands simple capital B variables."];
         VerificationTest[
-                getabCoef[i][k B[i]^k a[i] + r b[i] a[i]],
+                getabCoef[i][putIntoL[k B[i]^k a[i] + r b[i] a[i]]],
                 k^2 + r,
 TestID->"getabCoef understands simple capital B variables."];
         VerificationTest[
-                getabCoef[i][a[i](B[i]^k - 1)/b[i]],
+                getabCoef[i][putIntoL[a[i](B[i]^k - 1)/b[i]]],
                 k^2/2,
 TestID->"getabCoef understands capital B variables."];
 ]
