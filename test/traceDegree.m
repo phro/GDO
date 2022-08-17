@@ -279,7 +279,7 @@ TestID->"getxyCoef understands capital B variables."];
 TestID->"getbCoef understands capital B variables."];
         VerificationTest[
                 getaCoef[i][putIntoL[a[i](B[i]^k - 1)/b[i]]]/.ℏ->1,
-                k,
+                -k,
 TestID->"getaCoef understands capital B variables."];
         VerificationTest[
                 getaCoef[i][putIntoL[(k B[i]^k + r b[i]) a[i]]]/.ℏ->1,
