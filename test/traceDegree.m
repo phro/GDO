@@ -287,10 +287,10 @@ TestID->"getaCoef understands capital B variables."];
 TestID->"getaCoef understands simple capital B variables."];
         VerificationTest[
                 getabCoef[i][putIntoL[(k B[i]^k + r b[i]) a[i]]]/.ℏ->1,
-                k^2 + r,
+                -k^2 + r,
 TestID->"getabCoef understands simple capital B variables."];
         VerificationTest[
-                getabCoef[i][putIntoL[a[i](B[i]^k - 1)/b[i]]],
+                getabCoef[i][putIntoL[a[i](B[i]^k - 1)/b[i]]]/.ℏ->1,
                 k^2/2,
 TestID->"getabCoef understands capital B variables."];
 ]

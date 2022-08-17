@@ -188,7 +188,9 @@ getxCoef[i_][gdo_][bb_] :=
                 (getSeries[gdo][[2]])
 
 getabCoef::usage = "getabCoef[i][gdo] returns the linear coefficient of a[i]b[i]."
-getabCoef[i_][gdo_] := (Coefficient[#,b[i],1]&) @* (Coefficient[#,a[i],1]&) @
+getabCoef[i_][gdo_] :=
+        (SeriesCoefficient[#,{b[i],0,1}]&) @*
+        (Coefficient[#,a[i],1]&) @
         (getSeries[gdo][[1]]/.U2l)
 
 getxyCoef::usage = "getxyCoef[i][gdo][b[i]] returns the linear coefficient of x[i]y[i] as a function of b[i]."
