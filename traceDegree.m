@@ -185,17 +185,22 @@ getxCoef[i_][gdo_][bb_] :=
         ReplaceAll[U2l] @*
         (Coefficient[#, y[i],0]&) @*
         (Coefficient[#, x[i],1]&) @
-                (getSeries[gdo][[2]])
+        getSeries[gdo][[2]]
 
 getabCoef::usage = "getabCoef[i][gdo] returns the linear coefficient of a[i]b[i]."
 getabCoef[i_][gdo_] :=
         (SeriesCoefficient[#,{b[i],0,1}]&) @*
-        (Coefficient[#,a[i],1]&) @
-        (getSeries[gdo][[1]]/.U2l)
+        (Coefficient[#,a[i],1]&) @*
+        ReplaceAll[U2l] @
+        getSeries[gdo][[1]]
 
 getxyCoef::usage = "getxyCoef[i][gdo][b[i]] returns the linear coefficient of x[i]y[i] as a function of b[i]."
-getxyCoef[i_][gdo_][bb_] := (Coefficient[#,x[i],1]&) @* (Coefficient[#,y[i],1]&)@
-        (getSeries[gdo][[2]]/.U2l)/.{b[i]->bb}
+getxyCoef[i_][gdo_][bb_] :=
+        ReplaceAll[{b[i]->bb}] @*
+        ReplaceAll[U2l] @*
+        (Coefficient[#,x[i],1]&) @*
+        (Coefficient[#,y[i],1]&) @
+        getSeries[gdo][[2]]
 
 tr::usage = "tr[i] computes the trace of a GDO element on component i. Current implementation assumes the Subscript[a, i] Subscript[b, i] term vanishes and $k=0."
 tr::nonzeroSigma = "tr[`1`]: Component `1` has writhe: `2`, expected: 0."
