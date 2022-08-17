@@ -9,6 +9,6 @@ failedreports=Flatten@(Values@Values@#["TestsFailed"] & /@ reports);
 failedwithmessagesreports=Flatten@(Values@#["TestsFailedWithMessages"] & /@ reports);
 succeededreports=Flatten@(Values@#["TestsSucceeded"] & /@ reports);
 Print["Test report summary:"]
-Print[reports]
+Print[reports//TableForm]
 Print["Failed tests summary:"]
-Print[failedreports]
+Print[failedreports//TableForm]
