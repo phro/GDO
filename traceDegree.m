@@ -166,7 +166,11 @@ getyCoef[i_][gdo_][bb_] := (Coefficient[getSeries[gdo][[2]]/.{x[i]->0}, y[i],
         1]/.U2l)/.Subscript[b, i]:>bb
 
 getbCoef::usage = "getbCoef[i][gdo] returns the linear coefficient of b[i]."
-getbCoef[i_][gdo_] := Coefficient[getSeries[gdo][[1]]/.U2l/.{a[i]->0}, b[i], 1]
+getbCoef[i_][gdo_] :=
+        (SeriesCoefficient[#, {b[i],0,1}]&) @*
+        (Coefficient[#, a[i],0]&) @*
+        ReplaceAll[U2l] @
+        getSeries[gdo][[1]]
 
 getaCoef::usage = "getaCoef[i][gdo] returns the linear coefficient of a[i]."
 getaCoef[i_][gdo_] := Coefficient[getSeries[gdo][[1]]/.U2l/.{b[i]->0}, a[i], 1]
