@@ -218,7 +218,8 @@ tr[i_][gdo_] := Module[
         },
         ta = (1-Exp[-α]) t[i];
         GDO[ins -> closeComponent[i][outs]][
-                c + α a[i] + β ta + t[i] (η[ta] ξ[ta] + λ[ta])/(1-t[i] λ[ta])
+                (* c + α a[i] + β ta + t[i] (η[ta] ξ[ta] + λ[ta])/(1-t[i] λ[ta]) *)
+                α a[i] + β ta + t[i] (η[ta] ξ[ta] + λ[ta])/(1-t[i] λ[ta])
         ]
 ] /; Module[
         {σ = getabCoef[i][gdo]},
