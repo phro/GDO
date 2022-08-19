@@ -293,6 +293,11 @@ TestID->"getabCoef understands simple capital B variables."];
                 getabCoef[i][putIntoL[a[i](B[i]^k - 1)/b[i]]]/.ℏ->1,
                 k^2/2,
 TestID->"getabCoef understands capital B variables."];
+        VerificationTest[
+                getyCoef[1][putIntoQ[
+                        ((-1 + B[1]) x[3] y[1])/(b[1] B[1])]][bb]/.ℏ->1,
+                ((-1 + Exp[-bb]) x[3])/(bb Exp[-bb]),
+TestID->"getyCoef correctly captures pernicuous (b, B)-series."]
 ]
 
 Module[
@@ -324,6 +329,51 @@ Module[
                 getyCoef[i][gdo][b[i]],
                 t1[b[i]] y[j] + t3[b[i]] x[j],
 TestID->"getyCoef[i] only extracts values from index-i terms."]]
+
+Module[
+        {i = "i"},
+        VerificationTest[
+                GDO[{}->{i}][α[i] a[i] + β[i] b[i]]//tr[i],
+                GDO[{{},{}}->{{},{i}}][α[i] a[i] + β[i](1-Exp[-α[i]])t[i]],
+TestID->"tr behaves as defined on an L-only GDO."]]
+
+Module[
+        {
+                i = "i",
+                ta
+        },
+        ta = (1-Exp[-α[i]])t[i];
+        VerificationTest[
+                GDO[{}->{i}][α[i] a[i] + b[i]x[i]y[i]]//tr[i],
+                GDO[{{},{}}->{{},{i}}][α[i] a[i] + ta t[i]/(1- ta t[i])],
+TestID->"tr behaves as defined on an almost Q-only GDO."]]
+
+Module[
+        {
+                i = "i",
+                ta
+        },
+        ta = Exp[-ℏ(1-Exp[-α[i]])t[i]];
+        VerificationTest[
+                GDO[{}->{i}][α[i] a[i] + B[i]x[i]y[i]]//tr[i],
+                GDO[{{},{}}->{{},{i}}][α[i] a[i] + ta t[i]/(1- ta t[i])],
+TestID->"tr behaves as defined on a doubly-nested exponential almost Q-only GDO."]
+]
+
+Module[
+        {
+                i = "i",
+                ta,
+                tb
+        },
+        ta = (1-Exp[-α[i]])t[i];
+        tb = (Exp[-ℏ ta]-1)/ta;
+        VerificationTest[
+                GDO[{}->{i}][α[i] a[i] + (B[i]-1)/b[i] x[i]y[i]]//tr[i],
+                GDO[{{},{}}->{{},{i}}][α[i] a[i] + tb t[i]/(1- tb t[i])],
+TestID->"tr behaves as defined on a doubly-nested almost exponential almost Q-only GDO."]
+]
+
 
 Module[
         {n = 5,
