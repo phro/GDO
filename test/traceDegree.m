@@ -297,7 +297,11 @@ TestID->"getabCoef understands capital B variables."];
                 getyCoef[1][putIntoQ[
                         ((-1 + B[1]) x[3] y[1])/(b[1] B[1])]][bb]/.ℏ->1,
                 ((-1 + Exp[-bb]) x[3])/(bb Exp[-bb]),
-TestID->"getyCoef correctly captures pernicuous (b, B)-series."]
+TestID->"getyCoef correctly captures pernicuous (b, B)-series."];
+        VerificationTest[
+                getConstCoef[1][putIntoQ[(1-B[1]^-k) x[3]/(b[1])]]/.ℏ->1,
+               -k x[3],
+TestID->"getConstCoef correctly captures pernicuous (b, B)-series."]
 ]
 
 Module[
@@ -374,20 +378,27 @@ Module[
 TestID->"tr behaves as defined on a doubly-nested almost exponential almost Q-only GDO."]
 ]
 
-
 Module[
         {n = 5,
         gdo = GDO[{} -> {1, 3}][
                 -ℏ(a[3] b[1] + a[1] b[3]),
                 ((-1 + B[1]) x[3] y[1])/(b[1] B[1]) +
                 ((-1 + B[3]) x[1] y[3])/(b[3] B[3]),
-                B[3]^Rational[1, 2]
-        ]
+                1
+        ]/.ℏ->1
         },
         VerificationTest[
                 gdo // tr[1] // GDOTruncateToDegree[n],
                 gdo // trGuess[1] // GDOTruncateToDegree[n],
-TestID->"tr matches trGuess on their common domain."]]
+TestID->"tr matches trGuess on their common domain."]
+        VerificationTest[
+                (gdo // tr[1])/.U2l/.ℏ->1//Simplify,
+                (GDO[{{},{}}->{{3},{1}}][
+                        -b[3] a[1] - (1-Exp[b[3]]) a[3] t[1] +
+                        x[3] y[3] (1-Exp[t[1](1-Exp[b[3]])])/b[3]
+                        ]/.U2l/.ℏ->1)//Simplify,
+TestID->"tr behaves as expected on a real-world GDO."]
+]
 
 Module[
         {
