@@ -8,6 +8,8 @@
 
 $k = 0; \[Gamma] = 1;
 
+$Assumptions = Element[_, Reals]
+
 η[i_] := Subscript[η, i];
 β[i_] := Subscript[β, i];
 α[i_] := Subscript[α, i];
@@ -158,8 +160,13 @@ trGuess[i_] := Module[
 (* Coefficient-extraction functions *)
 
 getConstCoef::usage = "getConstCoef[i][gdo] returns the terms in a GDO expression which are not a function of y[i], b[i], a[i], nor x[i]."
-getConstCoef[i_][gdo_] := Total@(getSeries[gdo]/.
-        {y[i]->0,b[i]->0,a[i]->0,x[i]->0})
+getConstCoef[i_][gdo_] := Module[{gdo2 = gdo/.U2l},
+        (Coefficient[#, y[i], 0]&) @*
+        (SeriesCoefficient[#, {b[i],0,0}]&) @*
+        (Coefficient[#, a[i], 0]&) @*
+        (Coefficient[#, x[i], 0]&) @
+        (gdo2[1] + gdo2[2] + Log[gdo2[3]])
+]
 
 getyCoef::usage = "getyCoef[i][gdo][b[i]] returns the linear coefficient of y[i] as a function of b[i]."
 getyCoef[i_][gdo_][bb_] := (Coefficient[getSeries[gdo][[2]]/.{x[i]->0}, y[i],
@@ -218,8 +225,8 @@ tr[i_][gdo_] := Module[
         },
         ta = (1-Exp[-α]) t[i];
         GDO[ins -> closeComponent[i][outs]][
-                (* c + α a[i] + β ta + t[i] (η[ta] ξ[ta] + λ[ta])/(1-t[i] λ[ta]) *)
-                α a[i] + β ta + t[i] (η[ta] ξ[ta] + λ[ta])/(1-t[i] λ[ta])
+                c + α a[i] + β ta + t[i] (η[ta] ξ[ta] + λ[ta])/(1-t[i] λ[ta])
+                (* α a[i] + β ta + t[i] (η[ta] ξ[ta] + λ[ta])/(1-t[i] λ[ta]) *)
         ]
 ] /; Module[
         {σ = getabCoef[i][gdo]},

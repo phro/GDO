@@ -213,7 +213,7 @@ Module[
         gdo = GDO[{}->{i}][
                 βi b[i] + αi a[i] + σi a[i]b[i],
                 ηi [b[i]]y[i] + ξi [b[i]]x[i] + λi[b[i]] x[i]y[i],
-                ci
+                Exp[ci]
         ];
         VerificationTest[
                 getyCoef[i][gdo][bb],
@@ -251,7 +251,7 @@ VerificationTest[
                 getyCoef[i][gdo][b[i]]  y[i] +
                 getxCoef[i][gdo][b[i]]  x[i] +
                 getxyCoef[i][gdo][b[i]] x[i] y[i],
-                getConstCoef[i][gdo]
+                Exp@getConstCoef[i][gdo]
                 ],
         gdo,
 TestID->"Extracting coefficients then reforming a GDO element is the identity."]
