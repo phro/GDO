@@ -424,8 +424,8 @@ TestID->"tr acts as expected on generic GDO element"]]
 Module[
         {i="i", j="j", k="k"},
         VerificationTest[
-                Subscript[cm, j, i -> k] // tr[k],
-                Subscript[cm, i, j -> k] // tr[k],
+                (Subscript[cm, j, i -> k] // tr[k])/.l2U//Simplify,
+                (Subscript[cm, i, j -> k] // tr[k])/.l2U//Simplify,
 TestID->"tr is dyslexic."]]
 
 Module[
