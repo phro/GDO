@@ -169,8 +169,12 @@ getConstCoef[i_][gdo_] := Module[{gdo2 = gdo/.U2l},
 ]
 
 getyCoef::usage = "getyCoef[i][gdo][b[i]] returns the linear coefficient of y[i] as a function of b[i]."
-getyCoef[i_][gdo_][bb_] := (Coefficient[getSeries[gdo][[2]]/.{x[i]->0}, y[i],
-        1]/.U2l)/.Subscript[b, i]:>bb
+getyCoef[i_][gdo_][bb_] :=
+        ReplaceAll[{b[i]->bb}] @*
+        ReplaceAll[U2l] @*
+        (Coefficient[#, x[i],0]&) @*
+        (Coefficient[#, y[i],1]&) @
+        getSeries[gdo][[2]]
 
 getbCoef::usage = "getbCoef[i][gdo] returns the linear coefficient of b[i]."
 getbCoef[i_][gdo_] :=
