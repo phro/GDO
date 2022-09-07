@@ -403,6 +403,26 @@ TestID->"tr behaves as expected on a real-world GDO."]
 Module[
         {
                 i="i",
+                ηη="η",
+                ββ="β",
+                αα="α",
+                ξξ="ξ",
+                λλ="λ",
+                ta
+        },
+        ta = (1-Exp[-αα]) t[i];
+        VerificationTest[
+                GDO[{{1,2},{}}->{{i},{}}][
+                        αα a[i] +  ββ η[1]ξ[2] b[i]
+                ] //tr[i],
+                GDO[{{1,2},{}}->{{},{i}}][
+                        αα a[i] + ββ η[1]ξ[2] ta
+                ],
+TestID->"tr behaves properly on GDO with nonempty domain."]]
+
+Module[
+        {
+                i="i",
                 η="η",
                 β="β",
                 α="α",
