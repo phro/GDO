@@ -152,13 +152,13 @@ trGuess[i_] := GDO[{{i},{}}->{{},{i}}][
 (* Coefficient-extraction functions *)
 
 getConstCoef::usage = "getConstCoef[i][gdo] returns the terms in a GDO expression which are not a function of y[i], b[i], a[i], nor x[i]."
-getConstCoef[i_][gdo_] := Module[{gdo2 = gdo/.U2l},
-        (Coefficient[#, y[i], 0]&) @*
+getConstCoef[i_][gdo_] := 
         (SeriesCoefficient[#, {b[i],0,0}]&) @*
+        (Coefficient[#, y[i], 0]&) @*
         (Coefficient[#, a[i], 0]&) @*
         (Coefficient[#, x[i], 0]&) @
-        (gdo2[1] + gdo2[2] + Log[gdo2[3]])
-]
+        ReplaceAll[U2l] @
+        (gdo[1] + gdo[2] + Log[gdo[3]])
 
 getyCoef::usage = "getyCoef[i][gdo][b[i]] returns the linear coefficient of y[i] as a function of b[i]."
 getyCoef[i_][gdo_][bb_] :=
