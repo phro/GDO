@@ -170,7 +170,7 @@ Subscript[B, is___][L_,R_]:=\!\(\*SubscriptBox[\(B\), \({is}\)]\)[L,R];
 (* ::Input::Initialization:: *)
 Subscript[B, is_List][Subscript[\[DoubleStruckCapitalE], d1_->r1_][L1_,Q1_,P1_],Subscript[\[DoubleStruckCapitalE], d2_->r2_][L2_,Q2_,P2_]]:=Subscript[\[DoubleStruckCapitalE], (d1\[Union]Complement[d2,is])->(r2\[Union]Complement[r1,is])]@@Subscript[B, is][\[DoubleStruckCapitalE][L1,Q1,P1],\[DoubleStruckCapitalE][L2,Q2,P2]];
 Subscript[\[DoubleStruckCapitalE], d1_->r1_][L1_,Q1_,P1_]//Subscript[\[DoubleStruckCapitalE], d2_->r2_][L2_,Q2_,P2_] := Subscript[B, r1\[Intersection]d2][Subscript[\[DoubleStruckCapitalE], d1->r1][L1,Q1,P1],Subscript[\[DoubleStruckCapitalE], d2->r2][L2,Q2,P2]];
-Subscript[\[DoubleStruckCapitalE], d1_->r1_][L1_,Q1_,P1_]\[Congruent]Subscript[\[DoubleStruckCapitalE], d2_->r2_][L2_,Q2_,P2_] ^:= (d1==d2)\[And](r1==r2)\[And](\[DoubleStruckCapitalE][L1,Q1,P1]\[Congruent]\[DoubleStruckCapitalE][L2,Q2,P2]);
+Subscript[\[DoubleStruckCapitalE], d1_->r1_][L1_,Q1_,P1_]\[Congruent]Subscript[\[DoubleStruckCapitalE], d2_->r2_][L2_,Q2_,P2_] ^:= (Sort@d1==Sort@d2)\[And](Sort@r1==Sort@r2)\[And](\[DoubleStruckCapitalE][L1,Q1,P1]\[Congruent]\[DoubleStruckCapitalE][L2,Q2,P2]);
 Subscript[\[DoubleStruckCapitalE], d1_->r1_][L1_,Q1_,P1_]Subscript[\[DoubleStruckCapitalE], d2_->r2_][L2_,Q2_,P2_] ^:= Subscript[\[DoubleStruckCapitalE], (d1\[Union]d2)->(r1\[Union]r2)]@@(\[DoubleStruckCapitalE][L1,Q1,P1]\[DoubleStruckCapitalE][L2,Q2,P2]);
 Subscript[Subscript[\[DoubleStruckCapitalE], dr_][L_,Q_,P_], $k_]:=Subscript[\[DoubleStruckCapitalE], dr]@@Subscript[\[DoubleStruckCapitalE][L,Q,P], $k];
 Subscript[\[DoubleStruckCapitalE], _][\[ScriptCapitalE]___][i_]:={\[ScriptCapitalE]}[[i]];

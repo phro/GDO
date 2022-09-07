@@ -70,7 +70,8 @@ Subscript[B, r1\[Intersection]d2][
 
 Subscript[\[DoubleStruckCapitalE], {d1_, dc1_} -> {r1_, rc1_}][L1_,Q1_,P1_] ===
 Subscript[\[DoubleStruckCapitalE], {d2_, dc2_} -> {r2_, rc2_}][L2_,Q2_,P2_] ^:=
-(d1==d2)&&(r1==r2)&& (dc1==dc2) && (rc1==rc2) &&
+(Sort@d1==Sort@d2)&&(Sort@r1==Sort@r2)&& (Sort@dc1==Sort@dc2) &&
+(Sort@rc1==Sort@rc2) &&
 (\[DoubleStruckCapitalE][L1,Q1,P1]===\[DoubleStruckCapitalE][L2,Q2,P2]);
 (*Subscript[\[DoubleStruckCapitalE], d1_->r1_][L1_,Q1_,P1_]Subscript[\[DoubleStruckCapitalE], d2_->r2_][L2_,Q2_,P2_] ^:= Subscript[\[DoubleStruckCapitalE], (d1\[Union]d2)->(r1\[Union]r2)]@@(\[DoubleStruckCapitalE][L1,Q1,P1]\[DoubleStruckCapitalE][L2,Q2,P2]);*)
 (*Subscript[Subscript[\[DoubleStruckCapitalE], dr_][L_,Q_,P_], $k_]:=Subscript[\[DoubleStruckCapitalE], dr]@@Subscript[\[DoubleStruckCapitalE][L,Q,P], $k];*)
