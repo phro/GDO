@@ -40,7 +40,7 @@ Module[
 TestID->"trGenFunc[i] is correct up to degree 3."]]
 
 Module[
-        {i},
+        {i = "i"},
         VerificationTest[
                 trDeg[4][i][[3]],
                 trGenFunc[4][i]//ExpandAll,

@@ -145,16 +145,8 @@ trDeg::usage = "trDeg[m][i] is the component-i trace up to degree m as a GDO ele
 trDeg[m_][i_] := GDOTruncateToDegree[m]@trGuess[i]
 
 trGuess::usage = "trGuess[i] is a placeholder guess for a GDO expression which represents a trace."
-trGuess[i_] := Module[
-        {ηi, βi, αi, ξi, ai, ti},
-        ηi = Subscript[η, i];
-        βi = Subscript[β, i];
-        αi = Subscript[α, i];
-        ξi = Subscript[ξ, i];
-        ai = Subscript[a, i];
-        ti = Subscript[t, i];
-        GDO[{{i},{}}->{{},{i}}][αi ai, ηi ξi ti, Exp[βi (1-Exp[-αi]) ti]]
-        (* GDO[{{i},{}}->{{},{i}}][αi ai, ηi ξi ti, 1 + βi (1-Exp[-αi]) ti]/.l2U *)
+trGuess[i_] := GDO[{{i},{}}->{{},{i}}][
+        α[i]a[i],η[i]ξ[i]t[i], Exp[β[i] (1-Exp[-α[i]])t[i]]
 ]
 
 (* Coefficient-extraction functions *)
