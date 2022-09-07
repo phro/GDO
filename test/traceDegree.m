@@ -207,7 +207,7 @@ Module[
         },
         VerificationTest[
                 getbCoef[i] @ GDO[{j, k} -> {i}][
-                        0, 0, a[j] x[k] b[i]
+                        0, 0, Exp[a[j] x[k] b[i]]
                 ],
                 a[j] x[k],
 TestID->"getbCoef obtains coefficients from P-component."]]

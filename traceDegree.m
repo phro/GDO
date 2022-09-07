@@ -172,8 +172,10 @@ getbCoef::usage = "getbCoef[i][gdo] returns the linear coefficient of b[i]."
 getbCoef[i_][gdo_] :=
         (SeriesCoefficient[#, {b[i],0,1}]&) @*
         (Coefficient[#, a[i],0]&) @*
+        (Coefficient[#, x[i],0]&) @*
+        (Coefficient[#, y[i],0]&) @*
         ReplaceAll[U2l] @
-        getSeries[gdo][[1]]
+        (gdo[1] + gdo[2] + Log[gdo[3]])
 
 getaCoef::usage = "getaCoef[i][gdo] returns the linear coefficient of a[i]."
 getaCoef[i_][gdo_] :=
