@@ -201,6 +201,32 @@ TestID->"getabCoef obtains the linear ab-term of an R-matrix."]
 
 Module[
         {
+                i = "i",
+                j = "j",
+                k = "k"
+        },
+        VerificationTest[
+                getbCoef[i] @ GDO[{j, k} -> {i}][
+                        0, 0, a[j] x[k] b[i]
+                ],
+                a[j] x[k],
+TestID->"getbCoef obtains coefficients from P-component."]]
+
+Module[
+        {
+                i = "i",
+                j = "j",
+                k = "k"
+        },
+        VerificationTest[
+                getbCoef[i] @ GDO[{j, k} -> {i}][
+                        0, (η[j]ξ[k] + η[j] + ξ[k]) b[i], 1
+                ],
+                η[j]ξ[k] + η[j] + ξ[k],
+TestID->"getbCoef obtains coefficients from Q-component."]]
+
+Module[
+        {
                 i="i",
                 ηi="ηi",
                 βi="βi",
