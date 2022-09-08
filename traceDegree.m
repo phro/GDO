@@ -49,6 +49,12 @@ cm[ii_List, k_] := Module[
         Subscript[cm, i, j-> l] // cm[Prepend[js, l], k]
 ]
 
+toGDO[Xp[i_,j_]] := cR[i,j]
+toGDO[Xm[i_,j_]] := cRi[i,j]
+toGDO[{i_,n_}]   := CCn[i][n]
+toGDO[xs_Strand] := cm[List@@xs, First[xs]]
+toGDO[xs_Loop]   := Module[{x = First[xs]}, cm[List@@xs, x]//tr[x]]
+
 Reindex\[DoubleStruckCapitalE][gdo_]:=Module[
         {
         replacementRules,

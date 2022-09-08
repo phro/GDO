@@ -29,6 +29,39 @@ VerificationTest[
 TestID->"cm is the unit when provided with empty output."]
 
 Module[
+        {
+                i = "i",
+                j = "j",
+                n = 10,
+                m = -7
+        },
+        VerificationTest[
+                toGDO[Xp[i,j]],
+                cR[i,j],
+TestID->"toGDO transforms Xp into R-matrix."];
+        VerificationTest[
+                toGDO[Xm[i,j]],
+                cRi[i,j],
+TestID->"toGDO transforms Xm into inverse R-matrix."];
+        VerificationTest[
+                toGDO[{i,n}],
+                CCn[i][n],
+TestID->"toGDO transforms positive rotation into C-element."];
+        VerificationTest[
+                toGDO[{i,m}],
+                CCn[i][m],
+TestID->"toGDO transforms negative rotation into inverse C-element."];
+        VerificationTest[
+                toGDO[Strand[1,2,3]],
+                cm[{1,2,3},1],
+TestID->"toGDO transforms negative rotation into inverse C-element."];
+        VerificationTest[
+                toGDO[Loop[1,2,3]],
+                cm[{1,2,3},1]//tr[1],
+TestID->"toGDO transforms negative rotation into inverse C-element."]
+]
+
+Module[
         {i, j},
         VerificationTest[
                 coinv[i][a[j] y[i] x[i]],
