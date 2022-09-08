@@ -532,8 +532,8 @@ Module[
         , doubleSpiral = RVT[{Strand[1]},{},{{1,0}}]
         },
         VerificationTest[
-                ZFramed[doubleTwist],
-                ZFramed[doubleSpiral],
+                ZFramed[doubleTwist]//Normal,
+                ZFramed[doubleSpiral]//Normal,
 TestID -> "ZFramed satisfies cancelling kinks."]]
 
 Module[
@@ -541,11 +541,11 @@ Module[
                 {Strand[1,2,3,4]},
                 {Xp[1,2], Xm[4,3]},
                 {{2,-1},{4,-1},{1,0},{3,0}}]
-        , doubleSpiral = RVT[{Strand[1]},{},{{1,-2}}]
+        , doubleSpiral = RVT[{Strand[1]},{},{{1,0}}]
         },
         VerificationTest[
-                ZFramed[doubleTwist],
-                ZFramed[doubleSpiral],
+                ZFramed[doubleTwist]//Normal,
+                ZFramed[doubleSpiral]//Normal,
 TestID -> "ZFramed satisfies R1' with cancelling negative kinks."]]
 
 (*

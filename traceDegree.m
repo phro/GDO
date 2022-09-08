@@ -480,7 +480,7 @@ ZFramed[RVT[cs_, xs_, rs0_]] := Module[{
     j,
   },
   rs = DeleteCases[rs0,{_,0}];
-  z=Times@@xs/.{Xp[i_,j_]:>cR[i,j], Xm[i_,j_]:>cRi[i,j]};
+  z = Times@@xs/.{Xp[i_,j_]:>cR[i,j], Xm[i_,j_]:>cRi[i,j]};
   z *= Product[Subscript[c\[Eta],i], {i, is}];
   z *= Times@@(rs /. {{i_Integer, n_Integer} -> CCn[b[i]][n]});
   Do[
