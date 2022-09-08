@@ -25,7 +25,7 @@ TestID->"cm is renaming when provided a singleton with differing output."]
 
 VerificationTest[
         cm[{},1],
-        Subscript[η,1],
+        Subscript[cη,1],
 TestID->"cm is the unit when provided with empty output."]
 
 Module[

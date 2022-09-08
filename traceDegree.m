@@ -33,6 +33,21 @@ getIndices[gdo_]:=Union@Flatten@{getDomain[GDO],getCodomain[GDO]};
 isolateSubscripts[a_->b_]:=Subscript[x_, a]->Subscript[x, b];
 getPLength[gdo_] := Map[Length,ExpandAll[GDO],{1}][[3]];
 
+cm[{}, j_] := Subscript[cη, j]
+cm[{i_}, j_] := Subscript[cσ, i->j]
+cm[{i_, j_}, k_] := Subscript[cm, i, j -> k]
+cm[ii_List, k_] := Module[
+        {
+                i  = First[ii],
+                is = Rest[ii],
+                j  ,
+                js ,
+                l
+        },
+        j  = First[is];
+        js = Rest[is];
+        Subscript[cm, i, j-> l] // cm[Prepend[js, l], k]
+]
 
 Reindex\[DoubleStruckCapitalE][gdo_]:=Module[
         {
