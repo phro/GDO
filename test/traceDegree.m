@@ -8,6 +8,26 @@ Module[
                 Subscript[sσ,i ->j],
 TestID->"GDO-notation returns \[DoubleStruckCapitalE]-notation."]]
 
+VerificationTest[
+        cm[{1,2},3],
+        Subscript[cm,1,2->3],
+TestID->"cm is multiplication when given a 2-element list."]
+
+VerificationTest[
+        cm[{1,2,3},4],
+        Subscript[cm,1,2->2]//Subscript[cm,2,3->4],
+TestID->"cm multiplies three elements in the correct order."]
+
+VerificationTest[
+        cm[{1},2],
+        Subscript[cσ,1->2],
+TestID->"cm is renaming when provided a singleton with differing output."]
+
+VerificationTest[
+        cm[{},1],
+        Subscript[η,1],
+TestID->"cm is the unit when provided with empty output."]
+
 Module[
         {i, j},
         VerificationTest[

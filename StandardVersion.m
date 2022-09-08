@@ -220,7 +220,7 @@ Define[Subscript[cm, i,j->k]=\!\(\*SubscriptBox[\(\[DoubleStruckCapitalE]\), \({
 
 
 (* ::Input::Initialization:: *)
-Define[Subscript[c\[Sigma], i->j]=Subscript[s\[Sigma], i,j]/.Subscript[\[Tau], i]->0,Subscript[c\[Epsilon], i]=Subscript[s\[Epsilon], i], Subscript[c\[Eta], i]=Subscript[s\[Eta], i],Subscript[c\[CapitalDelta], i->j,k]=Subscript[s\[CapitalDelta], i->j,k],
+Define[Subscript[c\[Sigma], i->j]=Subscript[s\[Sigma], i->j]/.Subscript[\[Tau], i]->0,Subscript[c\[Epsilon], i]=Subscript[s\[Epsilon], i], Subscript[c\[Eta], i]=Subscript[s\[Eta], i],Subscript[c\[CapitalDelta], i->j,k]=Subscript[s\[CapitalDelta], i->j,k],
 Subscript[cS, i]=Subscript[sS, i]//Subscript[s\[CapitalUpsilon], i->1,2,3,4]//Subscript[cm, 4,3->i]//Subscript[cm, i,2->i]//Subscript[cm, i,1->i]];
 
 
