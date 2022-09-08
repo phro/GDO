@@ -173,21 +173,6 @@ Module[
 TestID->"GDOTruncateToDegree is idempotent."]]
 
 Module[
-        {i, n=4},
-        VerificationTest[
-                GDOTruncateToDegree[n]@trGuess[i]//ExpandAll,
-                trDeg[n][i]//ExpandAll,
-TestID->"trGuess matches trDeg[" <> ToString[n] <> "] up to degree"
-        <> ToString[n] <> "."]]
-
-Module[
-        {i="i", j="j", k="k"},
-        VerificationTest[
-                cR[i,j]//Subscript[cm, j, i -> k] // trGuess[k],
-                cR[i,j]//Subscript[cm, i, j -> k] // trGuess[k],
-TestID->"trGuess is dyslexic on a tangle."]]
-
-Module[
         {
                 i, j,
                 η, β, α, ξ,
@@ -434,10 +419,6 @@ Module[
                 1
         ]
         },
-        VerificationTest[
-                gdo // tr[1] // GDOTruncateToDegree[n],
-                gdo // trGuess[1] // GDOTruncateToDegree[n],
-TestID->"tr matches trGuess on their common domain."]
         VerificationTest[
                 (gdo // tr[1])/.U2l/.ℏ->1//Simplify,
                 (GDO[{{},{}}->{{3},{1}}][
