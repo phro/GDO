@@ -412,7 +412,7 @@ Module[
                 ((-1 + B[1]) x[3] y[1])/(b[1] B[1]) +
                 ((-1 + B[3]) x[1] y[3])/(b[3] B[3]),
                 1
-        ]/.ℏ->1
+        ]
         },
         VerificationTest[
                 gdo // tr[1] // GDOTruncateToDegree[n],

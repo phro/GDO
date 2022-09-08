@@ -477,31 +477,20 @@ ZFramed[RVT[cs_, xs_, rs0_]] := Module[{
     i1,
     rs,
     b,
-    (* i, *)
     j,
-    (* localprint = Print *)
-    localprint = Identity
   },
   rs = DeleteCases[rs0,{_,0}];
-  (* localprint[rs]; *)
   z=Times@@xs/.{Xp[i_,j_]:>cR[i,j], Xm[i_,j_]:>cRi[i,j]};
-  (* localprint["Introducing strands..."]; *)
   z *= Product[Subscript[c\[Eta],i], {i, is}];
-  (* localprint["Building Rotation numbers..."]; *)
   z *= Times@@(rs /. {{i_Integer, n_Integer} -> CCn[b[i]][n]});
-  (* localprint["Applying kinks..."]; *)
   Do[
-    (* localprint["(", i, "<-", b[i], ")"]; *)
     z = z // Subscript[cm, b[i], i -> i],
     {i, First/@rs}
-  (* localprint["Applying multiplication..."]; *)
   ];
   Do[
     i1 = First[i];
-    (* localprint["(", i1,"\[LeftArrow]", k,")..."]; *)
     z = z // Subscript[cm, i1, k -> i1];
     If[k==2,
-      (* localprint["Simplifying..."]; *)
       z = Simplify[z]
     ],
     {i, cs},{k, List@@Rest[i]}
