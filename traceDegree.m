@@ -219,13 +219,19 @@ tr[i_][gdo_] := Module[
                 λ = getxyCoef[i][gdo],
                 ins  = toMixed@getDomain[gdo],
                 outs = toMixed@getCodomain[gdo],
-                ta
+                ta,
+                exponent,
+                v
         },
         ta = (1-Exp[-α]) t[i];
-        GDO[ins -> closeComponent[i][outs]][
-                c + α a[i] + β ta + t[i] (η[ta] ξ[ta] + λ[ta])/(1-t[i] λ[ta])
-                (* α a[i] + β ta + t[i] (η[ta] ξ[ta] + λ[ta])/(1-t[i] λ[ta]) *)
-        ]
+        exponent = c + α a[i] + β ta + t[i](η[ta]ξ[ta] + λ[ta])/(1-t[i] λ[ta]);
+        If[exponent===Indeterminate,
+                exponent = Limit[
+                        c + α a[i] + β ta + t[i](η[v]ξ[v] + λ[v])/(1-t[i] λ[v]),
+                        v->ta
+                ]
+        ];
+        GDO[ins -> closeComponent[i][outs]][exponent]
 ] /; Module[
         {σ = getabCoef[i][gdo]},
         If[σ == 0,

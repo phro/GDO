@@ -1,3 +1,4 @@
+Block[{ℏ = 1},
 Module[
         {i, j},
         VerificationTest[
@@ -433,12 +434,11 @@ Module[
         },
         VerificationTest[
                 cR[i, j] // tr[i],
-                GDO[{{},{}}->{{j},{i}}][-t[i]/2],
+                GDO[{{},{}}->{{j},{i}}][0],
 TestID->"tr closes properly on the overstrand of the Hopf Link."]
         VerificationTest[
                 cR[i, j] // tr[j],
-                GDO[{{},{}}->{{j},{i}}][a[j]b[i] +
-                (T[j]^(B[j]-1)-1)/(2-B[j]-T[j]^(B[j]-1))],
+                GDO[{{},{}}->{{i},{j}}][a[j]b[i]],
 TestID->"tr closes properly on the understrand of the Hopf Link."]
 ]
 
@@ -632,3 +632,4 @@ VerificationTest[
     positive integers."
 ]
 *)
+]
