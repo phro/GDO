@@ -61,6 +61,17 @@ TestID->"toGDO transforms strand into multiplications."];
 TestID->"toGDO transforms loop into multiplications followed by trace."]
 ]
 
+VerificationTest[
+        toList@RVT[
+                {Strand[1,2,3], Loop[4,5], Strand[6]},
+                {Xp[1,3], Xm[6,5], Xm[2,4]},
+                {{1,0},{4,-3},{7,2}}
+        ],
+        {cR[1,3], cRi[6,5], cRi[2,4],
+        CCn[1][0], CCn[4][-3], CCn[7][2],
+        cm[{1,2,3},1], cm[{4,5},4]//tr[4], cm[{6},6]},
+TestID->"toList transforms RVT into list of objects."]
+
 Module[
         {i, j},
         VerificationTest[

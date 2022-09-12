@@ -55,6 +55,8 @@ toGDO[{i_,n_}]   := CCn[i][n]
 toGDO[xs_Strand] := cm[List@@xs, First[xs]]
 toGDO[xs_Loop]   := Module[{x = First[xs]}, cm[List@@xs, x]//tr[x]]
 
+toList[RVT[cs_List, xs_List, rs_List]] := Flatten[#,1]&@((toGDO/@#&)/@{xs,rs,cs})
+
 Reindex\[DoubleStruckCapitalE][gdo_]:=Module[
         {
         replacementRules,
