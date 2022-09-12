@@ -54,11 +54,11 @@ TestID->"toGDO transforms negative rotation into inverse C-element."];
         VerificationTest[
                 toGDO[Strand[1,2,3]],
                 cm[{1,2,3},1],
-TestID->"toGDO transforms negative rotation into inverse C-element."];
+TestID->"toGDO transforms strand into multiplications."];
         VerificationTest[
                 toGDO[Loop[1,2,3]],
                 cm[{1,2,3},1]//tr[1],
-TestID->"toGDO transforms negative rotation into inverse C-element."]
+TestID->"toGDO transforms loop into multiplications followed by trace."]
 ]
 
 Module[
