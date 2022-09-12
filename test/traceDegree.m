@@ -552,6 +552,34 @@ Module[
 TestID->"ZFramed returns a \[DoubleStruckCapitalE]-element."]]
 
 Module[
+        {
+                whirl = RVT[
+                        {Strand[i,3,5], Strand[j,4,6]},
+                        {Xp[i,j]},
+                        {{i,-1},{j,-1},{5,1},{6,1}}
+                ],
+                xp    = RVT[{Strand[i], Strand[j]},{Xp[i,j]},{{i,0},{j,0}}]
+        },
+        VerificationTest[
+                whirl // ZFramed,
+                xp // ZFramed,
+TestID->"ZFramed satisfies the positive whirl relation."]]
+
+Module[
+        {
+                whirl = RVT[
+                        {Strand[i,3,5], Strand[j,4,6]},
+                        {Xm[i,j]},
+                        {{i,-1},{j,-1},{5,1},{6,1}}
+                ],
+                xm    = RVT[{Strand[i], Strand[j]},{Xm[i,j]},{{i,0},{j,0}}]
+        },
+        VerificationTest[
+                whirl // ZFramed,
+                xp // ZFramed,
+TestID->"ZFramed satisfies the negative whirl relation."]]
+
+Module[
         { pCW  = RVT[{Strand[1,2]},{Xp[2,1]},{{1,0},{2, 1}}]
         , pCCW = RVT[{Strand[1,2]},{Xp[1,2]},{{1,0},{2,-1}}]
         },
@@ -592,6 +620,94 @@ Module[
                 ZFramed[doubleTwist]//Normal,
                 ZFramed[doubleSpiral]//Normal,
 TestID -> "ZFramed satisfies R1' with cancelling negative kinks."]]
+
+Module[
+        {
+                r2pmb    = RVT[{Strand[1,2],Strand[3,4]}, {Xp[1,3],Xm[2,4]},{}],
+                r2mpb    = RVT[{Strand[1,2],Strand[3,4]}, {Xm[1,3],Xp[2,4]},{}],
+                parallel = RVT[Strand[1], Strand[3], {},{}]
+        },
+        VerificationTest[
+                ZFramed[r2pmb]//Normal,
+                ZFramed[parallel]//Normal,
+TestID->"ZFramed satisfies R2 (+-; braidlike)"];
+        VerificationTest[
+                ZFramed[r2mpb]//Normal,
+                ZFramed[parallel]//Normal,
+TestID->"ZFramed satisfies R2 (-+; braidlike)"]
+]
+
+Module[
+        {
+                r2pmcR    = RVT[
+                        {Strand[1,2],Strand[3,4]}, {Xp[4,1],Xm[3,2]},{{2,1}}],
+                r2mpcR    = RVT[
+                        {Strand[1,2],Strand[3,4]}, {Xm[1,4],Xp[2,3]},{{2,1}}],
+                parallelR = RVT[{Strand[1], Strand[3]},{},{{1,1}}]
+        },
+        VerificationTest[
+                ZFramed[r2pmcR]//Normal,
+                ZFramed[parallelR]//Normal,
+TestID->"ZFramed satisfies R2 (+-; cyclic; right)"];
+        VerificationTest[
+                ZFramed[r2mpcR]//Normal,
+                ZFramed[parallelR]//Normal,
+TestID->"ZFramed satisfies R2 (-+; cyclic; right)"]
+]
+
+Module[
+        {
+                r2pmcL    = RVT[
+                        {Strand[1,2],Strand[3,4]}, {Xp[1,4],Xm[2,3]},{{2,-1}}],
+                r2mpcL    = RVT[
+                        {Strand[1,2],Strand[3,4]}, {Xm[4,1],Xp[3,2]},{{2,-1}}],
+                parallelL = RVT[{Strand[1], Strand[3]},{},{{1,-1}}]
+        },
+        VerificationTest[
+                ZFramed[r2pmcL]//Normal,
+                ZFramed[parallelL]//Normal,
+TestID->"ZFramed satisfies R2 (+-; cyclic; left)"];
+        VerificationTest[
+                ZFramed[r2mpcL]//Normal,
+                ZFramed[parallelL]//Normal,
+TestID->"ZFramed satisfies R2 (-+; cyclic; left)"]
+]
+
+Module[
+        {
+                lhs = RVT[
+                        {Strand[11,12], Strand[21,22], Strand[31,32]},
+                        {Xp[11,21], Xp[12,31], Xp[22,32]},
+                        {}
+                ],
+                rhs = RVT[
+                        {Strand[11,12], Strand[21,22], Strand[31,32]},
+                        {Xp[21,31], Xp[11,32], Xp[12,22]},
+                        {}
+                ]
+        },
+        VerificationTest[
+                ZFramed[lhs]//Normal,
+                ZFramed[rhs]//Normal,
+TestID->"ZFramed satisfies R3+"]]
+
+Module[
+        {
+                lhs = RVT[
+                        {Strand[11,12], Strand[21,22], Strand[31,32]},
+                        {Xm[21,11], Xm[31,12], Xm[32,22]},
+                        {}
+                ],
+                rhs = RVT[
+                        {Strand[11,12], Strand[21,22], Strand[31,32]},
+                        {Xm[31,21], Xm[32,11], Xm[22,12]},
+                        {}
+                ]
+        },
+        VerificationTest[
+                ZFramed[lhs]//Normal,
+                ZFramed[rhs]//Normal,
+TestID->"ZFramed satisfies R3-"]]
 
 (*
 Module[
