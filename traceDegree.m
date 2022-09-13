@@ -496,7 +496,7 @@ CCn[i_][n_Integer]:=Module[{j},
  * Dror's GDO invariant of framed knots.
  * TODO: implement rotation number corrections
  *)
-ZFramed[rvt_RVT] := Fold[#2[#1]&, GDO[{}->{}][0,0,1], toList@rvt]
+ZFramed[rvt_RVT] := Fold[#2[#1]&, GDO[{}->getIndices@rvt][0,0,1], toList@rvt]
 ZFramed::NotRVT := "Argument `1` is not in RVT form."
 ZFramed[L_] := Message[ZFramed::NotRVT, L];ZFramed[toRVT[L]]
 
