@@ -265,23 +265,6 @@ tr[i_][gdo_] := Module[
         ]
 ]
 
-(* FIXME: BEGIN DEPRECATED CODE *)
-(* Front-end beautification *)
-Subscript[trDeg, ii_][m_] := trDeg[m][ii]
-
-(*
- * Scale each variable by a factor of ħ
- *)
-Sħ[is_List] := Product[Sħ[i],{i, is}]//Simplify;
-Sħ[i_] := GDO[{i} -> {i}][
-  ħ(Subscript[\[Alpha], i] Subscript[a, i] +Subscript[\[Beta], i] Subscript[b, i]),
-  ħ(Subscript[\[Xi], i] Subscript[x, i] +Subscript[\[Eta], i] Subscript[y, i]),
-  1
-];
-Subscript[Sħ, is_List]:= Sħ[is];
-Subscript[Sħ, i_] := Sħ[i];
-(* FIXME: END DEPRECATED CODE *)
-
 (*
  * Convert a GDO series to a polynomial
  *)
@@ -315,14 +298,6 @@ GDOTruncateToDegree[n_][gdo_]:=Module[
 
 GDOToList[GDO[is_->js_][L_,Q_,P_]] := {is, js, L, Q, P};
 GDOFromList[is_, js_, L_, Q_, P_] := GDO[is->js][L,Q,P]
-
-(* GDOTruncateToDegreeWrong[n_][gdo_] := Module[
-  {is, js, ks, L, Q, P},
-  ks = GDOToList[GDO][[2]];
-  [>{is, js, L, Q, P} = GDOToList[Sħ[ks] // GDO];<]
-  {is, js, L, Q, P} = GDOToList[GDO // Sħ[ks]];
-  GDO[is->js][0,0, Normal[Series[Exp[L+Q]*P/.U2l,{ħ,0,n}]]]
-] *)
 
 (* Skeleton-Xing form *)
 SXForm[L_SXForm]:=L
@@ -494,7 +469,6 @@ CCn[i_][n_Integer]:=Module[{j},
 
 (*
  * Dror's GDO invariant of framed knots.
- * TODO: implement rotation number corrections
  *)
 ZFramed[rvt_RVT] := Fold[#2[#1]&, GDO[{}->getIndices@rvt][0,0,1], toList@rvt]
 ZFramed::NotRVT := "Argument `1` is not in RVT form."
