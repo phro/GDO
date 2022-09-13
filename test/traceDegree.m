@@ -584,8 +584,8 @@ Module[
                 xp    = RVT[{Strand[i], Strand[j]},{Xp[i,j]},{{i,0},{j,0}}]
         },
         VerificationTest[
-                whirl // ZFramed,
-                xp // ZFramed,
+                whirl // ZFramed // Normal,
+                xp    // ZFramed // Normal,
 TestID->"ZFramed satisfies the positive whirl relation."]]
 
 Module[
@@ -598,8 +598,8 @@ Module[
                 xm    = RVT[{Strand[i], Strand[j]},{Xm[i,j]},{{i,0},{j,0}}]
         },
         VerificationTest[
-                whirl // ZFramed,
-                xp // ZFramed,
+                whirl // ZFramed // Normal,
+                xm    // ZFramed // Normal,
 TestID->"ZFramed satisfies the negative whirl relation."]]
 
 Module[
@@ -648,7 +648,7 @@ Module[
         {
                 r2pmb    = RVT[{Strand[1,2],Strand[3,4]}, {Xp[1,3],Xm[2,4]},{}],
                 r2mpb    = RVT[{Strand[1,2],Strand[3,4]}, {Xm[1,3],Xp[2,4]},{}],
-                parallel = RVT[Strand[1], Strand[3], {},{}]
+                parallel = RVT[{Strand[1], Strand[3]}, {},{}]
         },
         VerificationTest[
                 ZFramed[r2pmb]//Normal,
