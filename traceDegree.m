@@ -362,7 +362,7 @@ Unwrithe[L_SXForm] := Module[{s, z, lw},
     ];
   Reindex@SXForm[addLoops@@@lw,Join [z, Flatten[addXings@@@lw]]]
 ]
-Unwrithe[RVT[cs_, xs_, rs_]] := Module[{lw},
+Unwrithe[RVT[cs_List, xs_List, rs_List]] := Module[{lw},
   lw = Table[{l, Plus@@xs/.{
       Xp[i_,j_] :> If[MemberQ[l,i] \[And] MemberQ[l,j], 1,0],
       Xm[i_,j_] :> If[MemberQ[l,i] \[And] MemberQ[l,j],-1,0]
