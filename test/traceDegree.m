@@ -497,6 +497,19 @@ TestID->"tr behaves as expected on a real-world GDO."]
 
 Module[
         {
+                gdo = GDO[{{1,2},{}}->{{},{3}}][
+                        (α[1] + α[2])a[3] + (β[1] + β[2])(1-1/(A[1]A[2]))t[3],
+                        (η[1]ξ[1]/A[2]+η[2]ξ[2]/A[1] + η[1]ξ[2]+η[2]ξ[1])t[3],
+                        1
+                ]
+        },
+        VerificationTest[
+                cm[{1,2},3]//tr[3],
+                gdo,
+TestID->"tr returns uppercase GDO's by default"]]
+
+Module[
+        {
                 i = "i",
                 j = "j"
         },

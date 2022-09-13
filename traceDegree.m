@@ -18,6 +18,7 @@ $Assumptions = Element[_, Reals]
 y[i_] := Subscript[y, i];
 b[i_] := Subscript[b, i];
 B[i_] := Subscript[B, i];
+A[i_] := Subscript[\[ScriptCapitalA], i];
 a[i_] := Subscript[a, i];
 x[i_] := Subscript[x, i];
 t[i_] := Subscript[t, i];
