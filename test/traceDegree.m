@@ -73,6 +73,24 @@ VerificationTest[
 TestID->"toList transforms RVT into list of objects."]
 
 Module[
+        {
+                rvt = RVT[{Strand[1]},{},{{1,1}}]
+        },
+        VerificationTest[
+                toList@rvt,
+                {CCn[1][1], cm[{1},1]},
+TestID->"toList transforms a xingless tangle correctly."]]
+
+Module[
+        {
+                rvt = RVT[{Strand[1]},{},{}]
+        },
+        VerificationTest[
+                toList@rvt,
+                {cm[{1},1]},
+TestID->"toList transforms a rotation-free tangle correctly."]]
+
+Module[
         {i, j},
         VerificationTest[
                 coinv[i][a[j] y[i] x[i]],
