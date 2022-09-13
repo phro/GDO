@@ -29,7 +29,7 @@ GDO[ijs___][Qs___] := Subscript[\[DoubleStruckCapitalE], ijs][Qs]
 getDomain[GDO[is_->js_][L_,Q_,P_]]:=is;
 getCodomain[GDO[is_->js_][L_,Q_,P_]]:=js;
 getSeries[GDO[is_->js_][L_,Q_,P_]]:={L,Q,P};
-getIndices[gdo_]:=Union@Flatten@{getDomain[GDO],getCodomain[GDO]};
+getGDOIndices[gdo_]:=Union@Flatten@{getDomain[GDO],getCodomain[GDO]};
 isolateSubscripts[a_->b_]:=Subscript[x_, a]->Subscript[x, b];
 getPLength[gdo_] := Map[Length,ExpandAll[GDO],{1}][[3]];
 
@@ -61,7 +61,7 @@ Reindex\[DoubleStruckCapitalE][gdo_]:=Module[
         {
         replacementRules,
         subscriptReplacementRules,
-        indices = getIndices[gdo],
+        indices = getGDOIndices[gdo],
         is = getDomain[gdo],
         js = getCodomain[gdo],
         Q =  getSeries[gdo],
@@ -494,32 +494,7 @@ CCn[i_][n_Integer]:=Module[{j},
  * Dror's GDO invariant of framed knots.
  * TODO: implement rotation number corrections
  *)
-ZFramed[RVT[cs_, xs_, rs0_]] := Module[{
-    z,
-    is = Flatten[List@@@cs],
-    i1,
-    rs,
-    b,
-    j,
-  },
-  rs = DeleteCases[rs0,{_,0}];
-  z = Times@@xs/.{Xp[i_,j_]:>cR[i,j], Xm[i_,j_]:>cRi[i,j]};
-  z *= Product[Subscript[c\[Eta],i], {i, is}];
-  z *= Times@@(rs /. {{i_Integer, n_Integer} -> CCn[b[i]][n]});
-  Do[
-    z = z // Subscript[cm, b[i], i -> i],
-    {i, First/@rs}
-  ];
-  Do[
-    i1 = First[i];
-    z = z // Subscript[cm, i1, k -> i1];
-    If[k==2,
-      z = Simplify[z]
-    ],
-    {i, cs},{k, List@@Rest[i]}
-  ];
-  z
-]
+ZFramed[rvt_RVT] := Fold[#2[#1]&, GDO[{}->{}][0,0,1], toList@rvt]
 ZFramed::NotRVT := "Argument `1` is not in RVT form."
 ZFramed[L_] := Message[ZFramed::NotRVT, L];ZFramed[toRVT[L]]
 
