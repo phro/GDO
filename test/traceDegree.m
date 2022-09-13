@@ -62,6 +62,11 @@ TestID->"toGDO transforms loop into multiplications followed by trace."]
 ]
 
 VerificationTest[
+        getIndices@RVT[{Strand[1,2], Loop[3,4], Strand[5], Loop[6,-2]},{},{}],
+        {-2,1,2,3,4,5,6},
+TestID->"getIndices returns the indices of an RVT."]
+
+VerificationTest[
         toList@RVT[
                 {Strand[1,2,3], Loop[4,5], Strand[6]},
                 {Xp[1,3], Xm[6,5], Xm[2,4]},

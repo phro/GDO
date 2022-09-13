@@ -57,6 +57,8 @@ toGDO[xs_Loop]   := Module[{x = First[xs]}, cm[List@@xs, x]//tr[x]]
 
 toList[RVT[cs_List, xs_List, rs_List]] := Flatten[#,1]&@((toGDO/@#&)/@{xs,rs,cs})
 
+getIndices[RVT[cs_List, _List, _List]] := Sort@Flatten[#,1]&@(List@@@cs)
+
 Reindex\[DoubleStruckCapitalE][gdo_]:=Module[
         {
         replacementRules,
