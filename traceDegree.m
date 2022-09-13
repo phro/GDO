@@ -261,7 +261,7 @@ tr[i_][gdo_] := Module[
                         v->ta
                 ]
         ];
-        GDO[ins -> closeComponent[i][outs]][exponent]
+        GDO[ins -> closeComponent[i][outs]][exponent]//.l2U
 ] /; Module[
         {σ = getabCoef[i][gdo]},
         If[σ == 0,

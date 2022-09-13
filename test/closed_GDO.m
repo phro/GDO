@@ -1,4 +1,30 @@
 Module[
+        {
+                exp1 = (
+                        a[3] A[1] A[2] α[1] +
+                        a[3] A[1] A[2] α[2] -
+                        t[3] β[1] -
+                        t[3] β[2] +
+                        t[3] A[1] A[2] β[1] +
+                        t[3] A[1] A[2] β[2]
+                )/(A[1] A[2]),
+                exp2 = α[1] a[3] + α[2] a[3] +
+                        β[1] t[3] + β[2] t[3] -
+                        (t[3] β[1])/(A[1] A[2]) -
+                        (t[3] β[2])/(A[1] A[2]),
+                gdo1 = GDO[exp1,0,1],
+                gdo2 = GDO[exp2,0,1]
+        },
+        VerificationTest[
+                exp1 // Expand,
+                exp2 // Expand,
+TestID->"two test expressions are equivalent"];
+        VerificationTest[
+                gdo1 === gdo2,
+                true,
+TestID->"GDO elements with equivalent terms are deemed equal"]]
+
+Module[
   {i, j, L, Q, P},
   VerificationTest[
     getDomain@toMixed[GDO[{i}->{j}][L,Q,P]],

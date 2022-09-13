@@ -456,7 +456,7 @@ Module[
                 i = "i",
                 ta
         },
-        ta = Exp[-ℏ(1-Exp[-α[i]])t[i]];
+        ta = Exp[-ℏ(1-1/A[i])t[i]];
         VerificationTest[
                 GDO[{}->{i}][α[i] a[i] + B[i]x[i]y[i]]//tr[i],
                 GDO[{{},{}}->{{},{i}}][α[i] a[i] + ta t[i]/(1- ta t[i])],
@@ -504,8 +504,8 @@ Module[
                 ]
         },
         VerificationTest[
-                cm[{1,2},3]//tr[3],
-                gdo,
+                cm[{1,2},3]//tr[3]//Expand,
+                gdo//Expand,
 TestID->"tr returns uppercase GDO's by default"]]
 
 Module[
