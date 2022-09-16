@@ -293,7 +293,8 @@ GDOTruncateToDegree[n_][gdo_]:=Module[
         {i,
         is = getDomain[gdo],
         js = getCodomain[gdo],
-        scaler
+        scaler,
+        L, P, Q
         },
         scaler = # -> λ # & /@
                 Flatten[#, 1] &@(Thread /@ Map[#[Flatten@is] &, {η, β, α, ξ}]);

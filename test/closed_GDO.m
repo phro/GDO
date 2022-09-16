@@ -12,17 +12,27 @@ Module[
                         β[1] t[3] + β[2] t[3] -
                         (t[3] β[1])/(A[1] A[2]) -
                         (t[3] β[2])/(A[1] A[2]),
-                gdo1 = GDO[exp1,0,1],
-                gdo2 = GDO[exp2,0,1]
+                gdo1,
+                gdo2,
+                gdoClosed1,
+                gdoClosed2
         },
+        gdo1 = GDO[{{1,2},{}}->{{},{3}}][exp1,0,1];
+        gdo2 = GDO[{{1,2},{}}->{{},{3}}][exp2,0,1];
+        gdoClosed1 = GDO[{1,2}->{3}][exp1,0,1];
+        gdoClosed2 = GDO[{1,2}->{3}][exp2,0,1];
         VerificationTest[
                 exp1 // Expand,
                 exp2 // Expand,
 TestID->"two test expressions are equivalent"];
         VerificationTest[
-                gdo1 === gdo2,
-                true,
-TestID->"GDO elements with equivalent terms are deemed equal"]]
+                gdo1,
+                gdo2,
+TestID->"GDO elements with equivalent terms are deemed equal"];
+        VerificationTest[
+                gdoClosed1,
+                gdoClosed2,
+TestID->"Closed GDO elements with equivalent terms are deemed equal"]]
 
 Module[
   {i, j, L, Q, P},
