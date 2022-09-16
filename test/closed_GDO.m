@@ -1,5 +1,21 @@
 Module[
         {
+                dominfo       = {1,2}->{3},
+                dominfoClosed = {{1,2},{}}->{{},{3}},
+                exp1          = 0.5x + 0.5y,
+                exp2          = (x+y)/2
+        },
+        VerificationTest[
+                GDO[dominfo][exp1],
+                GDO[dominfo][exp2],
+TestID->"GDO elements with simple equivalent terms are deemed equal."];
+        VerificationTest[
+                GDO[dominfoClosed][exp1],
+                GDO[dominfoClosed][exp2],
+TestID->"Closed GDO elements with simple equivalent terms are deemed equal."]]
+
+Module[
+        {
                 exp1 = (
                         a[3] A[1] A[2] α[1] +
                         a[3] A[1] A[2] α[2] -
