@@ -6,12 +6,12 @@ Module[
                 exp2          = (x+y)/2
         },
         VerificationTest[
-                GDO[dominfo][exp1],
-                GDO[dominfo][exp2],
+                GDO[dominfo][exp1,0,1],
+                GDO[dominfo][exp2,0,1],
 TestID->"GDO elements with simple equivalent terms are deemed equal."];
         VerificationTest[
-                GDO[dominfoClosed][exp1],
-                GDO[dominfoClosed][exp2],
+                GDO[dominfoClosed][exp1,0,1],
+                GDO[dominfoClosed][exp2,0,1],
 TestID->"Closed GDO elements with simple equivalent terms are deemed equal."]]
 
 Module[
