@@ -1,6 +1,26 @@
 testDeg=1;
 BeginTestSection["GDO"];
 
+VerificationTest[
+        GDO[{2,1}->{4,2}][0,0,1]//CF,
+        GDO[{1,2}->{2,4}][0,0,1],
+TestID->"CF sorts co/domain lists for better comparison."]
+
+VerificationTest[
+        GDO[{{5,-5},{2,1}}->{{6,-6},{4,2}}][0,0,1]//CF,
+        GDO[{{-5,5},{1,2}}->{{-6,6},{2,4}}][0,0,1],
+TestID->"CF sorts co/domain lists for better comparison."]
+
+VerificationTest[
+        sortDomain@{{2,1},{-1,-2}},
+        {{1,2},{-2,-1}},
+TestID->"sortDomain sorts a two-component domain correctly."]
+
+VerificationTest[
+        sortDomain@{2,1}
+        {1,2},
+TestID->"sortDomain sorts a one-component domain correctly."]
+
 (* A-algebra testing *)
 Block[{$k=testDeg},
 VerificationTest[
