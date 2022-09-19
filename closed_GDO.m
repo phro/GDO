@@ -68,11 +68,22 @@ Subscript[B, r1\[Intersection]d2][
         Subscript[\[DoubleStruckCapitalE], d2->r2][L2,Q2,P2]
 ]//addClosedIndices[dc2,rc2];
 
-Subscript[\[DoubleStruckCapitalE], {d1_, dc1_} -> {r1_, rc1_}][L1_,Q1_,P1_] ===
-Subscript[\[DoubleStruckCapitalE], {d2_, dc2_} -> {r2_, rc2_}][L2_,Q2_,P2_] ^:=
-(Sort@d1==Sort@d2)&&(Sort@r1==Sort@r2)&& (Sort@dc1==Sort@dc2) &&
-(Sort@rc1==Sort@rc2) &&
-(\[DoubleStruckCapitalE][L1,Q1,P1]===\[DoubleStruckCapitalE][L2,Q2,P2]);
+Congruent[
+        Subscript[\[DoubleStruckCapitalE],
+                {d1_List, dc1_List} -> {r1_List, rc1_List}
+        ][L1_,Q1_,P1_]
+        Subscript[\[DoubleStruckCapitalE],
+                {d2_List, dc2_List} -> {r2_List, rc2_List}
+        ][L2_,Q2_,P2_]
+] ^:=
+        (Sort@d1 ==Sort@d2)  &&
+        (Sort@r1 ==Sort@r2)  &&
+        (Sort@dc1==Sort@dc2) &&
+        (Sort@rc1==Sort@rc2) &&
+        Congruent[
+                \[DoubleStruckCapitalE][L1,Q1,P1],
+                \[DoubleStruckCapitalE][L2,Q2,P2]
+        ];
 (*Subscript[\[DoubleStruckCapitalE], d1_->r1_][L1_,Q1_,P1_]Subscript[\[DoubleStruckCapitalE], d2_->r2_][L2_,Q2_,P2_] ^:= Subscript[\[DoubleStruckCapitalE], (d1\[Union]d2)->(r1\[Union]r2)]@@(\[DoubleStruckCapitalE][L1,Q1,P1]\[DoubleStruckCapitalE][L2,Q2,P2]);*)
 (*Subscript[Subscript[\[DoubleStruckCapitalE], dr_][L_,Q_,P_], $k_]:=Subscript[\[DoubleStruckCapitalE], dr]@@Subscript[\[DoubleStruckCapitalE][L,Q,P], $k];*)
 (*Subscript[\[DoubleStruckCapitalE], _][\[ScriptCapitalE]___][i_Integer]:={\[ScriptCapitalE]}\[LeftDoubleBracket]i\[RightDoubleBracket];*)

@@ -6,16 +6,16 @@ Module[
                 exp2          = (x+y)/2
         },
         VerificationTest[
-                exp1,
-                exp2,
+                exp1//CF,
+                exp2//CF,
 TestID->"Ensure two simple expressions are deemed equal."];
         VerificationTest[
-                GDO[dominfo][exp1,0,1],
-                GDO[dominfo][exp2,0,1],
+                GDO[dominfo][exp1,0,1]//CF,
+                GDO[dominfo][exp2,0,1]//CF,
 TestID->"GDO elements with simple equivalent terms are deemed equal."];
         VerificationTest[
-                GDO[dominfoClosed][exp1,0,1],
-                GDO[dominfoClosed][exp2,0,1],
+                GDO[dominfoClosed][exp1,0,1]//CF,
+                GDO[dominfoClosed][exp2,0,1]//CF,
 TestID->"Closed GDO elements with simple equivalent terms are deemed equal."]]
 
 Module[
@@ -46,12 +46,12 @@ Module[
                 exp2 // Expand,
 TestID->"two test expressions are equivalent"];
         VerificationTest[
-                gdo1,
-                gdo2,
+                gdo1//CF,
+                gdo2//CF,
 TestID->"GDO elements with equivalent terms are deemed equal"];
         VerificationTest[
-                gdoClosed1,
-                gdoClosed2,
+                gdoClosed1//CF,
+                gdoClosed2//CF,
 TestID->"Closed GDO elements with equivalent terms are deemed equal"]]
 
 Module[
