@@ -2,9 +2,13 @@ Module[
         {
                 dominfo       = {1,2}->{3},
                 dominfoClosed = {{1,2},{}}->{{},{3}},
-                exp1          = 0.5x + 0.5y,
+                exp1          = 1/2x + 1/2y,
                 exp2          = (x+y)/2
         },
+        VerificationTest[
+                exp1,
+                exp2,
+TestID->"Ensure two simple expressions are deemed equal."];
         VerificationTest[
                 GDO[dominfo][exp1,0,1],
                 GDO[dominfo][exp2,0,1],
