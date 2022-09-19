@@ -473,7 +473,7 @@ Module[
         tb = (Exp[-ℏ ta]-1)/ta;
         VerificationTest[
                 GDO[{}->{i}][α[i] a[i] + (B[i]-1)/b[i] x[i]y[i]]//tr[i],
-                GDO[{{},{}}->{{},{i}}][α[i] a[i] + tb t[i]/(1- tb t[i])],
+                GDO[{{},{}}->{{},{i}}][α[i] a[i] + tb t[i]/(1- tb t[i])]//.l2U,
 TestID->"tr behaves as defined on a doubly-nested almost exponential almost Q-only GDO."]
 ]
 
@@ -487,11 +487,11 @@ Module[
         ]
         },
         VerificationTest[
-                (gdo // tr[1])/.U2l/.ℏ->1//Simplify,
+                (gdo // tr[1])/.ℏ->1//Simplify,
                 (GDO[{{},{}}->{{3},{1}}][
                         -b[3] a[1] - (1-Exp[b[3]]) a[3] t[1] +
                         x[3] y[3] (1-Exp[t[1](1-Exp[b[3]])])/b[3]
-                        ]/.U2l/.ℏ->1)//Simplify,
+                        ]//.l2U/.ℏ->1)//Simplify,
 TestID->"tr behaves as expected on a real-world GDO."]
 ]
 
