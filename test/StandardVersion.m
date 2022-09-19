@@ -17,7 +17,7 @@ VerificationTest[
 TestID->"sortDomain sorts a two-component domain correctly."]
 
 VerificationTest[
-        sortDomain@{2,1}
+        sortDomain@{2,1},
         {1,2},
 TestID->"sortDomain sorts a one-component domain correctly."]
 
