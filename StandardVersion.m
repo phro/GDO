@@ -35,6 +35,11 @@ Once[<<KnotTheory`];
 
 
 (* ::Input::Initialization:: *)
+sortDomain[{is_List,js_List}]:= {Union[is],Union[js]}
+sortDomain[is_]:= Union@is
+
+
+(* ::Input::Initialization:: *)
 CCF[\[ScriptCapitalE]_] := ExpandDenominator@ExpandNumerator@Together[
 Expand[\[ScriptCapitalE]] //. E^x_ E^y_:>E^(x+y) /. E^x_:>E^CCF[x]];
 CF[\[ScriptCapitalE]_List]:=CF/@\[ScriptCapitalE];
@@ -43,7 +48,7 @@ CF[\[ScriptCapitalE]_] := Module[
 {vs=Cases[\[ScriptCapitalE],Subscript[(y|b|t|a|x|\[Eta]|\[Beta]|\[Tau]|\[Alpha]|\[Xi]), _],\[Infinity]]\[Union]{y,b,t,a,x,\[Eta],\[Beta],\[Tau],\[Alpha],\[Xi]}},
 Total[CoefficientRules[Expand[\[ScriptCapitalE]], vs] /. (ps_->c_) :> CCF[c](Times@@(vs^ps))]
 ];
-CF[\[ScriptCapitalE]_\[DoubleStruckCapitalE]]:=CF/@\[ScriptCapitalE]; CF[Subscript[\[DoubleStruckCapitalE], sp___][\[ScriptCapitalE]s___]]:=CF/@Subscript[\[DoubleStruckCapitalE], sp][\[ScriptCapitalE]s];
+CF[\[ScriptCapitalE]_\[DoubleStruckCapitalE]]:=CF/@\[ScriptCapitalE]; CF[Subscript[\[DoubleStruckCapitalE], dom_->cod_][\[ScriptCapitalE]s___]]:=CF/@Subscript[\[DoubleStruckCapitalE], sortDomain@dom->sortDomain@cod][\[ScriptCapitalE]s];
 
 
 (* ::Input::Initialization:: *)
