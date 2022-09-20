@@ -1,4 +1,18 @@
 Block[{ℏ = 1},
+
+Module[
+        {
+                tangle = RVT[
+                        {Strand[1,3,4,5], Strand[2,6,7,8]},
+                        {Xp[1,2], Xp[6,3], Xp[4,7], Xp[8,5]},
+                        {{1,0},{5,0}}
+                ]
+        },
+        VerificationTest[
+                tangle // Unwrithe,
+                tangle,
+TestID->"Unwrithe does not affect tangles with no writhe."]]
+
 Module[
         {i, j},
         VerificationTest[
