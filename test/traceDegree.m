@@ -480,6 +480,16 @@ TestID->"tr behaves as defined on a doubly-nested almost exponential almost Q-on
 ]
 
 Module[
+        {
+                nonzeroWrithe = GDO[{}->{1}][5 a[1] b[1], 0,1]
+        },
+        VerificationTest[
+                nonzeroWrithe // tr[1],
+                nonzeroWrithe // tr[1],
+                {tr::nonzeroSigma},
+TestID->"tr does not compute when writhe is nonzero"]]
+
+Module[
         {n = 5,
         gdo = GDO[{} -> {1, 3}][
                 -ℏ(a[3] b[1] + a[1] b[3]),
