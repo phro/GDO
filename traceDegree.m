@@ -324,19 +324,8 @@ getWritheOfComponent[L_RVT][c:Component[__]] := Total[
         getWritheOfXing@c /@ getXings@L
 ]
 Writhe[L_RVT] := getWritheOfComponent[L] /@ getSkeleton[L]
-Writhe[L_SXForm]:=Module[{s,z},
-  {s,z}=List@@L;
-  (* Print["s: ",s]; *)
-  (* Print["z: ",z]; *)
-  Table[
-      (Plus@@z)/.{
-        Xp[i_,j_]:>If[MemberQ[l,i] \[And] MemberQ[l,j], 1,0],
-        Xm[i_,j_]:>If[MemberQ[l,i] \[And] MemberQ[l,j],-1,0]
-    },
-    {l,s}
-  ]
-]
-Writhe[L_]:=Writhe[SXForm[L]]
+Writhe::badArg = "Writhe must be called with head RVT, called instead with head `1`"
+Writhe[L_] := Message[Writhe::badArg, Head@L]
 
 combineBySecond[l_List] := mergeWith[Total,#]& /@ GatherBy[l, First];
 combineBySecond[lis___] := combineBySecond[Join[lis]]
