@@ -24,6 +24,25 @@ TestID->"getRotNums retrieves the rotnums of an RVT."]
 
 Module[
         {
+                c = {Strand[1,2,3,4], Strand[5,6,7,8,9,10]},
+                L
+        },
+        L = RVT[c,
+                {Xm[4,1], Xm[2,6], Xm[7,3], Xm[5,8], Xp[9,10]},
+                {{2,-1},{8,1},{10,-1}}
+        ];
+        VerificationTest[
+                getWritheOfComponent[L][c[[1]]],
+                1,
+TestID->"getWritheOfComponent determines writhes correctly."];
+        VerificationTest[
+                getWritheOfComponent[L][c[[2]]],
+                0,
+TestID->"getWritheOfComponent determines cancelling writhes correctly."]
+]
+
+Module[
+        {
                 tangle = RVT[
                         {Strand[1], Loop[2], Loop[3]},
                         {},
