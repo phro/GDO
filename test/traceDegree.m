@@ -65,6 +65,16 @@ Module[
                 tangle,
 TestID->"Unwrithe does not change well-indexed knots."]]
 
+Module[
+        {
+                tangle = toRVT@Link[11,NonAlternating,243],
+                tangleUnwrithed
+        },
+        tangleUnwrithed = tangle // Unwrithe;
+        VerificationTest[
+                tangleUnwrithed // Unwrithe,
+                tangleUnwrithed,
+TestID->"Unwrithe is idempotent."]]
 
 Module[
         {i, j},
