@@ -318,6 +318,8 @@ SXForm[L_] := SXForm[
     If[PositiveQ[X[i,j,k,l]],Xp[l,i], Xm[j,i]])
 ];
 
+getWritheOfXing[c:Component[__]][Xp[is__]] := If[SubsetQ[List@@c,{is}],1,0]
+getWritheOfXing[c:Component[__]][Xm[is__]] := If[SubsetQ[List@@c,{is}],-1,0]
 getWritheOfComponent[L_RVT][c:Component[__]] := Total[
         getWritheOfXing@c /@ getXings@L
 ]
