@@ -5,9 +5,9 @@ Module[
                 skeleton = {Strand[1,2], Loop[3,4]},
                 xings = {Xp[1,4], Xm[3,2]},
                 rotnums = {{1,0},{3,-1},{2,0},{4,1}},
-                rvt,
+                rvt
         },
-        rvt = RVT[skeleton, xings, rotnums]
+        rvt = RVT[skeleton, xings, rotnums];
         VerificationTest[
                 getSkeleton[rvt],
                 skeleton,
