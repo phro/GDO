@@ -473,8 +473,8 @@ CCn[i_][n_Integer]:=Module[{j},
  * Dror's GDO invariant of framed knots.
  *)
 ZFramed[rvt_RVT] := Fold[#2[#1]&, GDO[{}->getIndices@rvt][0,0,1], toList@rvt]
-ZFramed::NotRVT := "Argument `1` is not in RVT form."
-ZFramed[L_] := Message[ZFramed::NotRVT, L];ZFramed[toRVT[L]]
+ZFramed::notRVT := "Argument `1` is not in RVT form."
+ZFramed[L_] := Message[ZFramed::notRVT, L];ZFramed[toRVT[L]]
 
 (* ZFramed[E_GDOSeq] :=  *)
 
@@ -482,10 +482,9 @@ ZFramed[L_] := Message[ZFramed::NotRVT, L];ZFramed[toRVT[L]]
  * Dror's GDO invariant, computed in the classical algebra together with a
  * writhe correction.
  *)
-Z::SXForm := "Argument `1` is not in RVT form."
 Z[L_RVT] := ZFramed[PrintTemporary["Unwrithing..."]; Unwrithe[L]]
-Z[L_SXForm] := Message[Z::SXForm, L]
-Z[L_] := Z[PrintTemporary["Converting to SXForm..."]; SXForm[L]]
+Z::notRVT := "Argument `1` is not in RVT form."
+Z[L_notRVT] := Message[Z::notRVT, L]; Z@toRVT@L
 
 (* trZ := ((Times @@ Table[trDeg[i][2], {i, #[[0, 2, 2]]}])[#] & )@* Simplify@*(GDOTruncateToDegree[4, #] &)@*Z) & *)
 
