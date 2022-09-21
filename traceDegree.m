@@ -37,6 +37,7 @@ getPLength[gdo_] := Map[Length,ExpandAll[GDO],{1}][[3]];
 getSkeleton[L_RVT] := L[[1]]
 getXings[L_RVT]    := L[[2]]
 getRotNums[L_RVT]  := L[[3]]
+Component = Strand | Loop
 
 cm[{}, j_] := Subscript[cη, j]
 cm[{i_}, j_] := Subscript[cσ, i->j]
@@ -321,6 +322,9 @@ SXForm[L_] := SXForm[
  * Compute the writhe of a link, returning a list of integers corresponding to the
  * components.
  *)
+getWritheOfComponent[L_RVT][c:Component[__]] :=
+        Total@(getWritheOfXing/@getXings[L])
+Writhe[L_RVT]:= getWritheOfComponent[L]/@ getSkeleton[L]
 Writhe[L_SXForm]:=Module[{s,z},
   {s,z}=List@@L;
   (* Print["s: ",s]; *)
