@@ -318,10 +318,6 @@ SXForm[L_] := SXForm[
     If[PositiveQ[X[i,j,k,l]],Xp[l,i], Xm[j,i]])
 ];
 
-(*
- * Compute the writhe of a link, returning a list of integers corresponding to the
- * components.
- *)
 getWritheOfComponent[L_RVT][c:Component[__]] := Total[
         getWritheOfXing@c /@ getXings@L
 ]
