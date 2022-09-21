@@ -430,7 +430,6 @@ cRi[i_,j_] := Module[
 ]
 
 CC[i_] := Subscript[C, i];
-(* CCi[i_] := Subscript[Overscript[C, _], i] *)
 CCi[i_] := Subscript[\!\(\*OverscriptBox[\(C\), \(_\)]\), i]
 
 
@@ -476,8 +475,6 @@ ZFramed[rvt_RVT] := Fold[#2[#1]&, GDO[{}->getIndices@rvt][0,0,1], toList@rvt]
 ZFramed::notRVT := "Argument `1` is not in RVT form."
 ZFramed[L_] := Message[ZFramed::notRVT, L];ZFramed[toRVT[L]]
 
-(* ZFramed[E_GDOSeq] :=  *)
-
 (*
  * Dror's GDO invariant, computed in the classical algebra together with a
  * writhe correction.
@@ -486,13 +483,10 @@ Z[L_RVT] := ZFramed[PrintTemporary["Unwrithing..."]; Unwrithe[L]]
 Z::notRVT := "Argument `1` is not in RVT form."
 Z[L_notRVT] := Message[Z::notRVT, L]; Z@toRVT@L
 
-(* trZ := ((Times @@ Table[trDeg[i][2], {i, #[[0, 2, 2]]}])[#] & )@* Simplify@*(GDOTruncateToDegree[4, #] &)@*Z) & *)
-
 (*
  * The Z invariant restricted in degree, together with the trace applied to its elements
  *)
 Zdeg[deg_, L_] := CF[GDOTruncateToDegree[deg][Z[L]]]
-(* trZ[deg_,L_] :=  (Times @@ Table[trDeg[i][deg], {i,      #[[0, 2, 2]]}])[#]&[Zdeg[deg, L]] *)
 Ztr[deg_,L_] := Zdeg[deg, L] // (Composition @@ Table[
     trDeg[i][deg],
     {i, Echo[Cases[(Unwrithe@L)[[1]], Loop[j_, __] -> j]]}
