@@ -5,13 +5,27 @@ Module[
                 tangle = RVT[
                         {Strand[1,3,4,5], Strand[2,6,7,8]},
                         {Xp[1,2], Xp[6,3], Xp[4,7], Xp[8,5]},
+                        {{1,0},{2,0}}
+                ]
+        },
+        VerificationTest[
+                tangle // Unwrithe,
+                tangle // Reindex,
+TestID->"Unwrithe only reindexes tangles with no writhe."]]
+
+Module[
+        {
+                tangle = RVT[
+                        {Strand[1,2,3,4], Strand[5,6,7,8]},
+                        {Xp[1,5], Xp[6,2], Xp[3,7], Xp[8,4]},
                         {{1,0},{5,0}}
                 ]
         },
         VerificationTest[
                 tangle // Unwrithe,
                 tangle,
-TestID->"Unwrithe does not affect tangles with no writhe."]]
+TestID->"Unwrithe does not change well-indexed knots."]]
+
 
 Module[
         {i, j},
