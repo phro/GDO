@@ -3,6 +3,32 @@ Block[{ℏ = 1},
 Module[
         {
                 tangle = RVT[
+                        {Strand[1], Loop[2], Loop[3]},
+                        {},
+                        {{1,0},{2,1},{3,-1}}
+                ]
+        },
+        VerificationTest[
+                tangle // Writhe,
+                {0,0,0},
+TestID->"Writhe computes the writhe of a no-crossing tangle correctly."]]
+
+Module[
+        {
+                tangle = RVT[
+                        {Strand[1,2], Strand[3], Strand[4]},
+                        {Xp[1,3], Xm[4,2]},
+                        {{1,0},{2,0},{3,0}}
+                ]
+        },
+        VerificationTest[
+                tangle // Writhe,
+                {0,0,0},
+TestID->"Writhe does not factor in inter-strand crossings in computation."]]
+
+Module[
+        {
+                tangle = RVT[
                         {Strand[1,3,4,5], Strand[2,6,7,8]},
                         {Xp[1,2], Xp[6,3], Xp[4,7], Xp[8,5]},
                         {{1,0},{2,0}}
