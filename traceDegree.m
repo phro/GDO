@@ -322,9 +322,8 @@ SXForm[L_] := SXForm[
  * Compute the writhe of a link, returning a list of integers corresponding to the
  * components.
  *)
-getWritheOfComponent[L_RVT][c:Component[__]] :=
-        Total@(getWritheOfXing/@getXings[L])
-Writhe[L_RVT]:= getWritheOfComponent[L]/@ getSkeleton[L]
+getWritheOfComponent[L_RVT][c:Component[__]]:=Total[getWritheOfXing/@getXings@L]
+Writhe[L_RVT] := getWritheOfComponent[L] /@ getSkeleton[L]
 Writhe[L_SXForm]:=Module[{s,z},
   {s,z}=List@@L;
   (* Print["s: ",s]; *)
