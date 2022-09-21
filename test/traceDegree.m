@@ -29,6 +29,19 @@ TestID->"Writhe does not factor in inter-strand crossings in computation."]]
 Module[
         {
                 tangle = RVT[
+                        {Strand[1,2,3,4], Strand[5,6,7,8]},
+                        {Xm[4,1], Xm[2,6], Xm[7,3], Xm[5,8]},
+                        {{2,-1},{8,1}}
+                ]
+        },
+        VerificationTest[
+                tangle // Writhe,
+                {-1, -1},
+TestID->"Writhe computes writhes correctly for multiple interacting strands."]]
+
+Module[
+        {
+                tangle = RVT[
                         {Strand[1,3,4,5], Strand[2,6,7,8]},
                         {Xp[1,2], Xp[6,3], Xp[4,7], Xp[8,5]},
                         {{1,0},{2,0}}
