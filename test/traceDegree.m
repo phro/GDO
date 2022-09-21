@@ -2,6 +2,27 @@ Block[{ℏ = 1},
 
 Module[
         {
+                skeleton = {Strand[1,2], Loop[3,4]},
+                xings = {Xp[1,4], Xm[3,2]},
+                rotnums = {{1,0},{3,-1},{2,0},{4,1}},
+                rvt,
+        },
+        rvt = RVT[skeleton, xings, rotnums]
+        VerificationTest[
+                getSkeleton[rvt],
+                skeleton,
+TestID->"getSkeleton retrieves the skeleton of an RVT."];
+        VerificationTest[
+                getXings[rvt],
+                xings,
+TestID->"getXings retrieves the xings of an RVT."];
+        VerificationTest[
+                getRotNums[rvt],
+                rotnums,
+TestID->"getRotNums retrieves the rotnums of an RVT."]
+]
+Module[
+        {
                 tangle = RVT[
                         {Strand[1], Loop[2], Loop[3]},
                         {},
