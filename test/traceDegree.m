@@ -43,6 +43,32 @@ TestID->"getWritheOfComponent determines cancelling writhes correctly."]
 
 Module[
         {
+                c = Strand[1,2,3],
+                xpIn  = Xp[1,2],
+                xpOut = Xp[3,4],
+                xmIn  = Xm[2,1],
+                xmOut = Xm[4,3]
+                },
+        VerificationTest[
+                getWritheOfXing@c@xmIn,
+                -1,
+TestID->"getWritheOfXing gets writhe of negative xing in component."];
+        VerificationTest[
+                getWritheOfXing@c@xpIn,
+                1,
+TestID->"getWritheOfXing gets writhe of positive xing in component."];
+        VerificationTest[
+                getWritheOfXing@c@xmOut,
+                0,
+TestID->"getWritheOfXing gets writhe of negative xing out of component."];
+        VerificationTest[
+                getWritheOfXing@c@xpOut,
+                0,
+TestID->"getWritheOfXing gets writhe of positive xing out of component."];
+]
+
+Module[
+        {
                 tangle = RVT[
                         {Strand[1], Loop[2], Loop[3]},
                         {},
