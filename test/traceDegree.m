@@ -33,7 +33,7 @@ Module[
         ];
         VerificationTest[
                 getWritheOfComponent[L][c[[1]]],
-                1,
+                -1,
 TestID->"getWritheOfComponent determines writhes correctly."];
         VerificationTest[
                 getWritheOfComponent[L][c[[2]]],
