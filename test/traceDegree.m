@@ -50,19 +50,19 @@ Module[
                 xmOut = Xm[4,3]
                 },
         VerificationTest[
-                getWritheOfXing@c@xmIn,
+                (getWritheOfXing@)c@xmIn,
                 -1,
 TestID->"getWritheOfXing gets writhe of negative xing in component."];
         VerificationTest[
-                getWritheOfXing@c@xpIn,
+                (getWritheOfXing@c)@xpIn,
                 1,
 TestID->"getWritheOfXing gets writhe of positive xing in component."];
         VerificationTest[
-                getWritheOfXing@c@xmOut,
+                (getWritheOfXing@c)@xmOut,
                 0,
 TestID->"getWritheOfXing gets writhe of negative xing out of component."];
         VerificationTest[
-                getWritheOfXing@c@xpOut,
+                (getWritheOfXing@c)@xpOut,
                 0,
 TestID->"getWritheOfXing gets writhe of positive xing out of component."];
 ]
