@@ -67,6 +67,12 @@ TestID->"getWritheOfXing gets writhe of negative xing out of component."];
 TestID->"getWritheOfXing gets writhe of positive xing out of component."];
 ]
 
+VerificationTest[
+        Writhe[SXForm[Strand[1],{}]],
+        Writhe[SXForm[Strand[1],{}]],
+        {Writhe::badArg},
+TestID->"Writhe is only defined for RVT form."]
+
 Module[
         {
                 tangle = RVT[
