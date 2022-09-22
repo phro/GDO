@@ -301,7 +301,7 @@ GDOTruncateToDegree[n_][gdo_]:=Module[
         scaler = # -> λ # & /@
                 Flatten[#, 1] &@(Thread /@ Map[#[Flatten@is] &, {η, β, α, ξ}]);
         {L, Q, P} = getSeries[gdo/.U2l/.scaler];
-        GDO[is->js][0, 0, TruncateToDegree[n][λ][(Exp[L+Q]*P)/.U2l]]/.(λ->1)
+        GDO[is->js][0, 0, TruncateToDegree[n][λ][(Exp[L+Q]*P)/.U2l]]/.(λ->1)//CF
 ]
 
 GDOToList[GDO[is_->js_][L_,Q_,P_]] := {is, js, L, Q, P};
