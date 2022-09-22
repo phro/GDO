@@ -493,17 +493,11 @@ Ztr[deg_,L_] := Zdeg[deg, L] // (Composition @@ Table[
     ]
   )
 
-ptr[deg_][L_] := Module[
-  {
-    ZL = Zdeg[deg, L],
-    cod
-  },
-  cod = getCodomain@ZL;
-  Table[
-    (Composition @@ Table[
-      trDeg[j][deg],
-      {j, Complement[cod,{i}]}
-    ])[ZL]
-    ,{i, cod}
-  ]
+ptr[L_] := Module[
+        {
+                ZL = Z[L],
+                cod
+        },
+        cod = getCodomain@ZL;
+        Table[(Composition@@Table[tr[j],{j,Complement[cod,{i}]}])[ZL],{i,cod}]
 ]
