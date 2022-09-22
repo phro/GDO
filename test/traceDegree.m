@@ -606,8 +606,8 @@ Module[
                 ξ[i]b[i] x[i] + b[i] x[i] y[i]
         ];
         VerificationTest[
-                gdo // tr[i] // GDOTruncateToDegree[n] // CF,
-                gdo // trDeg[n][i] //CF,
+                gdo // tr[i] // GDOTruncateToDegree[n],
+                gdo // trDeg[n][i],
 TestID->"tr agrees with trDeg on a GDO."]]
 
 Module[
