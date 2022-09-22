@@ -909,7 +909,7 @@ TestID->"ZFramed satisfies R3-"]]
 
 Module[
         {
-                gdo = Link[7,Alternating,7]//toRVT//Z
+                gdo = Link[7,Alternating,7]//toRVT
         },
         VerificationTest[
                 gdo // ptr // Length,
