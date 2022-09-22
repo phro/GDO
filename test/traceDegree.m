@@ -335,7 +335,7 @@ Module[
         VerificationTest[
                 TruncateToDegree[2][λ][1/(1-x λ)],
                 1 + x λ + x^2 λ^2,
-TestID->"TruncateToDogree restricts Taylor-expandable series."]]
+TestID->"TruncateToDegree restricts Taylor-expandable series."]]
 
 Module[
         {i, id},
