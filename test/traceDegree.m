@@ -380,6 +380,18 @@ Module[
 TestID->"GDOTruncateToDegree truncates an exponent appropriately."]]
 
 Module[
+        {r, gdo},
+        gdo = GDO[{1}->{1}][r α[1], (A[1]-1)y[1],1];
+        VerificationTest[
+                gdo // GDOTruncateToDegree[2],
+                GDO[{1}->{1}][0,0,
+                        1 +
+                        (y[1] + r)α[1] +
+                        (r^2/2 + (1/2 + r)y[1] + 1/2 y[1]^2)α[1]^2
+                ]//CF,
+TestID->"GDOTruncateToDegree truncates capital variables appropriately."]]
+
+Module[
         {
                 n = 2,
                 gdo = Subscript[cm, 1,2->3]
