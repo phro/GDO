@@ -170,10 +170,9 @@ trGenFunc[m_][ii_] := Module[{
 ]
 
 trDeg::usage = "trDeg[m][i] is the component-i trace up to degree m as a GDO element."
-(* trDeg[m_][ii_] := GDO[{{ii},{}} -> {{},{ii}}][
+trDeg[m_][ii_] := GDO[{{ii},{}} -> {{},{ii}}][
         0, 0, trGenFunc[m][ii]
-] *)
-trDeg[m_][i_] := GDOTruncateToDegree[m]@trGuess[i]
+]
 
 trGuess::usage = "trGuess[i] is a placeholder guess for a GDO expression which represents a trace."
 trGuess[i_] := GDO[{{i},{}}->{{},{i}}][
