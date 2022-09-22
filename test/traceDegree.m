@@ -377,7 +377,7 @@ Module[
                         (α[i] a[i] + β[i] b[i] + ξ[i] x[i] + η[i] y[i]) +
                         1/2 (α[i] a[i] + β[i] b[i] + ξ[i] x[i] + η[i] y[i])^2
                 ]//ExpandAll,
-TestID->"GDOTruncateToDegree truncates an exponent appropriately"]]
+TestID->"GDOTruncateToDegree truncates an exponent appropriately."]]
 
 Module[
         {
