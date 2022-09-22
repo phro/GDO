@@ -584,6 +584,21 @@ Module[
 TestID->"getyCoef[i] only extracts values from index-i terms."]]
 
 Module[
+        {
+                gdo,
+                i = "i",
+                n = 3
+        },
+        gdo = GDO[{{},{}}->{{i},{}}][
+                α[i] a[i] + η[i]b[i] y[i] + β[i] b[i] +
+                ξ[i]b[i] x[i] + b[i] x[i] y[i]
+        ];
+        VerificationTest[
+                gdo // tr[i] // GDOTruncateToDegree[n] // CF,
+                gdo // trDeg[n][i] //CF,
+TestID->"tr agrees with trDeg on a GDO."]]
+
+Module[
         {i = "i"},
         VerificationTest[
                 GDO[{}->{i}][α[i] a[i] + β[i] b[i]]//tr[i],
