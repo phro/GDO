@@ -589,7 +589,7 @@ Module[
                 i = "i",
                 n = 3
         },
-        gdo = GDO[{{},{}}->{{i},{}}][
+        gdo = GDO[{{i},{}}->{{i},{}}][
                 α[i] a[i] + η[i]b[i] y[i] + β[i] b[i] +
                 ξ[i]b[i] x[i] + b[i] x[i] y[i]
         ];
