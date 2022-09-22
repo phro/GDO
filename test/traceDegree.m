@@ -907,6 +907,15 @@ Module[
                 ZFramed[rhs]//Normal,
 TestID->"ZFramed satisfies R3-"]]
 
+Module[
+        {
+                gdo = Link[7,Alternating,7]//toRVT//Z
+        },
+        VerificationTest[
+                gdo // ptr // Length,
+                gdo // getCodomain // Length,
+TestID->"ptr returns a list of k elements for a k-component tangle."]]
+
 (*
 Module[
         { i, j, k, l,
