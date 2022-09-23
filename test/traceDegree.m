@@ -596,6 +596,18 @@ Module[
 TestID->"getyCoef[i] only extracts values from index-i terms."]]
 
 Module[
+        {a},
+        VerificationTest[
+                safeEval[Exp[#]&][Exp[a]-1],
+                Exp[Exp[a]-1],
+TestID->"safeEval evaluates functions with well-defined values."];
+        VerificationTest[
+                safeEval[((1-Exp[#])/#)&][0],
+                -1,
+TestID->"safeEval evaluates functions with existant limits."]
+        ]
+
+Module[
         {
                 gdo,
                 i = "i",
