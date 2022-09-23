@@ -235,6 +235,13 @@ getxyCoef[i_][gdo_][bb_] :=
         (Coefficient[#,y[i],1]&) @
         getSeries[gdo][[2]]
 
+safeEval[f_][x_] := Module[{fx, x0},
+        If[(fx=Quiet[f[x]]) === Indeterminate,
+                Series[f[x0],{x0, x, 0}]//Normal,
+                fx
+        ]
+]
+
 tr::usage = "tr[i] computes the trace of a GDO element on component i. Current implementation assumes the Subscript[a, i] Subscript[b, i] term vanishes and $k=0."
 tr::nonzeroSigma = "tr[`1`]: Component `1` has writhe: `2`, expected: 0."
 tr[i_][gdo_] := Module[
