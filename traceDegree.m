@@ -237,7 +237,7 @@ getxyCoef[i_][gdo_][bb_] :=
 
 safeEval[f_][x_] := Module[{fx, x0},
         If[(fx=Quiet[f[x]]) === Indeterminate,
-                Series[f[x0],{x0, x, 0}]//Normal,
+                Series[f[x0],x0 -> x]//Normal,
                 fx
         ]
 ]
