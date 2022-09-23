@@ -256,20 +256,11 @@ tr[i_][gdo_] := Module[
                 outs = toMixed@getCodomain[gdo],
                 ta,
                 exponent,
-                v,
-                ηta, ξta, λta
         },
         ta = (1-Exp[-α]) t[i];
-        If[(ηta = Quiet[η[ta]]) === Indeterminate, ηta = Limit[η[v],v->ta]];
-        If[(ξta = Quiet[ξ[ta]]) === Indeterminate, ξta = Limit[ξ[v],v->ta]];
-        If[(λta = Quiet[λ[ta]]) === Indeterminate, λta = Limit[λ[v],v->ta]];
-        exponent = Quiet[c + α a[i] + β ta + t[i](ηta ξta + λta)/(1-t[i] λta)];
-        If[exponent===Indeterminate,
-                exponent = Limit[
-                        c + α a[i] + β ta + t[i](η[v]ξ[v] + λ[v])/(1-t[i] λ[v]),
-                        v->ta
-                ]
-        ];
+        exponent = safeEval[
+                c + α a[i] + β ta + t[i](η[#]ξ[#] + λ[#])/(1-t[i] λ[#])&
+        ][ta];
         CF[GDO[ins -> closeComponent[i][outs]][exponent]//.l2U]
 ] /; Module[
         {σ = getabCoef[i][gdo]},
