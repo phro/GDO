@@ -613,13 +613,14 @@ Module[
                 i = "i",
                 n = 3,
                 gdoTr,
-                gdoTestComp
+                gdoTrByHand,
+                gdoTrDeg
         },
         gdo = GDO[{{i},{}}->{{i},{}}][
                 α[i] a[i] + η[i]b[i] y[i] + β[i] b[i] +
                 ξ[i]b[i] x[i] + b[i] x[i] y[i]
         ];
-        gdoTr = GDO[{{i},{}}->{{},{i}}][0,0,
+        gdoTrByHand = GDO[{{i},{}}->{{},{i}}][0,0,
                 1+
                 (a[i] + t[i]^2) α[i] +
                 (
@@ -635,14 +636,15 @@ Module[
                         ) α[i]^3
                 )
         ]//CF;
-        gdoTestComp = gdo // tr[i] // GDOTruncateToDegree[n];
+        gdoTr = gdo // tr[i] // GDOTruncateToDegree[n];
+        gdoTrDeg = gdo // trDeg[n][i];
         VerificationTest[
-                gdoTestComp,
                 gdoTr,
-TestID->"tr computes the correct value on a GDO."];
+                gdoTrByHand,
+TestID->"tr agrees with by-hand computation on a GDO."];
         VerificationTest[
-                gdoTestComp,
-                gdo // trDeg[n][i],
+                gdoTr,
+                gdoTrDeg,
 TestID->"tr agrees with trDeg on a GDO."]
         ]
 
