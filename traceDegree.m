@@ -247,19 +247,19 @@ tr::nonzeroSigma = "tr[`1`]: Component `1` has writhe: `2`, expected: 0."
 tr[i_][gdo_] := Module[
         {
                 c = getConstCoef[i][gdo],
-                η = getyCoef[i][gdo],
-                β = getbCoef[i][gdo],
-                α = getaCoef[i][gdo],
-                ξ = getxCoef[i][gdo],
+                ηη = getyCoef[i][gdo],
+                ββ = getbCoef[i][gdo],
+                αα = getaCoef[i][gdo],
+                ξξ = getxCoef[i][gdo],
                 λ = getxyCoef[i][gdo],
                 ins  = toMixed@getDomain[gdo],
                 outs = toMixed@getCodomain[gdo],
                 ta,
                 exponent,
         },
-        ta = (1-Exp[-α]) t[i];
+        ta = (1-Exp[-αα]) t[i];
         exponent = safeEval[
-                c + α a[i] + β ta + t[i](η[#]ξ[#] + λ[#])/(1-t[i] λ[#])&
+                c + αα a[i] + ββ ta + t[i](ηη[#]ξξ[#] + λ[#])/(1-t[i] λ[#])&
         ][ta];
         CF[GDO[ins -> closeComponent[i][outs]][exponent]//.l2U]
 ] /; Module[
