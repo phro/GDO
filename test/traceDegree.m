@@ -649,6 +649,25 @@ TestID->"tr agrees with trDeg on a GDO."]
         ]
 
 Module[
+        {
+                mono, d, n, i = "i"
+        },
+        Table[
+        d = Sum[n[j], {j, 4}];
+        mono = GDO[{}->{i}][0,0, y[i]^n[1] b[i]^n[2] a[i]^n[3] x[i]^n[4]];
+        VerificationTest[
+                mono // tr[i],
+                mono // trDeg[d][i],
+TestID->"tr matches trDeg on small monomial \n"<>ToString[mono[3]]
+        ],
+	{n[1], 0, 2},
+	{n[2], 0, 2},
+	{n[3], 0, 2},
+	{n[4], 0, 2}
+        ]
+]
+
+Module[
         {i = "i"},
         VerificationTest[
                 GDO[{}->{i}][α[i] a[i] + β[i] b[i]]//tr[i],
