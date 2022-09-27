@@ -660,10 +660,10 @@ Module[
                 mono // trDeg[d][i],
 TestID->"tr matches trDeg on small monomial \n"<>ToString[mono[3]]
         ],
-	{n[1], 0, 2},
-	{n[2], 0, 2},
-	{n[3], 0, 2},
-	{n[4], 0, 2}
+        {n[1], 0, 2},
+        {n[2], 0, 2},
+        {n[3], 0, 2},
+        {n[4], 0, 2}
         ]
 ]
 
