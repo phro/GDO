@@ -635,7 +635,11 @@ Module[
         VerificationTest[
                 gdoTr[1],
                 gdoTrDeg[1],
-        TestID->"tr agrees with trDeg on GDO number "<>ToString[1]<>"."]
+        TestID->"tr agrees with trDeg on GDO number "<>ToString[1]<>"."];
+        VerificationTest[
+                gdoTr[2],
+                gdoTrDeg[2],
+        TestID->"tr agrees with trDeg on GDO number "<>ToString[2]<>"."]
 ]
 
 Module[
