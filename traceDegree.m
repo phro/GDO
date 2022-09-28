@@ -259,7 +259,10 @@ tr[i_][gdo_] := Module[
         },
         ta = (1-Exp[-αα]) t[i];
         exponent = safeEval[
-                c + αα a[i] + ββ ta + t[i](ηη[#]ξξ[#] + λ[#])/(1-t[i] λ[#])&
+                c + αα a[i] + ββ ta +
+                t[i](ηη[#]ξξ[#])/(1-t[i] λ[#]) -
+                Log[1-t[i] λ[#]]
+                &
         ][ta];
         CF[GDO[ins -> closeComponent[i][outs]][exponent]//.l2U]
 ] /; Module[
