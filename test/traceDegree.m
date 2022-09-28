@@ -350,6 +350,13 @@ Module[
 TestID->"GDOTruncateToDegree truncates the identity appropriately"]]
 
 Module[
+        {i = "i"},
+        VerificationTest[
+                GDO[{}->{i}][a[i],0,1]//GDOTruncateToDegree[3],
+                GDO[{}->{i}][0,0,1+a[i] + a[i]^2/2 + a[i]^3/6],
+TestID->"GDOTruncateToDegree truncates empty-domain exponential correctly."]]
+
+Module[
         {i, id},
         as = GDO[{i}->{i}][α[i] a[i] , 0, 1];
         VerificationTest[
