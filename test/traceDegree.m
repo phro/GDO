@@ -620,19 +620,23 @@ Module[
                 i = "i",
                 n = 3,
                 gdoTr,
-                gdoTrDeg
+                gdoTrDeg,
+                j
         },
-        gdo = GDO[{{i},{}}->{{i},{}}][
+        gdo[1] = GDO[{{i},{}}->{{i},{}}][
+                α[i] a[i] + η[i] y[i] + β[i] b[i] + ξ[i] x[i] + x[i] y[i]
+        ];
+        gdo[2] = GDO[{{i},{}}->{{i},{}}][
                 α[i] a[i] + η[i]b[i] y[i] + β[i] b[i] +
                 ξ[i]b[i] x[i] + b[i] x[i] y[i]
         ];
-        gdoTr = gdo // tr[i] // GDOTruncateToDegree[n];
-        gdoTrDeg = gdo // trDeg[n][i];
+        gdoTr[j_] := gdo[j] // tr[i] // GDOTruncateToDegree[n];
+        gdoTrDeg[j_] := gdo[j] // trDeg[n][i];
         VerificationTest[
-                gdoTr,
-                gdoTrDeg,
-TestID->"tr agrees with trDeg on a GDO."]
-        ]
+                gdoTr[1],
+                gdoTrDeg[1],
+        TestID->"tr agrees with trDeg on GDO number "<>ToString[1]<>"."]
+]
 
 Module[
         {
