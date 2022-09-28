@@ -630,6 +630,9 @@ Module[
                 α[i] a[i] + η[i]b[i] y[i] + β[i] b[i] +
                 ξ[i]b[i] x[i] + b[i] x[i] y[i]
         ];
+        gdo[3] = GDO[{{i},{}}->{{i},{}}][
+                α[i] a[i] + β[i] b[i] + b[i] x[i] y[i]
+        ];
         gdoTr[j_] := gdo[j] // tr[i] // GDOTruncateToDegree[n];
         gdoTrDeg[j_] := gdo[j] // trDeg[n][i];
         Table[
@@ -639,7 +642,7 @@ Module[
                 TestID->"tr agrees with trDeg on GDO number "<>
                         ToString[j]<>"."
                 ],
-                {j,2}
+                {j,3}
         ]
 ]
 
