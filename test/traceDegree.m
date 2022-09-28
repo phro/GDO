@@ -617,32 +617,30 @@ TestID->"safeEval evaluates functions with existant limits."]
 Module[
         {
                 gdo,
+                gdos,
                 i = "i",
                 n = 3,
-                gdoTr,
-                gdoTrDeg,
                 j
         },
-        gdo[1] = GDO[{{i},{}}->{{i},{}}][
-                α[i] a[i] + η[i] y[i] + β[i] b[i] + ξ[i] x[i] + x[i] y[i]
-        ];
-        gdo[2] = GDO[{{i},{}}->{{i},{}}][
-                α[i] a[i] + η[i]b[i] y[i] + β[i] b[i] +
-                ξ[i]b[i] x[i] + b[i] x[i] y[i]
-        ];
-        gdo[3] = GDO[{{i},{}}->{{i},{}}][
-                α[i] a[i] + β[i] b[i] + b[i] x[i] y[i]
-        ];
-        gdoTr[j_] := gdo[j] // tr[i] // GDOTruncateToDegree[n];
-        gdoTrDeg[j_] := gdo[j] // trDeg[n][i];
+        gdos = {
+                GDO[{{i},{}}->{{i},{}}][
+                        α[i]a[i] + η[i]y[i] + β[i]b[i] + ξ[i]x[i] + x[i]y[i]
+                ],
+                GDO[{{i},{}}->{{i},{}}][
+                        α[i] a[i] + η[i]b[i] y[i] + β[i] b[i] +
+                        ξ[i]b[i] x[i] + b[i] x[i] y[i]
+                ],
+                GDO[{{i},{}}->{{i},{}}][
+                        α[i] a[i] + β[i] b[i] + b[i] x[i] y[i]
+                ]
+        };
         Table[
                 VerificationTest[
-                        gdoTr[j],
-                        gdoTrDeg[j],
-                TestID->"tr agrees with trDeg on GDO number "<>
-                        ToString[j]<>"."
+                        gdo // tr[i] // GDOTruncateToDegree[n],
+                        gdo // trDeg[n][i],
+                TestID->"tr agrees with trDeg on GDO\n" <> ToString[gdo]<>"."
                 ],
-                {j,3}
+                {gdo, gdos}
         ]
 ]
 
