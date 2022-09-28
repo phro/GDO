@@ -783,18 +783,25 @@ Module[
                 α="α",
                 ξ="ξ",
                 λ="λ",
-                ta
+                ta,
+                gdo,
+                gdoTr
         },
         ta = (1-Exp[-α]) t[i];
+        gdo = GDO[{{},{}}->{{i},{}}][
+                α a[i] + η[b[i]] y[i] + β b[i] +
+                ξ[b[i]] x[i] + λ[b[i]] x[i] y[i]
+        ];
+        gdoTr = GDO[{{},{}}->{{},{i}}][
+                α a[i] + β ta + t[i](η[ta] ξ[ta] +
+                λ[ta])/(1-t[i] λ[ta])
+        ];
         VerificationTest[
-                GDO[{{},{}}->{{i},{}}][
-                        α a[i] + η[b[i]] y[i] + β b[i] +
-                        ξ[b[i]] x[i] + λ[b[i]] x[i] y[i]
-                ] //tr[i],
-                GDO[{{},{}}->{{},{i}}][
-                        α a[i] + β ta + t[i](η[ta] ξ[ta] + λ[ta])/(1-t[i] λ[ta])
-                ],
-TestID->"tr acts as expected on generic GDO element"]]
+                gdo //tr[i],
+                gdoTr,
+TestID->"tr acts as expected on generic GDO element."
+        ]
+]
 
 Module[
         {i="i", j="j", k="k"},

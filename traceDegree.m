@@ -255,7 +255,7 @@ tr[i_][gdo_] := Module[
                 ins  = toMixed@getDomain[gdo],
                 outs = toMixed@getCodomain[gdo],
                 ta,
-                exponent,
+                exponent
         },
         ta = (1-Exp[-αα]) t[i];
         exponent = safeEval[
