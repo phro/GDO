@@ -632,14 +632,15 @@ Module[
         ];
         gdoTr[j_] := gdo[j] // tr[i] // GDOTruncateToDegree[n];
         gdoTrDeg[j_] := gdo[j] // trDeg[n][i];
-        VerificationTest[
-                gdoTr[1],
-                gdoTrDeg[1],
-        TestID->"tr agrees with trDeg on GDO number "<>ToString[1]<>"."];
-        VerificationTest[
-                gdoTr[2],
-                gdoTrDeg[2],
-        TestID->"tr agrees with trDeg on GDO number "<>ToString[2]<>"."]
+        Table[
+                VerificationTest[
+                        gdoTr[j],
+                        gdoTrDeg[j],
+                TestID->"tr agrees with trDeg on GDO number "<>
+                        ToString[j]<>"."
+                ],
+                {j,2}
+        ]
 ]
 
 Module[
