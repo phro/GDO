@@ -624,17 +624,17 @@ Module[
         },
         gdos = {
                 GDO[{{i},{}}->{{i},{}}][
-                        α[i] a[i] + x[i] y[i]
+                        α[i] a[i] + ξ[i]η[i]x[i]y[i]
                 ],
                 GDO[{{i},{}}->{{i},{}}][
-                        α[i]a[i] + η[i]y[i] + β[i]b[i] + ξ[i]x[i] + x[i]y[i]
+                        α[i]a[i] + η[i]y[i] + β[i]b[i] + ξ[i]x[i] + ξ[i]η[i]x[i]y[i]
                 ],
                 GDO[{{i},{}}->{{i},{}}][
-                        α[i] a[i] + η[i]b[i] y[i] + β[i] b[i] +
-                        ξ[i]b[i] x[i] + b[i] x[i] y[i]
+                        α[i] a[i] + η[i]β[i] b[i]y[i] + β[i] b[i] +
+                        β[i]ξ[i]b[i] x[i] + β[i]ξ[i]η[i] b[i]x[i]y[i]
                 ],
                 GDO[{{i},{}}->{{i},{}}][
-                        α[i] a[i] + β[i] b[i] + b[i] x[i] y[i]
+                        α[i] a[i] + β[i] b[i] + β[i]ξ[i]η[i] b[i]x[i]y[i]
                 ]
         };
         Table[
