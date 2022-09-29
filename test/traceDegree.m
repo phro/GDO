@@ -662,7 +662,7 @@ Module[
         ta = (1-Exp[-α[i]])t[i];
         VerificationTest[
                 GDO[{}->{i}][α[i] a[i] + b[i]x[i]y[i]]//tr[i],
-                GDO[{{},{}}->{{},{i}}][α[i] a[i] + ta t[i]/(1- ta t[i])],
+                GDO[{{},{}}->{{},{i}}][α[i] a[i] - Log[1-t[i] ta]],
 TestID->"tr behaves as defined on an almost Q-only GDO."]]
 
 Module[
