@@ -787,8 +787,8 @@ Module[
                 ξ[b[i]] x[i] + λ[b[i]] x[i] y[i]
         ];
         gdoTr = GDO[{{},{}}->{{},{i}}][
-                α a[i] + β ta + t[i](η[ta] ξ[ta] +
-                λ[ta])/(1-t[i] λ[ta])
+                α a[i] + β ta + t[i](η[ta] ξ[ta])/(1-t[i] λ[ta])
+                - Log[1 - t[i]λ[ta]]
         ];
         VerificationTest[
                 gdo //tr[i],
