@@ -688,7 +688,7 @@ Module[
         VerificationTest[
                 GDO[{}->{i}][α[i] a[i] + (B[i]-1)/b[i] x[i]y[i]]//tr[i],
                 GDO[{{},{}}->{{},{i}}][
-                        α[i] a[i] + tb t[i]/(1- tb t[i])
+                        α[i] a[i] - Log[1 - t[i]tb]
                 ]//.l2U//CF,
 TestID->"tr behaves as defined on a doubly-nested almost exponential almost Q-only GDO."]
 ]
