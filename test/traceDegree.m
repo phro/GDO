@@ -987,6 +987,19 @@ Module[
                 gdo // getCodomain // Length,
 TestID->"ptr returns a list of k elements for a k-component tangle."]]
 
+Module[
+        {f, i, j, k, gdo, gdof},
+        gdo  = GDO[{i,j}->{k}][(i + j + k) α[i] + β[j], ξ[i]η[j] + ξ[i]x[j],1];
+        gdof = GDO[
+                {f[i],f[j]}->{f[k]}
+        ][
+                (i + j + k) α[f[i]] + β[f[j]], ξ[f[i]]η[f[j]] + ξ[f[i]]x[f[j]],1
+        ];
+        VerificationTest[
+                ReindexBy[f][gdo],
+                gdof,
+TestID->"ReindexBy replaces indices with mapped indices."]]
+
 (*
 Module[
         { i, j, k, l,
