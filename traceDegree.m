@@ -65,6 +65,24 @@ toList[RVT[cs_List, xs_List, rs_List]] := Flatten[#,1]&@((toGDO/@#&)/@{xs,rs,cs}
 
 getIndices[RVT[cs_List, _List, _List]] := Sort@Flatten[#,1]&@(List@@@cs)
 
+ReindexBy[f_][gdo_] := Module[
+        {
+        replacementRules,
+        subscriptReplacementRules,
+        indices = getGDOIndices[gdo],
+        is = getDomain[gdo],
+        js = getCodomain[gdo],
+        Q =  getSeries[gdo],
+        is2,js2,Q2
+        },
+        replacementRules = Thread[indices->(f/@indices)];
+        subscriptReplacementRules = Thread[isolateSubscripts[replacementRules]];
+        is2 = is/.replacementRules;
+        js2 = js/.replacementRules;
+        Q2 = Q/.subscriptReplacementRules;
+        GDO[is2->js2]@@Q2
+]
+
 Reindex\[DoubleStruckCapitalE][gdo_]:=Module[
         {
         replacementRules,
