@@ -1015,6 +1015,28 @@ Module[
                 gdof,
 TestID->"ReindexBy replaces closed-component indices with mapped indices."]]
 
+Module[
+        {i, j, k, gdo},
+        gdo = {
+                GDO[{i,j}->{k}][α[i]a[i], ξ[j]y[k],1],
+                GDO[{i,k}->{j}][α[i]a[i], ξ[k]y[j],1],
+                GDO[{j,i}->{k}][α[j]a[j], ξ[i]y[k],1],
+                GDO[{j,k}->{i}][α[j]a[j], ξ[k]y[i],1],
+                GDO[{k,j}->{i}][α[k]a[k], ξ[j]y[i],1],
+                GDO[{k,i}->{j}][α[k]a[k], ξ[i]y[j],1]
+        };
+        VerificationTest[
+                getReindications[gdo[[1]]],
+                Sort@{
+                        gdo[[1]],
+                        gdo[[2]],
+                        gdo[[3]],
+                        gdo[[4]],
+                        gdo[[5]],
+                        gdo[[6]]
+                },
+TestID->"getReindications applies all reindices to a GDO."]]
+
 (*
 Module[
         { i, j, k, l,
