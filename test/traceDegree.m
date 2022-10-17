@@ -1016,6 +1016,13 @@ Module[
 TestID->"ReindexBy replaces closed-component indices with mapped indices."]]
 
 Module[
+        {gdo = GDO[{}->{1}][a[1]b[1], x[1]y[1], 1]},
+        VerificationTest[
+                getReindications[gdo],
+                {gdo},
+TestID->"getReindications returns singleton when only one index present."]]
+
+Module[
         {i, j, k, gdo},
         gdo = {
                 GDO[{i,j}->{k}][α[i]a[i], ξ[j]y[k],1],
