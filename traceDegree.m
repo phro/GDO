@@ -243,7 +243,7 @@ getabCoef[i_][gdo_] :=
         (SeriesCoefficient[#,{b[i],0,1}]&) @*
         (Coefficient[#,a[i],1]&) @*
         ReplaceAll[U2l] @
-        getSeries[gdo][[1]]
+        (gdo[1] + gdo[2] + Log[gdo[3]])
 
 getxyCoef::usage = "getxyCoef[i][gdo][b[i]] returns the linear coefficient of x[i]y[i] as a function of b[i]."
 getxyCoef[i_][gdo_][bb_] :=
