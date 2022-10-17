@@ -325,7 +325,7 @@ GDOTruncateToDegree[n_][gdo_]:=Module[
                 Flatten[#, 1]&@(Thread /@ Map[#[Flatten@js]&, {y, b, a, x, t}]);
         {L, Q, P} = getSeries[gdo/.U2l/.scalerDomain/.scalerCodomain];
         GDO[is->js][0, 0, (TruncateToDegree[n][μ]@*TruncateToDegree[n][λ])@
-                ((Exp[L+Q]*P)/.U2l)
+                ((Exp[L+Q]*P)//.U2l)
         ]/.{λ->1, μ->1}//CF
 ]
 
