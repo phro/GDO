@@ -1000,6 +1000,21 @@ Module[
                 gdof,
 TestID->"ReindexBy replaces indices with mapped indices."]]
 
+Module[
+        {f, i, j, k, gdo, gdof},
+        gdo  = GDO[{{i,j},{}}->{{k},{i}}][
+                (i + j + k) α[i] + β[j], ξ[i]η[j] + ξ[i]x[j],1
+        ];
+        gdof = GDO[
+                {{f[i],f[j]},{}}->{{f[k]},{f[i]}}
+        ][
+                (i + j + k) α[f[i]] + β[f[j]], ξ[f[i]]η[f[j]] + ξ[f[i]]x[f[j]],1
+        ];
+        VerificationTest[
+                ReindexBy[f][gdo],
+                gdof,
+TestID->"ReindexBy replaces closed-component indices with mapped indices."]]
+
 (*
 Module[
         { i, j, k, l,
