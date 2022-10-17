@@ -30,7 +30,7 @@ GDO[ijs___][Qs___] := Subscript[\[DoubleStruckCapitalE], ijs][Qs]
 getDomain[GDO[is_->js_][L_,Q_,P_]]:=is;
 getCodomain[GDO[is_->js_][L_,Q_,P_]]:=js;
 getSeries[GDO[is_->js_][L_,Q_,P_]]:={L,Q,P};
-getGDOIndices[gdo_]:=Union@Flatten@{getDomain[GDO],getCodomain[GDO]};
+getGDOIndices[gdo_]:=Union@Flatten@{getDomain[gdo],getCodomain[gdo]};
 isolateSubscripts[a_->b_]:=Subscript[x_, a]->Subscript[x, b];
 getPLength[gdo_] := Map[Length,ExpandAll[GDO],{1}][[3]];
 
