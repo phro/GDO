@@ -83,6 +83,17 @@ ReindexBy[f_][gdo_] := Module[
         GDO[is2->js2]@@Q2
 ]
 
+fromAssoc[ass_] := Association[ass][#] &
+
+getReindications[gdo_] := Module[
+        {
+                is = getGDOIndices[gdo],
+                fs
+        },
+        fs = (fromAssoc@*Association@*Thread)/@(is -> # & /@ Permutations[is]);
+        ReindexBy[#][gdo]&/@fs
+]
+
 Reindex\[DoubleStruckCapitalE][gdo_]:=Module[
         {
         replacementRules,
