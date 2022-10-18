@@ -1089,7 +1089,7 @@ Module[
                         0, 1
                 ] 
         };
-        gdosReindexed = Sort@{
+        gdosReindexed = Sort[Sort/@{
                 {
                         GDO[{{},{}}->{{1},{2}}][
                                 -Log[1 +
@@ -1120,7 +1120,7 @@ Module[
                         0, 1
                 ]
                 }
-        };
+        }];
         gdosCanonical = {
                 GDO[{{},{}}->{{1},{2}}][
                         -Log[1 +
