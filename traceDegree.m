@@ -102,6 +102,8 @@ getReindications[gdo_] := Module[
         Sort[CF@ReindexBy[#][gdoInt]&/@fs]
 ]
 
+getCanonicalIndex[gdo_] := First@getReindications@gdo
+
 coinv::usage = "coinv[i][f] gives the coinvarant of expression in sl2+ f with respect to variables indexed by i. It returns a finite sum of monomials when given a finite sum."
 coinv[ii_][lincomb_Plus]:=coinv[ii]/@lincomb;
 coinv[ii_][word_]:=Module[{
