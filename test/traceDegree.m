@@ -1065,7 +1065,12 @@ Module[
                         gdo[[5]],
                         gdo[[6]]
                 },
-TestID->"getReindications applies all reindices to a GDO."]]
+TestID->"getReindications applies all reindices to a GDO."];
+        VerificationTest[
+                getCanonicalIndex[gdoOrig],
+                First@getReindications[gdoOrig],
+TestID->"getCanonicalIndex returns the first element of getReindications."]
+]
 
 (*
 Module[
