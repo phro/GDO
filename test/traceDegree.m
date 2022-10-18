@@ -1107,7 +1107,7 @@ Module[
         VerificationTest[
                 ReindexToInteger@gdos,
                 Reverse@gdosCanonical,
-        TestID->"ReindexToInteger behaves appropriately on a list."]
+TestID->"ReindexToInteger behaves appropriately on a list."];
         VerificationTest[
                 getCanonicalIndex@gdos,
                 gdosCanonical,
