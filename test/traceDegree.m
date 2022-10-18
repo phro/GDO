@@ -1023,6 +1023,15 @@ Module[
 TestID->"getReindications returns singleton when only one index present."]]
 
 Module[
+        {i, j, k, gdo, gdos},
+        gdo = GDO[{i,j}->{k}][α[i]a[k], ξ[j]y[k],1];
+        gdos = getReindications[gdo];
+        VerificationTest[
+                gdos,
+                CF/@gdos,
+TestID->"getReindications returns a list of GDO's in canonical form"]]
+
+Module[
         {i, j, k, gdo},
         gdo = {
                 GDO[{i,j}->{k}][α[i]a[i], ξ[j]y[k],1],
