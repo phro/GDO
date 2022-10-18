@@ -1072,6 +1072,40 @@ TestID->"getReindications applies all reindices to a GDO."];
 TestID->"getCanonicalIndex returns the first element of getReindications."]
 ]
 
+Module[
+        {gdos, gdosCanonical},
+        gdos = {
+                GDO[{{}, {}} -> {{5}, {1}}][
+                        -Log[1 +
+                                ((b[5] - 2 b[5] B[5] + b[5] B[5]^2) t[1])/
+                                (b[5] B[5])] - (b[5])/2,
+                        0, 1
+                ],
+                GDO[{{}, {}} -> {{1}, {5}}][
+                        -Log[1 +
+                                ((b[1] - 2 b[1]B[1] + b[1]B[1]^2) t[5])/
+                                (b[1] B[1])],
+                        0, 1
+                ] 
+        };
+        gdosCanonical = {
+                GDO[{{},{}}->{{1},{2}}][
+                        -Log[1 +
+                                (b[1] - 2 b[1]B[1] + b[1]B[1]^2)t[2]/
+                                (b[1]B[1])],
+                        0, 1
+                ],
+                GDO[{{},{}}->{{1},{2}}][
+                        -Log[1 + (b[2] - 2 b[2]B[2] + b[2]B[2]^2)t[1]/
+                                (b[2] B[2])] - (b[2])/2,
+                        0, 1
+                ]
+        };
+        VerificationTest[
+                getCanonicalIndex@gdos,
+                gdosCanonical,
+TestID->"getCanonicalIndex returns correct value on list of GDO's"]]
+
 (*
 Module[
         { i, j, k, l,
