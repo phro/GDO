@@ -91,7 +91,7 @@ getReindications[gdo_] := Module[
                 fs
         },
         fs = (fromAssoc@*Association@*Thread)/@(is -> # & /@ Permutations[is]);
-        ReindexBy[#][gdo]&/@fs
+        Sort[CF@ReindexBy[#][gdo]&/@fs]
 ]
 
 Reindex\[DoubleStruckCapitalE][gdo_]:=Module[

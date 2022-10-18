@@ -1033,7 +1033,7 @@ TestID->"getReindications returns a list of GDO's in canonical form"]]
 
 Module[
         {i, j, k, gdo},
-        gdo = {
+        gdo = CF/@{
                 GDO[{i,j}->{k}][α[i]a[i], ξ[j]y[k],1],
                 GDO[{i,k}->{j}][α[i]a[i], ξ[k]y[j],1],
                 GDO[{j,i}->{k}][α[j]a[j], ξ[i]y[k],1],
