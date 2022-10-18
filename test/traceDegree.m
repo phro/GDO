@@ -1073,7 +1073,7 @@ TestID->"getCanonicalIndex returns the first element of getReindications."]
 ]
 
 Module[
-        {gdos, gdosCanonical},
+        {gdos, gdosReindexed, gdosCanonical},
         gdos = {
                 GDO[{{}, {}} -> {{5}, {1}}][
                         -Log[1 +
@@ -1088,6 +1088,38 @@ Module[
                                 (b[1] B[1])],
                         0, 1
                 ] 
+        };
+        gdosReindexed = Sort@{
+                {
+                        GDO[{{},{}}->{{1},{2}}][
+                                -Log[1 +
+                                        (b[1] - 2 b[1]B[1] + b[1]B[1]^2)t[2]/
+                                        (b[1]B[1])
+                                ],
+                                0, 1
+                        ],
+                        GDO[{{},{}}->{{2},{1}}][
+                                -Log[1 + (b[2] - 2 b[2]B[2] + b[2]B[2]^2)t[1]/
+                                        (b[2] B[2])
+                                ] - b[2]/2,
+                                0, 1
+                        ]
+                },
+                {
+                GDO[{{},{}}->{{2},{1}}][
+                        -Log[1 +
+                                (b[2] - 2 b[2]B[2] + b[2]B[2]^2)t[1]/
+                                (b[2]B[2])
+                        ],
+                        0, 1
+                ],
+                GDO[{{},{}}->{{1},{2}}][
+                        -Log[1 + (b[1] - 2 b[1]B[1] + b[1]B[1]^2)t[2]/
+                                (b[1] B[1])
+                        ] - b[1]/2,
+                        0, 1
+                ]
+                }
         };
         gdosCanonical = {
                 GDO[{{},{}}->{{1},{2}}][
@@ -1108,6 +1140,10 @@ Module[
                 ReindexToInteger@gdos,
                 Reverse@gdosCanonical,
 TestID->"ReindexToInteger behaves appropriately on a list."];
+        VerificationTest[
+                getReindications[gdos],
+                gdosReindexed,
+TestID->"getReindications returns a list of lists when passed a list."]
         VerificationTest[
                 getCanonicalIndex@gdos,
                 gdosCanonical,
