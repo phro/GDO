@@ -1016,6 +1016,19 @@ Module[
 TestID->"ReindexBy replaces closed-component indices with mapped indices."]]
 
 Module[
+        {i, j, k, gdo, gdoInteger},
+        gdo  = GDO[{{i,j},{}}->{{k},{i}}][
+                (i + j + k) α[i] + β[j], ξ[i]η[j] + ξ[i]x[j],1
+        ];
+        gdoInteger  = GDO[{{1,2},{}}->{{3},{1}}][
+                (i + j + k) α[1] + β[2], ξ[1]η[2] + ξ[1]x[2],1
+        ];
+        VerificationTest[
+                ReindexToInteger@gdo,
+                gdoInteger,
+TestID->"ReindexToInteger replaces indices with consecutive integers"]]
+
+Module[
         {gdo = GDO[{}->{1}][a[1]b[1], x[1]y[1], 1]},
         VerificationTest[
                 getReindications[gdo],
