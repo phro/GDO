@@ -97,6 +97,19 @@ ReindexToInteger[gdos_List] := Module[
 
 fromAssoc[ass_] := Association[ass][#] &
 
+getReindications[gdos_List] := Module[
+        {
+                gdosInt = ReindexToInteger[gdos],
+                is,
+                fs,
+                ls
+        },
+        is = getGDOIndices[gdosInt[[1]]];
+        fs = (fromAssoc@*Association@*Thread)/@(is -> # & /@ Permutations[is]);
+        ls = CF@ReindexBy[#]/@gdosInt&/@fs;
+        Sort[Sort/@ls]
+]
+
 getReindications[gdo_] := Module[
         {
                 gdoInt = ReindexToInteger[gdo],
