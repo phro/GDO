@@ -102,66 +102,6 @@ getReindications[gdo_] := Module[
         Sort[CF@ReindexBy[#][gdoInt]&/@fs]
 ]
 
-Reindex\[DoubleStruckCapitalE][gdo_]:=Module[
-        {
-        replacementRules,
-        subscriptReplacementRules,
-        indices = getGDOIndices[gdo],
-        is = getDomain[gdo],
-        js = getCodomain[gdo],
-        Q =  getSeries[gdo],
-        is2,js2,Q2
-        },
-        replacementRules = Thread[indices->Range[Length[indices]]];
-        subscriptReplacementRules = Thread[isolateSubscripts[replacementRules]];
-        is2 = is/.replacementRules;
-        js2 = js/.replacementRules;
-        Q2 = Q/.subscriptReplacementRules;
-        GDO[is2->js2]@@Q2
-]
-
-MatrixForm[GDO[{} -> ss_][L_,Q_,P_]] ^:=
-  GDO[{} -> ss][
-    MatrixForm[Table[Table[
-      D[L,Subscript[a, i], Subscript[b, j]],
-      {i,ss}],
-      {j,ss}]
-    ],
-    MatrixForm[Table[Table[
-      D[Q,Subscript[x, i], Subscript[y, j]]
-      {i,ss}],
-      {j,ss}]
-    ],P
-  ]
-
-
-(*
- * Generic \[CurlyEpsilon]=0 elements of GDO
- *)
-EtestScal[n_] := GDO[{} -> Range[n]][
-  Sum[
-    ħ Subscript[l, i,j] Subscript[b, i] Subscript[a, j],
-    {i,1,n}, {j,1,n}
-  ],
-  Sum[
-    ħ Subscript[q, i,j][ħ Subscript[b, i]]
-    Subscript[y, i] Subscript[x, j],
-    {i,1,n},{j,1,n}],
-  1
-]
-
-Etest[n_] := GDO[{} -> Range[n]][
-  Sum[
-    ħ Subscript[l, i,j] Subscript[b, i] Subscript[a, j],
-    {i,1,n}, {j,1,n}
-  ],
-  Sum[
-    ħ Subscript[q, i,j] Subscript[y, i] Subscript[x, j],
-    {i,1,n},{j,1,n}],
-  1
-]
-
-
 coinv::usage = "coinv[i][f] gives the coinvarant of expression in sl2+ f with respect to variables indexed by i. It returns a finite sum of monomials when given a finite sum."
 coinv[ii_][lincomb_Plus]:=coinv[ii]/@lincomb;
 coinv[ii_][word_]:=Module[{
