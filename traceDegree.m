@@ -93,11 +93,13 @@ fromAssoc[ass_] := Association[ass][#] &
 
 getReindications[gdo_] := Module[
         {
-                is = getGDOIndices[gdo],
+                gdoInt = ReindexToInteger[gdo],
+                is,
                 fs
         },
+        is = getGDOIndices[gdoInt];
         fs = (fromAssoc@*Association@*Thread)/@(is -> # & /@ Permutations[is]);
-        Sort[CF@ReindexBy[#][gdo]&/@fs]
+        Sort[CF@ReindexBy[#][gdoInt]&/@fs]
 ]
 
 Reindex\[DoubleStruckCapitalE][gdo_]:=Module[
