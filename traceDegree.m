@@ -89,6 +89,12 @@ ReindexToInteger[gdo_] := Module[
         ReindexBy[f][gdo]
 ]
 
+ReindexToInteger[gdos_List] := Module[
+        {is = getGDOIndices@gdos[[1]], f},
+        f = fromAssoc@Thread[is -> Range[Length[is]]];
+        ReindexBy[f]/@gdos
+]
+
 fromAssoc[ass_] := Association[ass][#] &
 
 getReindications[gdo_] := Module[
