@@ -1045,17 +1045,18 @@ Module[
 TestID->"getReindications returns a list of GDO's in canonical form"]]
 
 Module[
-        {i, j, k, gdo},
+        {i, j, k, gdo, gdoOrig},
+        gdoOrig = GDO[{i,j}->{k}][α[i]a[i], ξ[j]y[k],1];
         gdo = CF/@{
-                GDO[{i,j}->{k}][α[i]a[i], ξ[j]y[k],1],
-                GDO[{i,k}->{j}][α[i]a[i], ξ[k]y[j],1],
-                GDO[{j,i}->{k}][α[j]a[j], ξ[i]y[k],1],
-                GDO[{j,k}->{i}][α[j]a[j], ξ[k]y[i],1],
-                GDO[{k,j}->{i}][α[k]a[k], ξ[j]y[i],1],
-                GDO[{k,i}->{j}][α[k]a[k], ξ[i]y[j],1]
+                GDO[{1,2}->{3}][α[1]a[1], ξ[2]y[3],1],
+                GDO[{1,3}->{2}][α[1]a[1], ξ[3]y[2],1],
+                GDO[{2,1}->{3}][α[2]a[2], ξ[1]y[3],1],
+                GDO[{2,3}->{1}][α[2]a[2], ξ[3]y[1],1],
+                GDO[{3,2}->{1}][α[3]a[3], ξ[2]y[1],1],
+                GDO[{3,1}->{2}][α[3]a[3], ξ[1]y[2],1]
         };
         VerificationTest[
-                getReindications[gdo[[1]]],
+                getReindications[gdoOrig],
                 Sort@{
                         gdo[[1]],
                         gdo[[2]],
