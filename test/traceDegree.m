@@ -250,14 +250,14 @@ Module[
         VerificationTest[
                 coinv[i][a[j] y[i] x[i]],
                 a[j] t[i],
-TestID->"coinv[i] reduces xy to t"]]
+TestID->"coinv[i] reduces xy to t."]]
 
 Module[
         {i, j},
         VerificationTest[
                 coinv[i][a[j] a[i] y[i]^5 x[i]^5],
                 5! a[j] a[i] t[i]^5,
-TestID->"coinv[i] reduces a(xy)^5 to at^5"]]
+TestID->"coinv[i] reduces a(xy)^5 to at^5."]]
 
 Module[
         {i, j},
@@ -347,7 +347,7 @@ Module[
                         (α[i] a[i] + β[i] b[i] + ξ[i] x[i] + η[i] y[i]) +
                         1/2 (α[i] a[i] + β[i] b[i] + ξ[i] x[i] + η[i] y[i])^2
                 ]//ExpandAll,
-TestID->"GDOTruncateToDegree truncates the identity appropriately"]]
+TestID->"GDOTruncateToDegree truncates the identity appropriately."]]
 
 Module[
         {i = "i"},
@@ -701,7 +701,7 @@ Module[
                 nonzeroWrithe // tr[1],
                 nonzeroWrithe // tr[1],
                 {tr::nonzeroSigma},
-TestID->"tr does not compute when writhe is nonzero"]]
+TestID->"tr does not compute when writhe is nonzero."]]
 
 Module[
         {n = 5,
@@ -732,7 +732,7 @@ Module[
         VerificationTest[
                 cm[{1,2},3]//tr[3],
                 gdo,
-TestID->"tr returns uppercase GDO's by default"]]
+TestID->"tr returns uppercase GDO's by default."]]
 
 Module[
         {
@@ -899,11 +899,11 @@ Module[
         VerificationTest[
                 ZFramed[r2pmb]//Normal,
                 ZFramed[parallel]//Normal,
-TestID->"ZFramed satisfies R2 (+-; braidlike)"];
+TestID->"ZFramed satisfies R2 (+-; braidlike)."];
         VerificationTest[
                 ZFramed[r2mpb]//Normal,
                 ZFramed[parallel]//Normal,
-TestID->"ZFramed satisfies R2 (-+; braidlike)"]
+TestID->"ZFramed satisfies R2 (-+; braidlike)."]
 ]
 
 Module[
@@ -917,11 +917,11 @@ Module[
         VerificationTest[
                 ZFramed[r2pmcR]//Normal,
                 ZFramed[parallelR]//Normal,
-TestID->"ZFramed satisfies R2 (+-; cyclic; right)"];
+TestID->"ZFramed satisfies R2 (+-; cyclic; right)."];
         VerificationTest[
                 ZFramed[r2mpcR]//Normal,
                 ZFramed[parallelR]//Normal,
-TestID->"ZFramed satisfies R2 (-+; cyclic; right)"]
+TestID->"ZFramed satisfies R2 (-+; cyclic; right)."]
 ]
 
 Module[
@@ -935,11 +935,11 @@ Module[
         VerificationTest[
                 ZFramed[r2pmcL]//Normal,
                 ZFramed[parallelL]//Normal,
-TestID->"ZFramed satisfies R2 (+-; cyclic; left)"];
+TestID->"ZFramed satisfies R2 (+-; cyclic; left)."];
         VerificationTest[
                 ZFramed[r2mpcL]//Normal,
                 ZFramed[parallelL]//Normal,
-TestID->"ZFramed satisfies R2 (-+; cyclic; left)"]
+TestID->"ZFramed satisfies R2 (-+; cyclic; left)."]
 ]
 
 Module[
@@ -958,7 +958,7 @@ Module[
         VerificationTest[
                 ZFramed[lhs]//Normal,
                 ZFramed[rhs]//Normal,
-TestID->"ZFramed satisfies R3+"]]
+TestID->"ZFramed satisfies R3+."]]
 
 Module[
         {
@@ -976,7 +976,7 @@ Module[
         VerificationTest[
                 ZFramed[lhs]//Normal,
                 ZFramed[rhs]//Normal,
-TestID->"ZFramed satisfies R3-"]]
+TestID->"ZFramed satisfies R3-."]]
 
 Module[
         {
@@ -1026,7 +1026,7 @@ Module[
         VerificationTest[
                 ReindexToInteger@gdo,
                 gdoInteger,
-TestID->"ReindexToInteger replaces indices with consecutive integers"]]
+TestID->"ReindexToInteger replaces indices with consecutive integers."]]
 
 Module[
         {gdo = GDO[{}->{1}][a[1]b[1], x[1]y[1], 1]},
@@ -1042,7 +1042,7 @@ Module[
         VerificationTest[
                 gdos,
                 CF/@gdos,
-TestID->"getReindications returns a list of GDO's in canonical form"]]
+TestID->"getReindications returns a list of GDO's in canonical form."]]
 
 Module[
         {i, j, k, gdo, gdoOrig},
@@ -1111,7 +1111,7 @@ TestID->"ReindexToInteger behaves appropriately on a list."];
         VerificationTest[
                 getCanonicalIndex@gdos,
                 gdosCanonical,
-TestID->"getCanonicalIndex returns correct value on list of GDO's"]
+TestID->"getCanonicalIndex returns correct value on list of GDO's."]
 ]
 
 (*
