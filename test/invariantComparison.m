@@ -21,6 +21,30 @@ TestID->"distinctValues returns the size of an empty image."]
 
 Module[
         {
+                f = 2&,
+                g = Mod[#,2]&,
+                X = {0,1,2,3,4}
+        },
+        VerificationTest[
+                getFibres[g][{}],
+                {},
+TestID->"getFibres returns the empty set for an empty domain."];
+        VerificationTest[
+                getFibres[f][X],
+                {X},
+TestID->"getFibres returns a singleton for a constant function."];
+        VerificationTest[
+                Union@Flatten[#,1]&@getFibres[g][X],
+                Union@X,
+TestID->"The list of fibres from getFibres unites to the domain."];
+        VerificationTest[
+                getFibres[g][X],
+                {{0,2,4},{1,3}},
+TestID->"getFibres returns mulitple fibres for a nonconstant function."]
+]
+
+Module[
+        {
                 mod4 = Mod[#,4]&,
                 mod2 = Mod[#,2]&,
                 X = {0,1,2,3,4},
