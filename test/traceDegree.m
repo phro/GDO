@@ -1087,7 +1087,7 @@ Module[
                                 ((b[1] - 2 b[1]B[1] + b[1]B[1]^2) t[5])/
                                 (b[1] B[1])],
                         0, 1
-                ] 
+                ]
         };
         gdosReindexed = Sort[Sort/@{
                 {
