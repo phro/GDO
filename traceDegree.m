@@ -475,7 +475,7 @@ CCn[i_][n_Integer]:=Module[{j},
  *)
 ZFramed[rvt_RVT] := Fold[#2[#1]&, GDO[{}->getIndices@rvt][0,0,1], toList@rvt]
 ZFramed::notRVT := "Argument `1` is not in RVT form."
-ZFramed[L_] := Message[ZFramed::notRVT, L];ZFramed[toRVT[L]]
+ZFramed[L_] := (Message[ZFramed::notRVT, L];ZFramed[toRVT[L]])
 
 (*
  * Dror's GDO invariant, computed in the classical algebra together with a
