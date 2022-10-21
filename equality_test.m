@@ -62,9 +62,9 @@ EquivalentQ[G1s_List,G2s_List]:=Module[
 		G2sSorted = SortBy[getPLength]@G2s,
 		perms = ReindexThenGetPermutations[G1s[[1]]]
 	},
-	Echo@(getPLength/@G1sSorted == getPLength/@G1sSorted) &&
-	Echo@(Length/@getDomain[#]&/@G1sSorted == Length/@getDomain[#]&/@G2sSorted) &&
-	Echo@(Length/@getCodomain[#]&/@G1sSorted == Length/@getCodomain[#]&/@G2sSorted) &&
+	(getPLength/@G1sSorted == getPLength/@G1sSorted) &&
+	(Length/@getDomain[#]&/@G1sSorted == Length/@getDomain[#]&/@G2sSorted) &&
+	(Length/@getCodomain[#]&/@G1sSorted == Length/@getCodomain[#]&/@G2sSorted) &&
 	Or@@Table[(Permute\[DoubleStruckCapitalE][#][p]&@G1sSorted)==G2sSorted,{p,perms}]
 ]
 EquivalentQ[G1_,G2_]:=

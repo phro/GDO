@@ -491,7 +491,7 @@ Z[L_notRVT] := Message[Z::notRVT, L]; Z@toRVT@L
 Zdeg[deg_, L_] := CF[GDOTruncateToDegree[deg][Z[L]]]
 Ztr[deg_,L_] := Zdeg[deg, L] // (Composition @@ Table[
     trDeg[i][deg],
-    {i, Echo[Cases[(Unwrithe@L)[[1]], Loop[j_, __] -> j]]}
+    {i, Cases[(Unwrithe@L)[[1]], Loop[j_, __] -> j]}
     ]
   )
 
