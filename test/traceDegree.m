@@ -451,8 +451,8 @@ Module[
                 getbCoef[i] @ GDO[{j, k} -> {i}][
                         0, 0, Exp[a[j] x[k] b[i]]
                 ],
-                a[j] x[k],
-TestID->"getbCoef obtains coefficients from P-component."]]
+                0,
+TestID->"getbCoef does not obtain coefficients from the P-component."]]
 
 Module[
         {
@@ -464,8 +464,8 @@ Module[
                 getbCoef[i] @ GDO[{j, k} -> {i}][
                         0, (η[j]ξ[k] + η[j] + ξ[k]) b[i], 1
                 ],
-                η[j]ξ[k] + η[j] + ξ[k],
-TestID->"getbCoef obtains coefficients from Q-component."]]
+                0,
+TestID->"getbCoef does not obtain coefficients from the Q-component."]]
 
 Module[
         {
@@ -474,14 +474,16 @@ Module[
                 βi="βi",
                 αi="αi",
                 ξi="ξi",
-                ci="ci",
+                cLi="cLi",
+                cQi="cQi",
+                pi ="pi",
                 bb,
                 gdo
         },
         gdo = GDO[{}->{i}][
-                βi b[i] + αi a[i] + σi a[i]b[i],
-                ηi [b[i]]y[i] + ξi [b[i]]x[i] + λi[b[i]] x[i]y[i],
-                Exp[ci]
+                cLi + βi b[i] + αi a[i] + σi a[i]b[i],
+                cQi + ηi[b[i]]y[i] + ξi[b[i]]x[i] + λi[b[i]] x[i]y[i],
+                pi[b[i]]
         ];
         VerificationTest[
                 getyCoef[i][gdo][bb],
@@ -508,18 +510,28 @@ TestID->"getxyCoef obtains the xy-term of a generic GDO expression."];
                 σi,
 TestID->"getabCoef obtains the ab-term of a generic GDO expression."];
         VerificationTest[
-                getConstCoef[i][gdo],
-                ci,
-TestID->"getConstCoef obtains the constant term of a generic GDO expression."];
+                getConstLCoef[i][gdo],
+                cLi,
+TestID->"getConstLCoef obtains the constant term of a generic GDO expression."];
+        VerificationTest[
+                getConstQCoef[i][gdo],
+                cQi,
+TestID->"getConstQCoef obtains the constant term of a generic GDO expression."];
+        VerificationTest[
+                getPCoef[i][gdo][b[i]],
+                pi[b[i]],
+TestID->"getPCoef obtains the constant term of a generic GDO expression."];
 VerificationTest[
         GDO[{}->{i}][
+                getConstLCoef[i][gdo] + 
                 getbCoef[i][gdo]        b[i] +
                 getaCoef[i][gdo]        a[i] +
                 getabCoef[i][gdo]       a[i] b[i],
+                getConstQCoef[i][gdo] + 
                 getyCoef[i][gdo][b[i]]  y[i] +
                 getxCoef[i][gdo][b[i]]  x[i] +
                 getxyCoef[i][gdo][b[i]] x[i] y[i],
-                Exp@getConstCoef[i][gdo]
+                getPCoef[i][gdo][b[i]]
                 ],
         gdo,
 TestID->"Extracting coefficients then reforming a GDO element is the identity."]
@@ -567,9 +579,9 @@ TestID->"getabCoef understands capital B variables."];
                 ((-1 + Exp[-bb]) x[3])/(bb Exp[-bb]),
 TestID->"getyCoef correctly captures pernicuous (b, B)-series."];
         VerificationTest[
-                getConstCoef[1][putIntoQ[(1-B[1]^-k) x[3]/(b[1])]]/.ℏ->1,
+                getConstQCoef[1][putIntoQ[(1-B[1]^-k) x[3]/(b[1])]]/.ℏ->1,
                -k x[3],
-TestID->"getConstCoef correctly captures pernicuous (b, B)-series."]
+TestID->"getConstQCoef correctly captures pernicuous (b, B)-series."]
 ]
 
 Module[
@@ -579,8 +591,9 @@ Module[
                 t1, t2, t3, t4
         },
         gdo = GDO[{}->{i,j}][
-                t1[b[i]] x[i] x[j] + t2[b[i]] x[j] x[j] +
-                t3[b[i]] x[i] y[j] + t4[b[i]] x[j] y[j]
+                0, t1[b[i]] x[i] x[j] + t2[b[i]] x[j] x[j] +
+                t3[b[i]] x[i] y[j] + t4[b[i]] x[j] y[j],
+                1
         ];
         VerificationTest[
                 getxCoef[i][gdo][b[i]],
@@ -594,8 +607,9 @@ Module[
                 t1, t2, t3, t4
         },
         gdo = GDO[{}->{i,j}][
-                t1[b[i]] y[i] y[j] + t2[b[i]] y[j] y[j] +
-                t3[b[i]] y[i] x[j] + t4[b[i]] y[j] x[j]
+                0, t1[b[i]] y[i] y[j] + t2[b[i]] y[j] y[j] +
+                t3[b[i]] y[i] x[j] + t4[b[i]] y[j] x[j],
+                1
         ];
         VerificationTest[
                 getyCoef[i][gdo][b[i]],
@@ -624,17 +638,20 @@ Module[
         },
         gdos = {
                 GDO[{{i},{}}->{{i},{}}][
-                        α[i] a[i] + ξ[i]η[i]x[i]y[i]
+                        α[i] a[i] , ξ[i]η[i]x[i]y[i],1
                 ],
                 GDO[{{i},{}}->{{i},{}}][
-                        α[i]a[i] + η[i]y[i] + β[i]b[i] + ξ[i]x[i] + ξ[i]η[i]x[i]y[i]
+                        α[i]a[i] + β[i]b[i] ,
+                        η[i]y[i] + ξ[i]x[i] + ξ[i]η[i]x[i]y[i],
+                        1
                 ],
                 GDO[{{i},{}}->{{i},{}}][
-                        α[i] a[i] + η[i]β[i] b[i]y[i] + β[i] b[i] +
-                        β[i]ξ[i]b[i] x[i] + β[i]ξ[i]η[i] b[i]x[i]y[i]
+                        α[i] a[i] + β[i] b[i] , η[i]β[i] b[i]y[i] +
+                        β[i]ξ[i]b[i] x[i] + β[i]ξ[i]η[i] b[i]x[i]y[i],
+                        1
                 ],
                 GDO[{{i},{}}->{{i},{}}][
-                        α[i] a[i] + β[i] b[i] + β[i]ξ[i]η[i] b[i]x[i]y[i]
+                        α[i] a[i] + β[i] b[i] , β[i]ξ[i]η[i] b[i]x[i]y[i],1
                 ]
         };
         Table[
@@ -661,8 +678,8 @@ Module[
         },
         ta = (1-Exp[-α[i]])t[i];
         VerificationTest[
-                GDO[{}->{i}][α[i] a[i] + b[i]x[i]y[i]]//tr[i],
-                GDO[{{},{}}->{{},{i}}][α[i] a[i] - Log[1-t[i] ta]],
+                GDO[{}->{i}][α[i] a[i], b[i]x[i]y[i], 1]//tr[i],
+                CF@GDO[{{},{}}->{{},{i}}][α[i] a[i],0, 1/(1-t[i] ta)]/.l2U,
 TestID->"tr behaves as defined on an almost Q-only GDO."]]
 
 Module[
