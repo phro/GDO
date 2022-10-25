@@ -1,5 +1,4 @@
 SetDirectory[NotebookDirectory[]]
-Get["invariantComparison.m"]
 Get["StandardVersion.m"]
 Get["closed_GDO.m"]
 Get["equality_test.m"]
