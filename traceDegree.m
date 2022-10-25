@@ -177,14 +177,23 @@ trGuess[i_] := GDO[{{i},{}}->{{},{i}}][
 
 (* Coefficient-extraction functions *)
 
-getConstCoef::usage = "getConstCoef[i][gdo] returns the terms in a GDO expression which are not a function of y[i], b[i], a[i], nor x[i]."
-getConstCoef[i_][gdo_] :=
+getConstLCoef::usage = "getConstLCoef[i][gdo] returns the terms in the L-portion of a GDO expression which are not a function of y[i], b[i], a[i], nor x[i]."
+getConstLCoef[i_][gdo_] :=
         (SeriesCoefficient[#, {b[i],0,0}]&) @*
         (Coefficient[#, y[i], 0]&) @*
         (Coefficient[#, a[i], 0]&) @*
         (Coefficient[#, x[i], 0]&) @
         ReplaceAll[U2l] @
-        (gdo[1] + gdo[2] + Log[gdo[3]])
+        gdo[1]
+
+getConstQCoef::usage = "getConstQCoef[i][gdo] returns the terms in the Q-portion of a GDO expression which are not a function of y[i], b[i], a[i], nor x[i]."
+getConstQCoef[i_][gdo_] :=
+        (SeriesCoefficient[#, {b[i],0,0}]&) @*
+        (Coefficient[#, y[i], 0]&) @*
+        (Coefficient[#, a[i], 0]&) @*
+        (Coefficient[#, x[i], 0]&) @
+        ReplaceAll[U2l] @
+        gdo[2]
 
 getyCoef::usage = "getyCoef[i][gdo][b[i]] returns the linear coefficient of y[i] as a function of b[i]."
 getyCoef[i_][gdo_][bb_] :=
@@ -192,7 +201,7 @@ getyCoef[i_][gdo_][bb_] :=
         ReplaceAll[U2l] @*
         (Coefficient[#, x[i],0]&) @*
         (Coefficient[#, y[i],1]&) @
-        getSeries[gdo][[2]]
+        gdo[2]
 
 getbCoef::usage = "getbCoef[i][gdo] returns the linear coefficient of b[i]."
 getbCoef[i_][gdo_] :=
@@ -201,7 +210,16 @@ getbCoef[i_][gdo_] :=
         (Coefficient[#, x[i],0]&) @*
         (Coefficient[#, y[i],0]&) @*
         ReplaceAll[U2l] @
-        (gdo[1] + gdo[2] + Log[gdo[3]])
+        (gdo[1])
+
+getPCoef::usage = "getPCoef[i][gdo] returns the perturbation P of a GDO as a function of b[i]."
+getPCoef[i_][gdo_][bb_] :=
+        ReplaceAll[{b[i]->bb}] @*
+        (Coefficient[#, a[i],0]&) @*
+        (Coefficient[#, x[i],0]&) @*
+        (Coefficient[#, y[i],0]&) @*
+        ReplaceAll[U2l] @
+        (gdo[3])
 
 getaCoef::usage = "getaCoef[i][gdo] returns the linear coefficient of a[i]."
 getaCoef[i_][gdo_] :=
@@ -223,7 +241,7 @@ getabCoef[i_][gdo_] :=
         (SeriesCoefficient[#,{b[i],0,1}]&) @*
         (Coefficient[#,a[i],1]&) @*
         ReplaceAll[U2l] @
-        (gdo[1] + gdo[2] + Log[gdo[3]])
+        (gdo[1])
 
 getxyCoef::usage = "getxyCoef[i][gdo][b[i]] returns the linear coefficient of x[i]y[i] as a function of b[i]."
 getxyCoef[i_][gdo_][bb_] :=
@@ -231,7 +249,7 @@ getxyCoef[i_][gdo_][bb_] :=
         ReplaceAll[U2l] @*
         (Coefficient[#,x[i],1]&) @*
         (Coefficient[#,y[i],1]&) @
-        getSeries[gdo][[2]]
+        gdo[2]
 
 safeEval[f_][x_] := Module[{fx, x0},
         If[(fx=Quiet[f[x]]) === Indeterminate,
@@ -244,7 +262,9 @@ tr::usage = "tr[i] computes the trace of a GDO element on component i. Current i
 tr::nonzeroSigma = "tr[`1`]: Component `1` has writhe: `2`, expected: 0."
 tr[i_][gdo_] := Module[
         {
-                c = getConstCoef[i][gdo],
+                cL = getConstLCoef[i][gdo],
+                cQ = getConstQCoef[i][gdo],
+                βP = getPCoef[i][gdo],
                 ηη = getyCoef[i][gdo],
                 ββ = getbCoef[i][gdo],
                 αα = getaCoef[i][gdo],
@@ -256,13 +276,10 @@ tr[i_][gdo_] := Module[
                 exponent
         },
         ta = (1-Exp[-αα]) t[i];
-        exponent = safeEval[
-                c + αα a[i] + ββ ta +
-                t[i](ηη[#]ξξ[#])/(1-t[i] λ[#]) -
-                Log[1-t[i] λ[#]]
-                &
-        ][ta];
-        CF[GDO[ins -> closeComponent[i][outs]][exponent]//.l2U]
+        expL = cL + αα a[i] + ββ ta;
+        expQ = cQ + safeEval[t[i]ηη[#]ξξ[#]/(1-t[i] λ[#])&][ta];
+        expP = safeEval[βP[#]/(1-t[i] λ[#])&][ta];
+        CF[GDO[ins -> closeComponent[i][outs]][expL, expQ, expP]//.l2U]
 ] /; Module[
         {σ = getabCoef[i][gdo]},
         If[σ == 0,
