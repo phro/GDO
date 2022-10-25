@@ -685,12 +685,14 @@ TestID->"tr behaves as defined on an almost Q-only GDO."]]
 Module[
         {
                 i = "i",
-                ta
+                ta,
+                λ
         },
         ta = (1-1/A[i])t[i];
+        λ = Exp[-#]&;
         VerificationTest[
-                GDO[{}->{i}][α[i] a[i] + B[i]x[i]y[i]]//tr[i],
-                GDO[{{},{}}->{{},{i}}][α[i] a[i] - Log[1-t[i]Exp[-ta]]],
+                GDO[{}->{i}][α[i] a[i], B[i]x[i]y[i],1]//tr[i],
+                CF@(GDO[{{},{}}->{{},{i}}][α[i] a[i], 0, 1/(1-t[i]λ[ta])]/.l2U),
 TestID->"tr behaves as defined on a doubly-nested exponential almost Q-only GDO."]
 ]
 
