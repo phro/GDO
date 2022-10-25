@@ -136,9 +136,9 @@ ys=CF@Table[\!\(
 \*SubscriptBox[\(\[PartialD]\), \(z\)]\((Q /. Alternatives @@ \[Zeta]s -> 0)\)\),{z,zs}];
 qt=CF@Inverse@Table[Subscript[K\[Delta], z,SuperStar[\[Zeta]]]-\!\(
 \*SubscriptBox[\(\[PartialD]\), \(z, \[Zeta]\)]Q\),{\[Zeta],\[Zeta]s},{z,zs}];
-zrule=Thread[zs->CF[qt.(zs+ys)]];
-\[Zeta]rule=Thread[\[Zeta]s->\[Zeta]s+\[Eta]s.qt];
-CF /@ \[DoubleStruckCapitalE][L,c+\[Eta]s.qt.ys,Det[qt]Subscript[Zip, \[Zeta]s][P/.(zrule\[Union]\[Zeta]rule)]] ];
+zrule=Thread[zs->CF[qt . (zs+ys)]];
+\[Zeta]rule=Thread[\[Zeta]s->\[Zeta]s+\[Eta]s . qt];
+CF /@ \[DoubleStruckCapitalE][L,c+\[Eta]s . qt . ys,Det[qt]Subscript[Zip, \[Zeta]s][P/.(zrule\[Union]\[Zeta]rule)]] ];
 
 
 (* ::Input::Initialization:: *)
@@ -152,12 +152,12 @@ ys=Table[\!\(
 \*SubscriptBox[\(\[PartialD]\), \(z\)]\((L /. Alternatives @@ \[Zeta]s -> 0)\)\),{z,zs}];
 lt=Inverse@Table[Subscript[K\[Delta], z,SuperStar[\[Zeta]]]-\!\(
 \*SubscriptBox[\(\[PartialD]\), \(z, \[Zeta]\)]L\),{\[Zeta],\[Zeta]s},{z,zs}];
-zrule=Thread[zs->lt.(zs+ys)];
+zrule=Thread[zs->lt . (zs+ys)];
 Zrule=Join[zrule,zrule/.r_Rule:>((U=r[[1]]/.{b->B,t->T,\[Alpha]->\[ScriptCapitalA]})->(U/.U2l/.r//.l2U))];
-\[Zeta]rule=Thread[\[Zeta]s->\[Zeta]s+\[Eta]s.lt];
+\[Zeta]rule=Thread[\[Zeta]s->\[Zeta]s+\[Eta]s . lt];
 Q1=Q/.(Zrule\[Union]\[Zeta]rule);
 EEQ[ps___]:=EEQ[ps]=(CF[E^-Q1 Subscript[D, Thread[{zs,{ps}}]][E^Q1]]/.{Alternatives@@zs->0,Alternatives@@Zs->1});
-CF@\[DoubleStruckCapitalE][c+\[Eta]s.lt.ys,Q1/.{Alternatives@@zs->0,Alternatives@@Zs->1},
+CF@\[DoubleStruckCapitalE][c+\[Eta]s . lt . ys,Q1/.{Alternatives@@zs->0,Alternatives@@Zs->1},
 Det[lt](Subscript[Zip, \[Zeta]s][(EQ@@zs)(P/.(Zrule\[Union]\[Zeta]rule))] /.
 Derivative[ps___][EQ][___]:> EEQ[ps] /. _EQ->1)]];
 
@@ -385,8 +385,8 @@ ThinPosition[K_,n_] := First@MinimalBy[Table[ThinPosition[K], n], Width];
 
 
 (* ::Input::Initialization:: *)
-Z[K_] := Z[RVK@EchoFunction[Width]@ThinPosition[K,100]];
-Z[rvk_RVK] := Monitor[ Module[{\[Zeta],done,st,c, \[Chi],i,j,k},
+Zvdv[K_] := Zvdv[RVK@EchoFunction[Width]@ThinPosition[K,100]];
+Zvdv[rvk_RVK] := Monitor[ Module[{\[Zeta],done,st,c, \[Chi],i,j,k},
 \[Zeta]=1; done={}; st=Range[2Length[rvk[[1]]]]; $M={};
 Do[AppendTo[$M,c];
 {i,j}=List@@c;
