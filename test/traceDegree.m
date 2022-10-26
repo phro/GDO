@@ -796,18 +796,23 @@ Module[
                 α="α",
                 ξ="ξ",
                 λ="λ",
+                cL="cL",
+                cQ="cQ",
+                p="p",
                 ta,
                 gdo,
                 gdoTr
         },
         ta = (1-Exp[-α]) t[i];
         gdo = GDO[{{},{}}->{{i},{}}][
-                α a[i] + η[b[i]] y[i] + β b[i] +
-                ξ[b[i]] x[i] + λ[b[i]] x[i] y[i]
+                cL[b[i]] + α a[i] + β b[i],
+                cQ[b[i]] + η[b[i]] y[i] + ξ[b[i]] x[i] + λ[b[i]] x[i] y[i],
+                p[b[i]]
         ];
         gdoTr = GDO[{{},{}}->{{},{i}}][
-                α a[i] + β ta + t[i](η[ta] ξ[ta])/(1-t[i] λ[ta])
-                - Log[1 - t[i]λ[ta]]
+                cL[ta] + α a[i] + β ta,
+                cQ[ta] + t[i](η[ta] ξ[ta])/(1-t[i] λ[ta]),
+                p[ta]/(1 - t[i]λ[ta])
         ];
         VerificationTest[
                 gdo //tr[i],
