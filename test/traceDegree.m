@@ -805,12 +805,12 @@ Module[
         },
         ta = (1-Exp[-α]) t[i];
         gdo = GDO[{{},{}}->{{i},{}}][
-                cL[b[i]] + α a[i] + β b[i],
+                cL + α a[i] + β b[i],
                 cQ[b[i]] + η[b[i]] y[i] + ξ[b[i]] x[i] + λ[b[i]] x[i] y[i],
                 p[b[i]]
         ];
-        gdoTr = GDO[{{},{}}->{{},{i}}][
-                cL[ta] + α a[i] + β ta,
+        gdoTr = CF@GDO[{{},{}}->{{},{i}}][
+                cL + α a[i] + β ta,
                 cQ[ta] + t[i](η[ta] ξ[ta])/(1-t[i] λ[ta]),
                 p[ta]/(1 - t[i]λ[ta])
         ];
