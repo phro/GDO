@@ -187,8 +187,8 @@ getConstLCoef[i_][gdo_] :=
         gdo[1]
 
 getConstQCoef::usage = "getConstQCoef[i][gdo] returns the terms in the Q-portion of a GDO expression which are not a function of y[i], b[i], a[i], nor x[i]."
-getConstQCoef[i_][gdo_] :=
-        (SeriesCoefficient[#, {b[i],0,0}]&) @*
+getConstQCoef[i_][gdo_][bb] :=
+        ReplaceAll[{b[i]->bb}] @*
         (Coefficient[#, y[i], 0]&) @*
         (Coefficient[#, a[i], 0]&) @*
         (Coefficient[#, x[i], 0]&) @
@@ -277,7 +277,7 @@ tr[i_][gdo_] := Module[
         },
         ta = (1-Exp[-αα]) t[i];
         expL = cL + αα a[i] + ββ ta;
-        expQ = cQ + safeEval[t[i]ηη[#]ξξ[#]/(1-t[i] λ[#])&][ta];
+        expQ = safeEval[cQ[ta] + t[i]ηη[#]ξξ[#]/(1-t[i] λ[#])&][ta];
         expP = safeEval[βP[#]/(1-t[i] λ[#])&][ta];
         CF[GDO[ins -> closeComponent[i][outs]][expL, expQ, expP]//.l2U]
 ] /; Module[
