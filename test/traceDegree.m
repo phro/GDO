@@ -580,7 +580,7 @@ TestID->"getabCoef understands capital B variables."];
 TestID->"getyCoef correctly captures pernicuous (b, B)-series."];
         VerificationTest[
                 getConstQCoef[1][putIntoQ[(1-B[1]^-k) x[3]/(b[1])]][b[1]]/.ℏ->1,
-               -k x[3],
+               x[3](1-Exp[k b[1]])/b[1],
 TestID->"getConstQCoef correctly captures pernicuous (b, B)-series."]
 ]
 
