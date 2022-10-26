@@ -482,7 +482,7 @@ Module[
         },
         gdo = GDO[{}->{i}][
                 cLi + βi b[i] + αi a[i] + σi a[i]b[i],
-                cQi + ηi[b[i]]y[i] + ξi[b[i]]x[i] + λi[b[i]] x[i]y[i],
+                cQi[b[i]] + ηi[b[i]]y[i] + ξi[b[i]]x[i] + λi[b[i]] x[i]y[i],
                 pi[b[i]]
         ];
         VerificationTest[
@@ -514,8 +514,8 @@ TestID->"getabCoef obtains the ab-term of a generic GDO expression."];
                 cLi,
 TestID->"getConstLCoef obtains the constant term of a generic GDO expression."];
         VerificationTest[
-                getConstQCoef[i][gdo],
-                cQi,
+                getConstQCoef[i][gdo][bb],
+                cQi[bb],
 TestID->"getConstQCoef obtains the constant term of a generic GDO expression."];
         VerificationTest[
                 getPCoef[i][gdo][b[i]],
@@ -527,7 +527,7 @@ VerificationTest[
                 getbCoef[i][gdo]        b[i] +
                 getaCoef[i][gdo]        a[i] +
                 getabCoef[i][gdo]       a[i] b[i],
-                getConstQCoef[i][gdo] + 
+                getConstQCoef[i][gdo][b[i]] + 
                 getyCoef[i][gdo][b[i]]  y[i] +
                 getxCoef[i][gdo][b[i]]  x[i] +
                 getxyCoef[i][gdo][b[i]] x[i] y[i],
@@ -579,7 +579,7 @@ TestID->"getabCoef understands capital B variables."];
                 ((-1 + Exp[-bb]) x[3])/(bb Exp[-bb]),
 TestID->"getyCoef correctly captures pernicuous (b, B)-series."];
         VerificationTest[
-                getConstQCoef[1][putIntoQ[(1-B[1]^-k) x[3]/(b[1])]]/.ℏ->1,
+                getConstQCoef[1][putIntoQ[(1-B[1]^-k) x[3]/(b[1])]][b[1]/.ℏ->1,
                -k x[3],
 TestID->"getConstQCoef correctly captures pernicuous (b, B)-series."]
 ]
