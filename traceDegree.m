@@ -187,7 +187,7 @@ getConstLCoef[i_][gdo_] :=
         gdo[1]
 
 getConstQCoef::usage = "getConstQCoef[i][gdo] returns the terms in the Q-portion of a GDO expression which are not a function of y[i], b[i], a[i], nor x[i]."
-getConstQCoef[i_][gdo_][bb] :=
+getConstQCoef[i_][gdo_][bb_] :=
         ReplaceAll[{b[i]->bb}] @*
         (Coefficient[#, y[i], 0]&) @*
         (Coefficient[#, a[i], 0]&) @*
