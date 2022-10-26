@@ -626,6 +626,10 @@ TestID->"safeEval evaluates functions with well-defined values."];
                 safeEval[((1-Exp[#])/#)&][0],
                 -1,
 TestID->"safeEval evaluates functions with existant limits."]
+        VerificationTest[
+                safeEval[Exp[#]#^2/#&][0],
+                0,
+TestID->"safeEval sucessfully evaluates functions in unsimplified form."]
         ]
 
 Module[
