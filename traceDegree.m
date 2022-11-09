@@ -277,7 +277,7 @@ tr[i_][gdo_] := Module[
         },
         ta = (1-Exp[-αα]) t[i];
         expL = cL + αα a[i] + ββ ta;
-        expQ = safeEval[cQ[ta] + t[i]ηη[#]ξξ[#]/(1-t[i] λ[#])&][ta];
+        expQ = safeEval[cQ[#] + t[i]ηη[#]ξξ[#]/(1-t[i] λ[#])&][ta];
         expP = safeEval[βP[#]/(1-t[i] λ[#])&][ta];
         CF[GDO[ins -> closeComponent[i][outs]][expL, expQ, expP]//.l2U]
 ] /; Module[
