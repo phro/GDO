@@ -1,6 +1,6 @@
 (* PG[L, Q, P] = Perturbed Gaußian Pe^(L + Q) *)
 
-toPG[L_, Q_, P_] := PG[<|"L"->L, "Q"->Q, "P"->P|>]
+toPG[L_, Q_, P_] := PG@<|"L"->L, "Q"->Q, "P"->P|>
 
 getL[pg_PG] := pg[[1,"L"]]
 getQ[pg_PG] := pg[[1,"Q"]]
