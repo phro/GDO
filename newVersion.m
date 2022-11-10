@@ -50,4 +50,19 @@ Dual@ζ = z;
 
 Dual[u_[i_]]:=Dual[u][i]
 
+U2l = {
+        B[i_]^p_. :> E^(-p ℏ γ b[i]), B^p_. :> E^(-p ℏ γ b),
+        T[i_]^p_. :> E^(-p ℏ t[i]), T^p_. :> E^(-p ℏ t),
+        A[i_]^p_. :> E^(p γ α[i]), A^p_. :> E^(-p γ α)
+};
+l2U = {
+        E^(c_. b[i_] + d_.) :> B[i]^(-c/(ℏ γ))E^d,
+        E^(c_. b + d_.) :> B^(-c/(ℏ γ))E^d,
+        E^(c_. t[i_] + d_.) :> T[i]^(-c/ℏ)E^d,
+        E^(c_. t + d_.) :> T^(-c/ℏ)E^d,
+        E^(c_. α[i_] + d_.) :> A[i]^(c/γ)E^d,
+        E^(c_. α + d_.) :> A^(c/γ)E^d,
+        E^expr_ :> E^Expand@expr
+};
+
 (* GDO = Gaußian Differential Operator *)
