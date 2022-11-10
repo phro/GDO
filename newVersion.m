@@ -40,4 +40,14 @@ PG /: pg1_PG * pg2_PG := toPG[
 
 setEpsilonDegree[k_Integer][pg_PG]:= setP[Series[Normal@getP@pg,{ϵ, 0, k}]][pg]
 
+ddsl2vars = {y, b, t, a, x};
+ddsl2varsDual = {η, β, τ, α, ξ};
+
+Evaluate[Dual/@ddsl2vars] = ddsl2varsDual;
+Evaluate[Dual/@ddsl2varsDual] = ddsl2vars;
+Dual@z = ζ;
+Dual@ζ = z;
+
+Dual[u_[i_]]:=Dual[u][i]
+
 (* GDO = Gaußian Differential Operator *)
