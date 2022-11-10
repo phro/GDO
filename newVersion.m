@@ -10,6 +10,22 @@ setL[L_][pg_PG] := Module[{b = pg[[1]]}, b["L"] = L; PG@b]
 setQ[Q_][pg_PG] := Module[{b = pg[[1]]}, b["Q"] = Q; PG@b]
 setP[P_][pg_PG] := Module[{b = pg[[1]]}, b["P"] = P; PG@b]
 
+CCF[e_] := ExpandDenominator@ExpandNumerator@Together[
+        Expand[e] //. E^x_ E^y_ :> E^(x + y) /. E^x_ :> E^CCF[x]
+];
+CF[es_List] := CF /@ es;
+CF[sd_SeriesData] := MapAt[CF, sd, 3];
+CF[e_] := Module[
+        {vs = Union[
+                Cases[e, Subscript[(y|b|t|a|x|η|β|τ|α|ξ), _], ∞],
+                {y, b, t, a, x, η, β, τ, α, ξ}
+        ]},
+        Total[CoefficientRules[Expand[e], vs] /.
+                (ps_ -> c_) :> CCF[c] (Times @@ (vs^ps))
+        ]
+];
+CF[e_PG] := CF/@#&/@e;
+
 PG /: Congruent[pg1_PG, pg2_PG] := And[
         CF[getL@pg1 == getL@pg2],
         CF[getQ@pg1 == getQ@pg2],
