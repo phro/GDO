@@ -65,4 +65,21 @@ l2U = {
         E^expr_ :> E^Expand@expr
 };
 
+(* Differentiation *)
+
+DD[f_, b] := D[f, b] - ℏ γ B D[f, B];
+DD[f_, b[i_]] := D[f, b[i]] - ℏ γ B[i] D[f, B[i]];
+
+DD[f_, t] := D[f, t] - ℏ T D[f, T];
+DD[f_, t[i_]] := D[f, t[i]] - ℏ T[i] D[f, T[i]];
+
+DD[f_, α] := D[f, α] + γ A D[f, A];
+DD[f_, α[i_]] := D[f, α[i]] + γ A[i] D[f, A[i]];
+
+DD[f_, v_] := D[f, v];
+DD[f_, {v_,0}] := f;
+DD[f_, {}] := f;
+DD[f_, {v_,n_Integer}] := DD[DD[f,v],{v,n-1}];
+DD[f_, {l_List, ls___}] := DD[DD[f, l], {ls}];
+
 (* GDO = Gaußian Differential Operator *)
