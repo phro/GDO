@@ -82,4 +82,15 @@ DD[f_, {}] := f;
 DD[f_, {v_,n_Integer}] := DD[DD[f,v],{v,n-1}];
 DD[f_, {l_List, ls___}] := DD[DD[f, l], {ls}];
 
+(* Finite zips *)
+collect[sd_SeriesData, ζ_] := MapAt[collect[#, ζ] &, sd, 3];
+collect[expr_, ζ_] := Collect[expr, ζ];
+
+Zip[{}][P_] := P;
+Zip[ζs_List][Ps_List] := Zip[ζs]/@Ps;
+Zip[{ζ_,ζs___}][P_] := (collect[P // Zip[{ζs}],ζ] /.
+        f_. ζ^d_. :> DD[f,{Dual[ζ], d}]) /.
+        Dual[ζ] -> 0 /.
+        ((Dual[ζ] /. {b->B, t->T, α -> A}) -> 1)
+
 (* GDO = Gaußian Differential Operator *)
