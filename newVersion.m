@@ -93,4 +93,16 @@ Zip[{ζ_,ζs___}][P_] := (collect[P // Zip[{ζs}],ζ] /.
         Dual[ζ] -> 0 /.
         ((Dual[ζ] /. {b->B, t->T, α -> A}) -> 1)
 
+(* Q-zips *)
+
+QZip[{ζs_List}][pg_PG] := Module[{ζ, z, zs, c, ys, ηs, qt, zrule, ζrule},
+        zs = Dual/@ζs;
+        c  = CF[Q/.Alternatives@@Union[ζs, zs]->0];
+        ys = CF@Table[D[Q,ζ]/Alternatives@@zs->0,{ζ,ζs}];
+        ηs = CF@Table[D[Q,z]/Alternatives@@ζs->0,{z,zs}];
+        qt = CF@Inverse@Table[KronekerDelta[z, Dual[ζ]] - D[Q,z,ζ],{z,zs}];
+        zrule = Thread[zs -> CF[qt . (zs + ys)]];
+        ζrule = Thread[ζs -> ζs + ηs . qt];
+        CF@setQ[c + ηs.qt.ys]@setP[Det[qt] Zip[ζs][P /. Union[zrule, ζrule]]]@pg
+]
 (* GDO = Gaußian Differential Operator *)
