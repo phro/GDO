@@ -95,12 +95,14 @@ Zip[{ζ_,ζs___}][P_] := (collect[P // Zip[{ζs}],ζ] /.
 
 (* Q-zips *)
 
-QZip[{ζs_List}][pg_PG] := Module[{ζ, z, zs, c, ys, ηs, qt, zrule, ζrule},
+QZip[ζs_List][pg_PG] := Module[{Q, P, ζ, z, zs, c, ys, ηs, qt, zrule, ζrule},
         zs = Dual/@ζs;
+        Q  = pg//getQ;
+        P  = pg//getP;
         c  = CF[Q/.Alternatives@@Union[ζs, zs]->0];
-        ys = CF@Table[D[Q,ζ]/Alternatives@@zs->0,{ζ,ζs}];
-        ηs = CF@Table[D[Q,z]/Alternatives@@ζs->0,{z,zs}];
-        qt = CF@Inverse@Table[KronekerDelta[z, Dual[ζ]] - D[Q,z,ζ],{z,zs}];
+        ys = CF@Table[D[Q,ζ]/.Alternatives@@zs->0,{ζ,ζs}];
+        ηs = CF@Table[D[Q,z]/.Alternatives@@ζs->0,{z,zs}];
+        qt = CF@Inverse@Table[KroneckerDelta[z, Dual[ζ]] - D[Q,z,ζ],{ζ,ζs},{z,zs}];
         zrule = Thread[zs -> CF[qt . (zs + ys)]];
         ζrule = Thread[ζs -> ζs + ηs . qt];
         CF@setQ[c + ηs.qt.ys]@setP[Det[qt] Zip[ζs][P /. Union[zrule, ζrule]]]@pg
