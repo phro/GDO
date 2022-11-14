@@ -4,6 +4,8 @@ toPG[L_, Q_, P_] := PG@<|"L"->L, "Q"->Q, "P"->P|>
 fromE[e_\[DoubleStruckCapitalE]] := toPG@@e/.
         Subscript[(v:y|b|t|a|x|B|T|η|β|τ|α|ξ|A), i_] -> v[i]
 
+δ[i_,j_] := If[SameQ[i,j],1,0]
+
 getL[pg_PG] := pg[[1,"L"]]
 getQ[pg_PG] := pg[[1,"Q"]]
 getP[pg_PG] := pg[[1,"P"]]
@@ -105,7 +107,7 @@ QZip[ζs_List][pg_PG] := Module[{Q, P, ζ, z, zs, c, ys, ηs, qt, zrule, ζrule}
         ys = CF@Table[D[Q,ζ]/.Alternatives@@zs->0,{ζ,ζs}];
         ηs = CF@Table[D[Q,z]/.Alternatives@@ζs->0,{z,zs}];
         qt = CF@Inverse@Table[
-                KroneckerDelta[z, Dual[ζ]] - D[Q,z,ζ],
+                δ[z, Dual[ζ]] - D[Q,z,ζ],
                 {ζ,ζs},{z,zs}
         ];
         zrule = Thread[zs -> CF[qt . (zs + ys)]];
@@ -125,7 +127,7 @@ LZip[ζs_List][pg_PG] := Module[
         ys = CF@Table[D[L,ζ]/.Alternatives@@zs->0,{ζ,ζs}];
         ηs = CF@Table[D[L,z]/.Alternatives@@ζs->0,{z,zs}];
         lt = CF@Inverse@Table[
-                KroneckerDelta[z, Dual[ζ]] - D[L,z,ζ],
+                δ[z, Dual[ζ]] - D[L,z,ζ],
                 {ζ,ζs},{z,zs}
         ];
         zrule = Thread[zs -> CF[lt . (zs + ys)]];
