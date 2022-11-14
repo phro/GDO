@@ -151,4 +151,13 @@ LZip[ζs_List][pg_PG] := Module[
         ]
 
 ]
+
+Pair[{}][L_PG,R_PG] := L R;
+Pair[is_List][L_PG,R_PG] := Module[{n},
+        Times[
+                L /. ((v: b|B|t|T|a|x|y)[#] -> v[n@#]&/@is),
+                R /. ((v: β|τ|α|A|ξ|η)[#] -> v[n@#]&/@is)
+        ] // LZip[Join@@Table[Through[{β, τ, a}[n@i]],{i, is}]] //
+        QZip[Join@@Table[Through[{ξ, y}[n@i]],{i, is}]]
+]
 (* GDO = Gaußian Differential Operator *)
