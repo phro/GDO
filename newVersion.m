@@ -204,3 +204,11 @@ setDO[do_][gdo_GDO] := setValue[do, gdo, "do"]
 setDC[dc_][gdo_GDO] := setValue[dc, gdo, "dc"]
 setCO[co_][gdo_GDO] := setValue[co, gdo, "co"]
 setCC[cc_][gdo_GDO] := setValue[cc, gdo, "cc"]
+
+Pair[is_List][gdo1_GDO, gdo2_GDO] := GDO@<|
+        "do" -> Union[gdo1//getDO, Complement[gdo2//getDO, is]],
+        "dc" -> Union[gdo1//getDC, gdo2//getDC],
+        "co" -> Union[gdo2//getCO, Complement[gdo1//getCO, is]],
+        "cc" -> Union[gdo1//getCC, gdo2//getCC],
+        "PG" -> Pair[is][gdo1//getPG, gdo2//getPG]
+|>
