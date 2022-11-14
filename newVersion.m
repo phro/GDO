@@ -1,7 +1,8 @@
 (* PG[L, Q, P] = Perturbed Gaußian Pe^(L + Q) *)
 
 toPG[L_, Q_, P_] := PG@<|"L"->L, "Q"->Q, "P"->P|>
-fromE[e_\[DoubleStruckCapitalE]] := toPG@@e
+fromE[e_\[DoubleStruckCapitalE]] := toPG@@e/.
+        Subscript[(v:y|b|t|a|x|B|T|η|β|τ|α|ξ|A), i_] -> v[i]
 
 getL[pg_PG] := pg[[1,"L"]]
 getQ[pg_PG] := pg[[1,"Q"]]
