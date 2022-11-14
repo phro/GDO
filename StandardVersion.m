@@ -119,15 +119,15 @@ Subscript[D, v_][f_]:=\!\(
 (* ::Input::Initialization:: *)
 collect[sd_SeriesData, \[Zeta]_] := MapAt[collect[#,\[Zeta]]&,sd,3];
 collect[\[ScriptCapitalE]_,\[Zeta]_] := Collect[\[ScriptCapitalE],\[Zeta]];
-\!\(\*SubscriptBox[\(Zip\), \({}\)]\)[P_]:=P;
-Subscript[Zip, \[Zeta]s_][Ps_List]:=Subscript[Zip, \[Zeta]s]/@Ps;
-\!\(\*SubscriptBox[\(Zip\), \({\[Zeta]_, \[Zeta]s___}\)]\)[P_] := 
-(collect[P//\!\(\*SubscriptBox[\(Zip\), \({\[Zeta]s}\)]\),\[Zeta]] /. f_. \[Zeta]^d_.:>(\!\(\*SubscriptBox[\(D\), \({
+\!\(\*SubscriptBox[\(ZipOld\), \({}\)]\)[P_]:=P;
+Subscript[ZipOld, \[Zeta]s_][Ps_List]:=Subscript[ZipOld, \[Zeta]s]/@Ps;
+\!\(\*SubscriptBox[\(ZipOld\), \({\[Zeta]_, \[Zeta]s___}\)]\)[P_] := 
+(collect[P//\!\(\*SubscriptBox[\(ZipOld\), \({\[Zeta]s}\)]\),\[Zeta]] /. f_. \[Zeta]^d_.:>(\!\(\*SubscriptBox[\(D\), \({
 \*SuperscriptBox[\(\[Zeta]\), \(*\)], d}\)]\)[f]))/.SuperStar[\[Zeta]]->0/.((SuperStar[\[Zeta]]/.{b->B,t->T,\[Alpha]->\[ScriptCapitalA]})->1)
 
 
 (* ::Input::Initialization:: *)
-Subscript[QZip, \[Zeta]s_List]@\[DoubleStruckCapitalE][L_,Q_,P_] := Module[{\[Zeta],z,zs,c,ys,\[Eta]s,qt,zrule,\[Zeta]rule,out},
+Subscript[QZipOld, \[Zeta]s_List]@\[DoubleStruckCapitalE][L_,Q_,P_] := Module[{\[Zeta],z,zs,c,ys,\[Eta]s,qt,zrule,\[Zeta]rule,out},
 zs=Table[SuperStar[\[Zeta]],{\[Zeta],\[Zeta]s}];
 c=CF[Q/.Alternatives@@(\[Zeta]s\[Union]zs)->0];
 ys=CF@Table[\!\(
@@ -138,11 +138,11 @@ qt=CF@Inverse@Table[Subscript[K\[Delta], z,SuperStar[\[Zeta]]]-\!\(
 \*SubscriptBox[\(\[PartialD]\), \(z, \[Zeta]\)]Q\),{\[Zeta],\[Zeta]s},{z,zs}];
 zrule=Thread[zs->CF[qt . (zs+ys)]];
 \[Zeta]rule=Thread[\[Zeta]s->\[Zeta]s+\[Eta]s . qt];
-CF /@ \[DoubleStruckCapitalE][L,c+\[Eta]s . qt . ys,Det[qt]Subscript[Zip, \[Zeta]s][P/.(zrule\[Union]\[Zeta]rule)]] ];
+CF /@ \[DoubleStruckCapitalE][L,c+\[Eta]s . qt . ys,Det[qt]Subscript[ZipOld, \[Zeta]s][P/.(zrule\[Union]\[Zeta]rule)]] ];
 
 
 (* ::Input::Initialization:: *)
-Subscript[LZip, \[Zeta]s_List]@\[DoubleStruckCapitalE][L_,Q_,P_] := Module[{\[Zeta],z,zs,Zs,c,ys,\[Eta]s,lt,zrule,Zrule,\[Zeta]rule,Q1,EEQ,EQ},
+Subscript[LZipOld, \[Zeta]s_List]@\[DoubleStruckCapitalE][L_,Q_,P_] := Module[{\[Zeta],z,zs,Zs,c,ys,\[Eta]s,lt,zrule,Zrule,\[Zeta]rule,Q1,EEQ,EQ},
 zs=Table[SuperStar[\[Zeta]],{\[Zeta],\[Zeta]s}];
 Zs=zs/.{b->B,t->T,\[Alpha]->\[ScriptCapitalA]};
 c=L/.Alternatives@@(\[Zeta]s\[Union]zs)->0/.Alternatives@@Zs->1;
@@ -158,7 +158,7 @@ Zrule=Join[zrule,zrule/.r_Rule:>((U=r[[1]]/.{b->B,t->T,\[Alpha]->\[ScriptCapital
 Q1=Q/.(Zrule\[Union]\[Zeta]rule);
 EEQ[ps___]:=EEQ[ps]=(CF[E^-Q1 Subscript[D, Thread[{zs,{ps}}]][E^Q1]]/.{Alternatives@@zs->0,Alternatives@@Zs->1});
 CF@\[DoubleStruckCapitalE][c+\[Eta]s . lt . ys,Q1/.{Alternatives@@zs->0,Alternatives@@Zs->1},
-Det[lt](Subscript[Zip, \[Zeta]s][(EQ@@zs)(P/.(Zrule\[Union]\[Zeta]rule))] /.
+Det[lt](Subscript[ZipOld, \[Zeta]s][(EQ@@zs)(P/.(Zrule\[Union]\[Zeta]rule))] /.
 Derivative[ps___][EQ][___]:> EEQ[ps] /. _EQ->1)]];
 
 
@@ -168,7 +168,7 @@ Derivative[ps___][EQ][___]:> EEQ[ps] /. _EQ->1)]];
 Times[
 L/.Table[Subscript[(v:b|B|t|T|a|x|y), i]->Subscript[v, n@i],{i,{is}}],
 R/.Table[Subscript[(v:\[Beta]|\[Tau]|\[Alpha]|\[ScriptCapitalA]|\[Xi]|\[Eta]), i]->Subscript[v, n@i],{i,{is}}]
-] // Subscript[LZip, Join@@Table[{Subscript[\[Beta], n@i],Subscript[\[Tau], n@i],Subscript[a, n@i]},{i,{is}}]] // Subscript[QZip, Join@@Table[{Subscript[\[Xi], n@i],Subscript[y, n@i]},{i,{is}}]] ];
+] // Subscript[LZipOld, Join@@Table[{Subscript[\[Beta], n@i],Subscript[\[Tau], n@i],Subscript[a, n@i]},{i,{is}}]] // Subscript[QZipOld, Join@@Table[{Subscript[\[Xi], n@i],Subscript[y, n@i]},{i,{is}}]] ];
 Subscript[B, is___][L_,R_]:=\!\(\*SubscriptBox[\(B\), \({is}\)]\)[L,R];
 
 
