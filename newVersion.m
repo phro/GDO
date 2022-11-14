@@ -160,4 +160,25 @@ Pair[is_List][L_PG,R_PG] := Module[{n},
         ] // LZip[Join@@Table[Through[{β, τ, a}[n@i]],{i, is}]] //
         QZip[Join@@Table[Through[{ξ, y}[n@i]],{i, is}]]
 ]
+
 (* GDO = Gaußian Differential Operator *)
+toGDO[do_List,dc_List,co_List,cc_List,L_,Q_,P_] := GDO@<|
+        "do" -> do,
+        "dc" -> dc,
+        "co" -> co,
+        "cc" -> cc,
+        "PG" -> toPG[L, Q, P]
+|>
+
+getL[gdo_GDO] := gdo[[1,"PG","L"]]
+getQ[gdo_GDO] := gdo[[1,"PG","Q"]]
+getP[gdo_GDO] := gdo[[1,"PG","P"]]
+
+setL[L_][gdo_GDO] := Module[{b = gdo[[1]]}, b["PG","L"] = L; GDO@b]
+setQ[Q_][gdo_GDO] := Module[{b = gdo[[1]]}, b["PG","Q"] = Q; GDO@b]
+setP[P_][gdo_GDO] := Module[{b = gdo[[1]]}, b["PG","P"] = P; GDO@b]
+
+setDO[do_][gdo_GDO] := Module[{b = gdo[[1]]}, b["do"] = do; GDO@b] 
+setDC[dc_][gdo_GDO] := Module[{b = gdo[[1]]}, b["dc"] = dc; GDO@b] 
+setCO[co_][gdo_GDO] := Module[{b = gdo[[1]]}, b["co"] = co; GDO@b] 
+setCC[cc_][gdo_GDO] := Module[{b = gdo[[1]]}, b["cc"] = cc; GDO@b] 
