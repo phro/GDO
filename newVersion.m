@@ -1,3 +1,8 @@
+setValue[value_,obj_,coords__]:=Module[
+        {b=obj[[1]]},
+        b[coords] = value; Head[obj]@b
+        ]
+
 (* PG[L, Q, P] = Perturbed Gaußian Pe^(L + Q) *)
 
 toPG[L_, Q_, P_] := PG@<|"L"->L, "Q"->Q, "P"->P|>
@@ -10,9 +15,9 @@ getL[pg_PG] := pg[[1,"L"]]
 getQ[pg_PG] := pg[[1,"Q"]]
 getP[pg_PG] := pg[[1,"P"]]
 
-setL[L_][pg_PG] := Module[{b = pg[[1]]}, b["L"] = L; PG@b]
-setQ[Q_][pg_PG] := Module[{b = pg[[1]]}, b["Q"] = Q; PG@b]
-setP[P_][pg_PG] := Module[{b = pg[[1]]}, b["P"] = P; PG@b]
+setL[L_][pg_PG] := setValue[L, pg, "L"];
+setQ[Q_][pg_PG] := setValue[Q, pg, "Q"];
+setP[P_][pg_PG] := setValue[P, pg, "P"];
 
 CCF[e_] := ExpandDenominator@ExpandNumerator@Together[
         Expand[e] //. E^x_ E^y_ :> E^(x + y) /. E^x_ :> E^CCF[x]
