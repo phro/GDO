@@ -170,13 +170,23 @@ toGDO[do_List,dc_List,co_List,cc_List,L_,Q_,P_] := GDO@<|
         "PG" -> toPG[L, Q, P]
 |>
 
-getL[gdo_GDO] := gdo[[1,"PG","L"]]
-getQ[gdo_GDO] := gdo[[1,"PG","Q"]]
-getP[gdo_GDO] := gdo[[1,"PG","P"]]
+toGDO[do_List,dc_List,co_List,cc_List,pg_PG] := GDO@<|
+        "do" -> do,
+        "dc" -> dc,
+        "co" -> co,
+        "cc" -> cc,
+        "PG" -> pg
+|>
 
-setL[L_][gdo_GDO] := Module[{b = gdo[[1]]}, b["PG","L"] = L; GDO@b]
-setQ[Q_][gdo_GDO] := Module[{b = gdo[[1]]}, b["PG","Q"] = Q; GDO@b]
-setP[P_][gdo_GDO] := Module[{b = gdo[[1]]}, b["PG","P"] = P; GDO@b]
+getL[gdo_GDO] := gdo[[1,"PG",1,"L"]]
+getQ[gdo_GDO] := gdo[[1,"PG",1,"Q"]]
+getP[gdo_GDO] := gdo[[1,"PG",1,"P"]]
+
+setPG[pg_PG][gdo_GDO] := Module[{b = gdo[[1]]}, b["PG"] = pg; GDO@b]
+
+setL[L_][gdo_GDO] := Module[{b = gdo[[1]]}, b["PG",1,"L"] = L; GDO@b]
+setQ[Q_][gdo_GDO] := Module[{b = gdo[[1]]}, b["PG",1,"Q"] = Q; GDO@b]
+setP[P_][gdo_GDO] := Module[{b = gdo[[1]]}, b["PG",1,"P"] = P; GDO@b]
 
 setDO[do_][gdo_GDO] := Module[{b = gdo[[1]]}, b["do"] = do; GDO@b] 
 setDC[dc_][gdo_GDO] := Module[{b = gdo[[1]]}, b["dc"] = dc; GDO@b] 
