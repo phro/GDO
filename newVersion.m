@@ -1,6 +1,7 @@
 (* PG[L, Q, P] = Perturbed Gaußian Pe^(L + Q) *)
 
 toPG[L_, Q_, P_] := PG@<|"L"->L, "Q"->Q, "P"->P|>
+fromE[e_\[DoubleStruckCapitalE]] := toPG@@e
 
 getL[pg_PG] := pg[[1,"L"]]
 getQ[pg_PG] := pg[[1,"Q"]]
@@ -102,9 +103,49 @@ QZip[ζs_List][pg_PG] := Module[{Q, P, ζ, z, zs, c, ys, ηs, qt, zrule, ζrule}
         c  = CF[Q/.Alternatives@@Union[ζs, zs]->0];
         ys = CF@Table[D[Q,ζ]/.Alternatives@@zs->0,{ζ,ζs}];
         ηs = CF@Table[D[Q,z]/.Alternatives@@ζs->0,{z,zs}];
-        qt = CF@Inverse@Table[KroneckerDelta[z, Dual[ζ]] - D[Q,z,ζ],{ζ,ζs},{z,zs}];
+        qt = CF@Inverse@Table[
+                KroneckerDelta[z, Dual[ζ]] - D[Q,z,ζ],
+                {ζ,ζs},{z,zs}
+        ];
         zrule = Thread[zs -> CF[qt . (zs + ys)]];
         ζrule = Thread[ζs -> ζs + ηs . qt];
         CF@setQ[c + ηs.qt.ys]@setP[Det[qt] Zip[ζs][P /. Union[zrule, ζrule]]]@pg
+]
+
+LZip[ζs_List][pg_PG] := Module[
+        {
+                L, Q, P, ζ, z, zs, Zs, c, ys, ηs, lt,
+                zrule, Zrule, ζrule, Q1, EEQ, EQ, U
+        },
+        zs = Dual/@ζs;
+        {L, Q, P} = Through[{getL, getQ, getP}@pg];
+        Zs = zs /. {b -> B, t -> T, α -> A};
+        c  = CF[L/.Alternatives@@Union[ζs, zs]->0/.Alternatives@@Zs -> 1];
+        ys = CF@Table[D[L,ζ]/.Alternatives@@zs->0,{ζ,ζs}];
+        ηs = CF@Table[D[L,z]/.Alternatives@@ζs->0,{z,zs}];
+        lt = CF@Inverse@Table[
+                KroneckerDelta[z, Dual[ζ]] - D[L,z,ζ],
+                {ζ,ζs},{z,zs}
+        ];
+        zrule = Thread[zs -> CF[lt . (zs + ys)]];
+        Zrule = Join[zrule, zrule /.
+                r_Rule :> ( (U = r[[1]] /. {b -> B, t -> T, α -> A}) ->
+                (U /. U2l /. r //. l2U))
+        ];
+        \[Zeta]rule = Thread[\[Zeta]s -> \[Zeta]s + \[Eta]s . lt];
+        Q1 = Q /. Union[Zrule, ζrule];
+        EEQ[ps___] :=
+                EEQ[ps] = (
+                        CF[E^-Q1 DD[E^Q1,Thread[{zs,{ps}}]] /.
+                                {Alternatives@@zs -> 0, Alternatives @@Zs -> 1}]
+                );
+        CF@toPG[
+                c + ηs.lt.ys,
+                Q1 /. {Alternatives@@zs -> 0, Alternatives@@Zs -> 1},
+                Det[lt] (Zip[ζs][(EQ@@zs) (P /. Union[Zrule,ζrule])] /.
+                        Derivative[ps___][EQ][___] :> EEQ[ps] /. _EQ ->1
+                )
+        ]
+
 ]
 (* GDO = Gaußian Differential Operator *)
