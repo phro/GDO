@@ -183,16 +183,16 @@ toGDO[do_List,dc_List,co_List,cc_List,pg_PG] := GDO@<|
         "PG" -> pg
 |>
 
-getDO[gdo_GDO] := gdo[[1, "do"]]
-getDC[gdo_GDO] := gdo[[1, "dc"]]
-getCO[gdo_GDO] := gdo[[1, "co"]]
-getCC[gdo_GDO] := gdo[[1, "cc"]]
+getDO[gdo_GDO] := Lookup[gdo[[1]], "do", {}]
+getDC[gdo_GDO] := Lookup[gdo[[1]], "dc", {}]
+getCO[gdo_GDO] := Lookup[gdo[[1]], "co", {}]
+getCC[gdo_GDO] := Lookup[gdo[[1]], "cc", {}]
 
-getL[gdo_GDO] := gdo[[1,"PG",1,"L"]]
-getQ[gdo_GDO] := gdo[[1,"PG",1,"Q"]]
-getP[gdo_GDO] := gdo[[1,"PG",1,"P"]]
+getPG[gdo_GDO] := Lookup[gdo[[1]], "PG", PG@<||> ]
 
-getPG[gdo_GDO] := gdo[[1,"PG"]]
+getL[gdo_GDO] := gdo//getPG//getL
+getQ[gdo_GDO] := gdo//getPG//getQ
+getP[gdo_GDO] := gdo//getPG//getP
 
 setPG[pg_PG][gdo_GDO] := setValue[pg, gdo, "PG"]
 
