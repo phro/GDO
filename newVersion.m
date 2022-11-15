@@ -222,3 +222,11 @@ GDO /: Congruent[gdo1_GDO, gdo2_GDO] := And[
         Sort@*getCC/@Equal[gdo1, gdo2],
         Congruent[gdo1//getPG, gdo2//getPG]
 ]
+
+GDO /: gdo1_GDO gdo2_GDO := GDO@<|
+        "do" -> Union[gdo1//getDO, gdo2//getDO],
+        "dc" -> Union[gdo1//getDC, gdo2//getDC],
+        "co" -> Union[gdo1//getCO, gdo2//getCO],
+        "cc" -> Union[gdo1//getCC, gdo2//getCC],
+        "PG" -> (gdo1//getPG)*(gdo2//getPG)
+|>
