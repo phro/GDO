@@ -212,3 +212,5 @@ Pair[is_List][gdo1_GDO, gdo2_GDO] := GDO@<|
         "cc" -> Union[gdo1//getCC, gdo2//getCC],
         "PG" -> Pair[is][gdo1//getPG, gdo2//getPG]
 |>
+
+gdo1_GDO // gdo2_GDO := Pair[Intersection[gdo1//getCO,gdo2//getDO]][gdo1,gdo2];
