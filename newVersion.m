@@ -1,3 +1,4 @@
+γ = 1; ℏ = 1;
 setValue[value_,obj_,coord_]:=Module[
         {b=Association@@obj},
         b[coord] = value; Head[obj]@@Normal@b
@@ -232,3 +233,43 @@ GDO /: gdo1_GDO gdo2_GDO := GDO[
 ]
 
 setEpsilonDegree[k_Integer][gdo_GDO]:=setP[Series[Normal@getP@gdo,{ϵ,0,k}]][gdo]
+
+fromLog[l_] := CF@Module[
+        {L, l0 = Limit[l, ϵ->0]},
+        L = l0 /. (η|y|ξ|x)[_]->0;
+        PG[
+                "L" -> L,
+                "Q" -> l0 - L
+        ]/.l2U
+]
+
+cΛ =    (η[i] + E^(-γ α[i] - ϵ β[i]) η[j]/(1+γ ϵ η[j]ξ[i]))y[k] +
+        (β[i] + β[j] + Log[1 + γ ϵ η[j]ξ[i]]/ϵ) b[k] + 
+        (α[i] + α[j] + Log[1 + γ ϵ η[j]ξ[i]]/γ) a[k] + 
+        (ξ[j] + E^(-γ α[j] - ϵ β[j]) ξ[i]/(1+γ ϵ η[j]ξ[i]))x[k];
+
+cm[i_, j_, k_] = GDO["do" -> {i,j}, "co" -> {k}, "PG" -> fromLog[cΛ]];
+
+cη[i_] = GDO["co" -> {i}];
+cσ[i_,j_] = GDO["do"->{i},"co"->{j},
+        "PG"->fromLog[β[i] b[j] + α[i] a[j] + η[i] y[j] + ξ[i] x[j]]
+];
+cϵ[i_] = GDO["do" -> {i}];
+cΔ[i_, j_, k_] = GDO["do"->{i}, "co"->{j, k},
+        "PG" -> fromLog[
+                β[i](b[j] + b[k]) +
+                α[i](a[j] + a[k]) + 
+                η[i](y[j] + y[k]) + 
+                ξ[i](x[j] + x[k])
+        ]
+];
+
+sY[i_, j_, k_, l_, m_] = GDO["do"->{i}, "co"->{j, k, l, m},
+        "PG" -> fromLog[β[i]b[k] + α[i]a[l] + η[i]y[j] + ξ[i]x[m]]
+];
+
+sS[i_] = GDO["do"->{i},"co"->{i},
+        "PG"->fromLog[-(β[i] b[i] + α[i] a[i] + η[i] y[i] + ξ[i] x[i])]
+];
+
+cS[i_] = sS[i] // sY[i, 1, 2, 3, 4] // cm[4,3, i] // cm[i, 2, i] // cm[i, 1, i];
