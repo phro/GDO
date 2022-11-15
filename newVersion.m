@@ -230,3 +230,5 @@ GDO /: gdo1_GDO gdo2_GDO := GDO@<|
         "cc" -> Union[gdo1//getCC, gdo2//getCC],
         "PG" -> (gdo1//getPG)*(gdo2//getPG)
 |>
+
+setEpsilonDegree[k_Integer][gdo_GDO]:=setP[Series[Normal@getP@pg,{ϵ,0,k}]][gdo]
