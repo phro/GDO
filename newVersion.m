@@ -1,19 +1,19 @@
-setValue[value_,obj_,coords__]:=Module[
-        {b=obj[[1]]},
-        b[coords] = value; Head[obj]@b
-        ]
+setValue[value_,obj_,coord_]:=Module[
+        {b=Association@@obj},
+        b[coord] = value; Head[obj]@@Normal@b
+]
 
 (* PG[L, Q, P] = Perturbed Gaußian Pe^(L + Q) *)
 
-toPG[L_, Q_, P_] := PG@<|"L"->L, "Q"->Q, "P"->P|>
+toPG[L_, Q_, P_] := PG["L"->L, "Q"->Q, "P"->P]
 fromE[e_\[DoubleStruckCapitalE]] := toPG@@e/.
         Subscript[(v:y|b|t|a|x|B|T|η|β|τ|α|ξ|A), i_] -> v[i]
 
 δ[i_,j_] := If[SameQ[i,j],1,0]
 
-getL[pg_PG] := Lookup[pg[[1]],"L",0]
-getQ[pg_PG] := Lookup[pg[[1]],"Q",0]
-getP[pg_PG] := Lookup[pg[[1]],"P",1]
+getL[pg_PG] := Lookup[Association@@pg,"L",0]
+getQ[pg_PG] := Lookup[Association@@pg,"Q",0]
+getP[pg_PG] := Lookup[Association@@pg,"P",1]
 
 setL[L_][pg_PG] := setValue[L, pg, "L"];
 setQ[Q_][pg_PG] := setValue[Q, pg, "Q"];
@@ -167,28 +167,28 @@ Pair[is_List][L_PG,R_PG] := Module[{n},
 ]
 
 (* GDO = Gaußian Differential Operator *)
-toGDO[do_List,dc_List,co_List,cc_List,L_,Q_,P_] := GDO@<|
+toGDO[do_List,dc_List,co_List,cc_List,L_,Q_,P_] := GDO[
         "do" -> do,
         "dc" -> dc,
         "co" -> co,
         "cc" -> cc,
         "PG" -> toPG[L, Q, P]
-|>
+]
 
-toGDO[do_List,dc_List,co_List,cc_List,pg_PG] := GDO@<|
+toGDO[do_List,dc_List,co_List,cc_List,pg_PG] := GDO[
         "do" -> do,
         "dc" -> dc,
         "co" -> co,
         "cc" -> cc,
         "PG" -> pg
-|>
+]
 
-getDO[gdo_GDO] := Lookup[gdo[[1]], "do", {}]
-getDC[gdo_GDO] := Lookup[gdo[[1]], "dc", {}]
-getCO[gdo_GDO] := Lookup[gdo[[1]], "co", {}]
-getCC[gdo_GDO] := Lookup[gdo[[1]], "cc", {}]
+getDO[gdo_GDO] := Lookup[Association@@gdo, "do", {}]
+getDC[gdo_GDO] := Lookup[Association@@gdo, "dc", {}]
+getCO[gdo_GDO] := Lookup[Association@@gdo, "co", {}]
+getCC[gdo_GDO] := Lookup[Association@@gdo, "cc", {}]
 
-getPG[gdo_GDO] := Lookup[gdo[[1]], "PG", PG@<||> ]
+getPG[gdo_GDO] := Lookup[Association@@gdo, "PG", PG[]]
 
 getL[gdo_GDO] := gdo//getPG//getL
 getQ[gdo_GDO] := gdo//getPG//getQ
@@ -196,22 +196,22 @@ getP[gdo_GDO] := gdo//getPG//getP
 
 setPG[pg_PG][gdo_GDO] := setValue[pg, gdo, "PG"]
 
-setL[L_][gdo_GDO] := setValue[L, gdo, "PG",1,"L"]
-setQ[Q_][gdo_GDO] := setValue[Q, gdo, "PG",1,"Q"]
-setP[P_][gdo_GDO] := setValue[P, gdo, "PG",1,"P"]
+setL[L_][gdo_GDO] := setValue[setL[L][gdo//getPG], gdo, "PG"]
+setQ[Q_][gdo_GDO] := setValue[setQ[Q][gdo//getPG], gdo, "PG"]
+setP[P_][gdo_GDO] := setValue[setP[P][gdo//getPG], gdo, "PG"]
 
 setDO[do_][gdo_GDO] := setValue[do, gdo, "do"]
 setDC[dc_][gdo_GDO] := setValue[dc, gdo, "dc"]
 setCO[co_][gdo_GDO] := setValue[co, gdo, "co"]
 setCC[cc_][gdo_GDO] := setValue[cc, gdo, "cc"]
 
-Pair[is_List][gdo1_GDO, gdo2_GDO] := GDO@<|
+Pair[is_List][gdo1_GDO, gdo2_GDO] := GDO[
         "do" -> Union[gdo1//getDO, Complement[gdo2//getDO, is]],
         "dc" -> Union[gdo1//getDC, gdo2//getDC],
         "co" -> Union[gdo2//getCO, Complement[gdo1//getCO, is]],
         "cc" -> Union[gdo1//getCC, gdo2//getCC],
         "PG" -> Pair[is][gdo1//getPG, gdo2//getPG]
-|>
+]
 
 gdo1_GDO // gdo2_GDO := Pair[Intersection[gdo1//getCO,gdo2//getDO]][gdo1,gdo2];
 
@@ -223,12 +223,12 @@ GDO /: Congruent[gdo1_GDO, gdo2_GDO] := And[
         Congruent[gdo1//getPG, gdo2//getPG]
 ]
 
-GDO /: gdo1_GDO gdo2_GDO := GDO@<|
+GDO /: gdo1_GDO gdo2_GDO := GDO[
         "do" -> Union[gdo1//getDO, gdo2//getDO],
         "dc" -> Union[gdo1//getDC, gdo2//getDC],
         "co" -> Union[gdo1//getCO, gdo2//getCO],
         "cc" -> Union[gdo1//getCC, gdo2//getCC],
         "PG" -> (gdo1//getPG)*(gdo2//getPG)
-|>
+]
 
-setEpsilonDegree[k_Integer][gdo_GDO]:=setP[Series[Normal@getP@pg,{ϵ,0,k}]][gdo]
+setEpsilonDegree[k_Integer][gdo_GDO]:=setP[Series[Normal@getP@gdo,{ϵ,0,k}]][gdo]
