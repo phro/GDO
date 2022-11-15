@@ -11,9 +11,9 @@ fromE[e_\[DoubleStruckCapitalE]] := toPG@@e/.
 
 δ[i_,j_] := If[SameQ[i,j],1,0]
 
-getL[pg_PG] := pg[[1,"L"]]
-getQ[pg_PG] := pg[[1,"Q"]]
-getP[pg_PG] := pg[[1,"P"]]
+getL[pg_PG] := Lookup[pg[[1]],"L",0]
+getQ[pg_PG] := Lookup[pg[[1]],"Q",0]
+getP[pg_PG] := Lookup[pg[[1]],"P",1]
 
 setL[L_][pg_PG] := setValue[L, pg, "L"];
 setQ[Q_][pg_PG] := setValue[Q, pg, "Q"];
