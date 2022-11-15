@@ -1,4 +1,4 @@
-γ = 1; ℏ = 1;
+γ = 1; ℏ = 1; $k = 0;
 setValue[value_,obj_,coord_]:=Module[
         {b=Association@@obj},
         b[coord] = value; Head[obj]@@Normal@b
