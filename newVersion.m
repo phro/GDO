@@ -234,6 +234,16 @@ GDO /: gdo1_GDO gdo2_GDO := GDO[
 
 setEpsilonDegree[k_Integer][gdo_GDO]:=setP[Series[Normal@getP@gdo,{ϵ,0,k}]][gdo]
 
+fromE[Subscript[\[DoubleStruckCapitalE],{do_List, dc_List}->{co_List, cc_List}][
+        L_, Q_, P_
+]] := toGDO[do, dc, co, cc, fromE[\[DoubleStruckCapitalE][L, Q, P]]]
+
+fromE[Subscript[\[DoubleStruckCapitalE], dom_List->cod_List][
+        L_, Q_, P_
+]] := GDO["do" -> dom, "co" -> cod,
+        "PG" -> fromE[\[DoubleStruckCapitalE][L, Q, P]]
+]
+
 fromLog[l_] := CF@Module[
         {L, l0 = Limit[l, ϵ->0]},
         L = l0 /. (η|y|ξ|x)[_]->0;
