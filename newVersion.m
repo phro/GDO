@@ -214,3 +214,11 @@ Pair[is_List][gdo1_GDO, gdo2_GDO] := GDO@<|
 |>
 
 gdo1_GDO // gdo2_GDO := Pair[Intersection[gdo1//getCO,gdo2//getDO]][gdo1,gdo2];
+
+GDO /: Congruent[gdo1_GDO, gdo2_GDO] := And[
+        Sort@*getDO/@Equal[gdo1, gdo2],
+        Sort@*getDC/@Equal[gdo1, gdo2],
+        Sort@*getCO/@Equal[gdo1, gdo2],
+        Sort@*getCC/@Equal[gdo1, gdo2],
+        Congruent[gdo1//getPG, gdo2//getPG]
+]
