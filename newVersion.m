@@ -450,3 +450,49 @@ Format[pg_PG] := \[DoubleStruckCapitalE][pg//getL, pg//getQ, pg//getP];
 SubscriptFormat[v_] := (Format[v[i_]] := Subscript[v, i]);
 
 SubscriptFormat/@{y,b,t,a,x,η,β,α,ξ,A,B,T};
+
+(* Z invariant *)
+
+CCn[i_][n_Integer]:=Module[{j},
+  If[n==0,
+    GDO["co"->{i}],
+    If[n>0,
+      If[n==1,
+        CC[i],
+        CC[j]//CCn[i][n-1]//cm[i,j,i]
+      ],
+      If[n==-1,
+        CCi[i],
+        CCi[j]//CCn[i][n+1]//cm[i,j,i]
+      ]
+    ]
+  ]
+]
+
+cm[{}, j_] := cη[j]
+cm[{i_}, j_] := cσ[i,j]
+cm[{i_, j_}, k_] := cm[i,j,k]
+cm[ii_List, k_] := Module[
+        {
+                i  = First[ii],
+                is = Rest[ii],
+                j  ,
+                js ,
+                l
+        },
+        j  = First[is];
+        js = Rest[is];
+        cm[i,j,l] // cm[Prepend[js, l], k]
+]
+
+toGDO[Xp[i_,j_]] := cR[i,j]
+toGDO[Xm[i_,j_]] := cRi[i,j]
+toGDO[{i_,n_}]   := CCn[i][n]
+toGDO[xs_Strand] := cm[List@@xs, First[xs]]
+toGDO[xs_Loop]   := Module[{x = First[xs]}, cm[List@@xs, x]//tr[x]]
+
+toList[RVT[cs_List, xs_List, rs_List]] := Flatten[#,1]&@((toGDO/@#&)/@{xs,rs,cs})
+
+getIndices[RVT[cs_List, _List, _List]] := Sort@Flatten[#,1]&@(List@@@cs)
+
+ZFramed[rvt_RVT] := Fold[#2[#1]&, GDO["co"->getIndices@rvt], toList@rvt]
