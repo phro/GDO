@@ -315,6 +315,9 @@ cRi[i_, j_] = GDO[
         "PG" -> toPG[-ℏ a[j] b[i], (B[i]-1)/(B[i] b[i]) x[j] y[i], 1]
 ]
 
+CC[i_] :=  GDO["co"->{i},"PG"->PG["P"->B[i]^( 1/2)]]
+CCi[i_] := GDO["co"->{i},"PG"->PG["P"->B[i]^(-1/2)]]
+
 getConstLCoef::usage = "getConstLCoef[i][gdo] returns the terms in the L-portion of a GDO expression which are not a function of y[i], b[i], a[i], nor x[i]."
 getConstLCoef[i_][gdo_] :=
         (SeriesCoefficient[#, {b[i],0,0}]&) @*
