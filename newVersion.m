@@ -20,6 +20,10 @@ setL[L_][pg_PG] := setValue[L, pg, "L"];
 setQ[Q_][pg_PG] := setValue[Q, pg, "Q"];
 setP[P_][pg_PG] := setValue[P, pg, "P"];
 
+applyToL[f_][pg_PG] := pg//setL[pg//getL//f]
+applyToQ[f_][pg_PG] := pg//setQ[pg//getQ//f]
+applyToP[f_][pg_PG] := pg//setP[pg//getP//f]
+
 CCF[e_] := ExpandDenominator@ExpandNumerator@Together[
         Expand[e] //. E^x_ E^y_ :> E^(x + y) /. E^x_ :> E^CCF[x]
 ];
@@ -205,6 +209,17 @@ setDO[do_][gdo_GDO] := setValue[do, gdo, "do"]
 setDC[dc_][gdo_GDO] := setValue[dc, gdo, "dc"]
 setCO[co_][gdo_GDO] := setValue[co, gdo, "co"]
 setCC[cc_][gdo_GDO] := setValue[cc, gdo, "cc"]
+
+applyToDO[f_][gdo_GDO] := gdo//setDO[gdo//getDO//f]
+applyToDC[f_][gdo_GDO] := gdo//setDC[gdo//getDC//f]
+applyToCO[f_][gdo_GDO] := gdo//setCO[gdo//getCO//f]
+applyToCC[f_][gdo_GDO] := gdo//setCC[gdo//getCC//f]
+
+applyToPG[f_][gdo_GDO] := gdo//setPG[gdo//getPG//f]
+
+applyToL[f_][gdo_GDO] := gdo//setL[gdo//getL//f]
+applyToQ[f_][gdo_GDO] := gdo//setQ[gdo//getQ//f]
+applyToP[f_][gdo_GDO] := gdo//setP[gdo//getP//f]
 
 Pair[is_List][gdo1_GDO, gdo2_GDO] := GDO[
         "do" -> Union[gdo1//getDO, Complement[gdo2//getDO, is]],
