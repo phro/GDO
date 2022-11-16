@@ -27,18 +27,17 @@ applyToP[f_][pg_PG] := pg//setP[pg//getP//f]
 CCF[e_] := ExpandDenominator@ExpandNumerator@Together[
         Expand[e] //. E^x_ E^y_ :> E^(x + y) /. E^x_ :> E^CCF[x]
 ];
-CF[es_List] := CF /@ es;
 CF[sd_SeriesData] := MapAt[CF, sd, 3];
 CF[e_] := Module[
         {vs = Union[
-                Cases[e, Subscript[(y|b|t|a|x|η|β|τ|α|ξ), _], ∞],
+                Cases[e, (y|b|t|a|x|η|β|τ|α|ξ)[_], ∞],
                 {y, b, t, a, x, η, β, τ, α, ξ}
         ]},
         Total[CoefficientRules[Expand[e], vs] /.
                 (ps_ -> c_) :> CCF[c] (Times @@ (vs^ps))
         ]
 ];
-CF[e_PG] := CF/@#&/@e;
+CF[e_PG] := e//applyToL[CF]//applyToQ[CF]//applyToP[CF]
 
 PG /: Congruent[pg1_PG, pg2_PG] := And[
         CF[getL@pg1 == getL@pg2],
@@ -114,13 +113,13 @@ QZip[ζs_List][pg_PG] := Module[{Q, P, ζ, z, zs, c, ys, ηs, qt, zrule, ζrule}
         Q  = pg//getQ;
         P  = pg//getP;
         c  = CF[Q/.Alternatives@@Union[ζs, zs]->0];
-        ys = CF@Table[D[Q,ζ]/.Alternatives@@zs->0,{ζ,ζs}];
-        ηs = CF@Table[D[Q,z]/.Alternatives@@ζs->0,{z,zs}];
-        qt = CF@Inverse@Table[
+        ys = CF/@Table[D[Q,ζ]/.Alternatives@@zs->0,{ζ,ζs}];
+        ηs = CF/@Table[D[Q,z]/.Alternatives@@ζs->0,{z,zs}];
+        qt = CF/@#&/@(Inverse@Table[
                 δ[z, Dual[ζ]] - D[Q,z,ζ],
                 {ζ,ζs},{z,zs}
-        ];
-        zrule = Thread[zs -> CF[qt . (zs + ys)]];
+        ]);
+        zrule = Thread[zs -> CF/@(qt . (zs + ys))];
         ζrule = Thread[ζs -> ζs + ηs . qt];
         CF@setQ[c + ηs.qt.ys]@setP[Det[qt] Zip[ζs][P /. Union[zrule, ζrule]]]@pg
 ]
@@ -134,13 +133,13 @@ LZip[ζs_List][pg_PG] := Module[
         {L, Q, P} = Through[{getL, getQ, getP}@pg];
         Zs = zs /. {b -> B, t -> T, α -> A};
         c  = CF[L/.Alternatives@@Union[ζs, zs]->0/.Alternatives@@Zs -> 1];
-        ys = CF@Table[D[L,ζ]/.Alternatives@@zs->0,{ζ,ζs}];
-        ηs = CF@Table[D[L,z]/.Alternatives@@ζs->0,{z,zs}];
-        lt = CF@Inverse@Table[
+        ys = CF/@Table[D[L,ζ]/.Alternatives@@zs->0,{ζ,ζs}];
+        ηs = CF/@Table[D[L,z]/.Alternatives@@ζs->0,{z,zs}];
+        lt = CF/@#&/@Inverse@Table[
                 δ[z, Dual[ζ]] - D[L,z,ζ],
                 {ζ,ζs},{z,zs}
         ];
-        zrule = Thread[zs -> CF[lt . (zs + ys)]];
+        zrule = Thread[zs -> CF/@(lt . (zs + ys))];
         Zrule = Join[zrule, zrule /.
                 r_Rule :> ( (U = r[[1]] /. {b -> B, t -> T, α -> A}) ->
                 (U /. U2l /. r //. l2U))
@@ -220,6 +219,13 @@ applyToPG[f_][gdo_GDO] := gdo//setPG[gdo//getPG//f]
 applyToL[f_][gdo_GDO] := gdo//setL[gdo//getL//f]
 applyToQ[f_][gdo_GDO] := gdo//setQ[gdo//getQ//f]
 applyToP[f_][gdo_GDO] := gdo//setP[gdo//getP//f]
+
+CF[e_GDO] := e//
+        applyToDO[Union]//
+	applyToDC[Union]//
+	applyToCO[Union]//
+	applyToCC[Union]//
+        applyToPG[CF]
 
 Pair[is_List][gdo1_GDO, gdo2_GDO] := GDO[
         "do" -> Union[gdo1//getDO, Complement[gdo2//getDO, is]],
