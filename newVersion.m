@@ -432,6 +432,7 @@ Format[gdo_GDO] := Subsuperscript[\[DoubleStruckCapitalE],
         Row[{gdo//getCO, ",", gdo//getCC}],
         Row[{gdo//getDO, ",", gdo//getDC}]
 ][gdo//getL, gdo//getQ, gdo//getP];
+Format[pg_PG] := \[DoubleStruckCapitalE][pg//getL, pg//getQ, pg//getP];
 
 SubscriptFormat[v_] := (Format[v[i_]] := Subscript[v, i]);
 
