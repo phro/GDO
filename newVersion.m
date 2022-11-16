@@ -404,3 +404,14 @@ tr[i_][gdo_GDO] := Module[
                 Message[tr::nonzeroSigma, i, ToString[σ]]; False
         ]
 ]
+
+(* Formatting *)
+
+Format[gdo_GDO] := Subsuperscript[\[DoubleStruckCapitalE],
+        Row[{gdo//getCO, ",", gdo//getCC}],
+        Row[{gdo//getDO, ",", gdo//getDC}]
+][gdo//getL, gdo//getQ, gdo//getP];
+
+SubscriptFormat[v_] := (Format[v[i_]] := Subscript[v, i]);
+
+SubscriptFormat/@{y,b,t,a,x,η,β,α,ξ,A,B,T};
