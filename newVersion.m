@@ -283,3 +283,124 @@ sS[i_] = GDO["do"->{i},"co"->{i},
 ];
 
 cS[i_] = sS[i] // sY[i, 1, 2, 3, 4] // cm[4,3, i] // cm[i, 2, i] // cm[i, 1, i];
+
+getConstLCoef::usage = "getConstLCoef[i][gdo] returns the terms in the L-portion of a GDO expression which are not a function of y[i], b[i], a[i], nor x[i]."
+getConstLCoef[i_][gdo_] :=
+        (SeriesCoefficient[#, {b[i],0,0}]&) @*
+        (Coefficient[#, y[i], 0]&) @*
+        (Coefficient[#, a[i], 0]&) @*
+        (Coefficient[#, x[i], 0]&) @*
+        ReplaceAll[U2l] @*
+        getL@
+        gdo
+
+getConstQCoef::usage = "getConstQCoef[i][gdo] returns the terms in the Q-portion of a GDO expression which are not a function of y[i], b[i], a[i], nor x[i]."
+getConstQCoef[i_][gdo_][bb_] :=
+        ReplaceAll[{b[i]->bb}] @*
+        (Coefficient[#, y[i], 0]&) @*
+        (Coefficient[#, a[i], 0]&) @*
+        (Coefficient[#, x[i], 0]&) @*
+        ReplaceAll[U2l] @*
+        getQ@
+        gdo
+
+getyCoef::usage = "getyCoef[i][gdo][b[i]] returns the linear coefficient of y[i] as a function of b[i]."
+getyCoef[i_][gdo_][bb_] :=
+        ReplaceAll[{b[i]->bb}] @*
+        ReplaceAll[U2l] @*
+        (Coefficient[#, x[i],0]&) @*
+        (Coefficient[#, y[i],1]&) @*
+        getQ@
+        gdo
+
+getbCoef::usage = "getbCoef[i][gdo] returns the linear coefficient of b[i]."
+getbCoef[i_][gdo_] :=
+        (SeriesCoefficient[#, {b[i],0,1}]&) @*
+        (Coefficient[#, a[i],0]&) @*
+        (Coefficient[#, x[i],0]&) @*
+        (Coefficient[#, y[i],0]&) @*
+        ReplaceAll[U2l] @*
+        getL@
+        gdo
+
+getPCoef::usage = "getPCoef[i][gdo] returns the perturbation P of a GDO as a function of b[i]."
+getPCoef[i_][gdo_][bb_] :=
+        ReplaceAll[{b[i]->bb}] @*
+        (Coefficient[#, a[i],0]&) @*
+        (Coefficient[#, x[i],0]&) @*
+        (Coefficient[#, y[i],0]&) @*
+        ReplaceAll[U2l] @*
+        getP@
+        gdo
+
+getaCoef::usage = "getaCoef[i][gdo] returns the linear coefficient of a[i]."
+getaCoef[i_][gdo_] :=
+        (SeriesCoefficient[#, {b[i],0,0}]&) @*
+        (Coefficient[#, a[i],1]&) @*
+        ReplaceAll[U2l] @*
+        getL@
+        gdo
+
+getxCoef::usage = "getxCoef[i][gdo][b[i]] returns the linear coefficient of x[i] as a function of b[i]."
+getxCoef[i_][gdo_][bb_] :=
+        ReplaceAll[{b[i]->bb}] @*
+        ReplaceAll[U2l] @*
+        (Coefficient[#, y[i],0]&) @*
+        (Coefficient[#, x[i],1]&) @*
+        getQ@
+        gdo
+
+getabCoef::usage = "getabCoef[i][gdo] returns the linear coefficient of a[i]b[i]."
+getabCoef[i_][gdo_] :=
+        (SeriesCoefficient[#,{b[i],0,1}]&) @*
+        (Coefficient[#,a[i],1]&) @*
+        ReplaceAll[U2l] @*
+        getL@
+        gdo
+
+getxyCoef::usage = "getxyCoef[i][gdo][b[i]] returns the linear coefficient of x[i]y[i] as a function of b[i]."
+getxyCoef[i_][gdo_][bb_] :=
+        ReplaceAll[{b[i]->bb}] @*
+        ReplaceAll[U2l] @*
+        (Coefficient[#,x[i],1]&) @*
+        (Coefficient[#,y[i],1]&) @*
+        getQ@
+        gdo
+
+safeEval[f_][x_] := Module[{fx, x0},
+        If[(fx=Quiet[f[x]]) === Indeterminate,
+                Series[f[x0],{x0,x,0}]//Normal,
+                fx
+        ]
+]
+
+closeComponent[i_][gdo_GDO]:=gdo//
+        setCO[Complement[gdo//getCO,{i}]]//
+        setCC[Union[gdo//getCC,{i}]]
+
+tr::usage = "tr[i] computes the trace of a GDO element on component i. Current implementation assumes the Subscript[a, i] Subscript[b, i] term vanishes and $k=0."
+tr::nonzeroSigma = "tr[`1`]: Component `1` has writhe: `2`, expected: 0."
+tr[i_][gdo_GDO] := Module[
+        {
+                cL = getConstLCoef[i][gdo],
+                cQ = getConstQCoef[i][gdo],
+                βP = getPCoef[i][gdo],
+                ηη = getyCoef[i][gdo],
+                ββ = getbCoef[i][gdo],
+                αα = getaCoef[i][gdo],
+                ξξ = getxCoef[i][gdo],
+                λ = getxyCoef[i][gdo],
+                ta
+        },
+        ta = (1-Exp[-αα]) t[i];
+        expL = cL + αα a[i] + ββ ta;
+        expQ = safeEval[cQ[#] + t[i]ηη[#]ξξ[#]/(1-t[i] λ[#])&][ta];
+        expP = safeEval[βP[#]/(1-t[i] λ[#])&][ta];
+        CF[(gdo//closeComponent[i]//setL[expL]//setQ[expQ]//setP[expP])//.l2U]
+] /; Module[
+        {σ = getabCoef[i][gdo]},
+        If[σ == 0,
+                True,
+                Message[tr::nonzeroSigma, i, ToString[σ]]; False
+        ]
+]
