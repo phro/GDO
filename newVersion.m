@@ -305,6 +305,16 @@ sS[i_] = GDO["do"->{i},"co"->{i},
 
 cS[i_] = sS[i] // sY[i, 1, 2, 3, 4] // cm[4,3, i] // cm[i, 2, i] // cm[i, 1, i];
 
+cR[i_, j_] = GDO[
+        "co" -> {i,j},
+        "PG" -> toPG[ℏ a[j] b[i], (B[i]-1)/(-b[i]) x[j] y[i], 1]
+]
+
+cRi[i_, j_] = GDO[
+        "co" -> {i,j},
+        "PG" -> toPG[-ℏ a[j] b[i], (B[i]-1)/(B[i] b[i]) x[j] y[i], 1]
+]
+
 getConstLCoef::usage = "getConstLCoef[i][gdo] returns the terms in the L-portion of a GDO expression which are not a function of y[i], b[i], a[i], nor x[i]."
 getConstLCoef[i_][gdo_] :=
         (SeriesCoefficient[#, {b[i],0,0}]&) @*
