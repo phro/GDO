@@ -496,3 +496,41 @@ toList[RVT[cs_List, xs_List, rs_List]] := Flatten[#,1]&@((toGDO/@#&)/@{xs,rs,cs}
 getIndices[RVT[cs_List, _List, _List]] := Sort@Flatten[#,1]&@(List@@@cs)
 
 ZFramed[rvt_RVT] := Fold[#2[#1]&, GDO["co"->getIndices@rvt], toList@rvt]
+
+combineBySecond[l_List] := mergeWith[Total,#]& /@ GatherBy[l, First];
+combineBySecond[lis___] := combineBySecond[Join[lis]]
+
+mergeWith[f_, l_] := {l[[1, 1]], f@(#[[2]] & /@ l)}
+
+Reindex[RVT[cs_, xs_, rs_]] := Module[
+  {
+    sf,
+    cs2, xs2, rs2,
+    repl, repl2
+  },
+   sf = Flatten[List@@#&/@cs];
+   repl = (Thread[sf -> Range[Length[sf]]]);
+   repl2 = repl /. {(a_ -> b_) -> ({a, i_} -> {b, i})};
+   cs2 = cs /. repl;
+   xs2 = xs /. repl;
+   rs2 = rs /. repl2;
+   RVT[cs2, xs2, rs2]
+]
+
+Unwrithe[RVT[cs_List, xs_List, rs_List]] := Module[{lw},
+  lw = Table[{l, Plus@@xs/.{
+      Xp[i_,j_] :> If[MemberQ[l,i] \[And] MemberQ[l,j], 1,0],
+      Xm[i_,j_] :> If[MemberQ[l,i] \[And] MemberQ[l,j],-1,0]
+    }},{l, cs}];
+  addLoops[l_,n_]:=Join[l, Head[l]@@Table[Subscript[Last[l], i],{i,2 Abs[n]}]];
+  Xn[n_]:=If[n>=0,Xm,Xp]; (* Loops to counteract the writhe. *)
+  addXings[l_,n_]:=If[n==0,
+    {},
+    Table[Xn[n][Subscript[Last[l],2 i -1], Subscript[Last[l], 2i]],{i,Abs[n]}]
+    ];
+  addRots[l_,n_] := {First@l,n};
+  (* Print["lw: ", lw]; *)
+  Reindex@RVT[addLoops@@@lw,Join [xs, Flatten[addXings@@@lw]], combineBySecond[rs,addRots@@@lw]]
+]
+
+Z[L_RVT] := ZFramed[Unwrithe[L]]
