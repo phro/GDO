@@ -220,8 +220,8 @@ Subscript[s\[CapitalUpsilon], i_->j_,k_,l_,m_]:=\!\(\*SubscriptBox[\(\[DoubleStr
 
 
 (* ::Input::Initialization:: *)
-c\[CapitalLambda]=(Subscript[\[Eta], i]+(E^(-\[Gamma] Subscript[\[Alpha], i]-\[Epsilon] Subscript[\[Beta], i]) Subscript[\[Eta], j])/(1+\[Gamma] \[Epsilon] Subscript[\[Eta], j] Subscript[\[Xi], i]))Subscript[y, k]+(Subscript[\[Beta], i]+Subscript[\[Beta], j]+Log[1+\[Gamma] \[Epsilon] Subscript[\[Eta], j] Subscript[\[Xi], i]]/\[Epsilon])Subscript[b, k]+(Subscript[\[Alpha], i]+Subscript[\[Alpha], j]+Log[1+\[Gamma] \[Epsilon] Subscript[\[Eta], j] Subscript[\[Xi], i]]/\[Gamma])Subscript[a, k]+((E^(-\[Gamma] Subscript[\[Alpha], j]-\[Epsilon] Subscript[\[Beta], j]) Subscript[\[Xi], i])/(1+\[Gamma] \[Epsilon] Subscript[\[Eta], j] Subscript[\[Xi], i])+Subscript[\[Xi], j])Subscript[x, k];
-Define[Subscript[cm, i,j->k]=\!\(\*SubscriptBox[\(\[DoubleStruckCapitalE]\), \({i, j} \[Rule] {k}\)]\)[c\[CapitalLambda]]]
+c\[CapitalLambda]Old=(Subscript[\[Eta], i]+(E^(-\[Gamma] Subscript[\[Alpha], i]-\[Epsilon] Subscript[\[Beta], i]) Subscript[\[Eta], j])/(1+\[Gamma] \[Epsilon] Subscript[\[Eta], j] Subscript[\[Xi], i]))Subscript[y, k]+(Subscript[\[Beta], i]+Subscript[\[Beta], j]+Log[1+\[Gamma] \[Epsilon] Subscript[\[Eta], j] Subscript[\[Xi], i]]/\[Epsilon])Subscript[b, k]+(Subscript[\[Alpha], i]+Subscript[\[Alpha], j]+Log[1+\[Gamma] \[Epsilon] Subscript[\[Eta], j] Subscript[\[Xi], i]]/\[Gamma])Subscript[a, k]+((E^(-\[Gamma] Subscript[\[Alpha], j]-\[Epsilon] Subscript[\[Beta], j]) Subscript[\[Xi], i])/(1+\[Gamma] \[Epsilon] Subscript[\[Eta], j] Subscript[\[Xi], i])+Subscript[\[Xi], j])Subscript[x, k];
+Define[Subscript[cm, i,j->k]=\!\(\*SubscriptBox[\(\[DoubleStruckCapitalE]\), \({i, j} \[Rule] {k}\)]\)[c\[CapitalLambda]Old]]
 
 
 (* ::Input::Initialization:: *)
