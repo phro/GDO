@@ -222,9 +222,9 @@ applyToP[f_][gdo_GDO] := gdo//setP[gdo//getP//f]
 
 CF[e_GDO] := e//
         applyToDO[Union]//
-	applyToDC[Union]//
-	applyToCO[Union]//
-	applyToCC[Union]//
+        applyToDC[Union]//
+        applyToCO[Union]//
+        applyToCC[Union]//
         applyToPG[CF]
 
 Pair[is_List][gdo1_GDO, gdo2_GDO] := GDO[
