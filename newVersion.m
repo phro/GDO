@@ -533,11 +533,13 @@ Unwrithe[RVT[cs_List, xs_List, rs_List]] := Module[{lw},
   Reindex@RVT[addLoops@@@lw,Join [xs, Flatten[addXings@@@lw]], combineBySecond[rs,addRots@@@lw]]
 ]
 
-Z[L_RVT] := ZFramed[Unwrithe[L]]
+toRVT[L_RVT] := L
+
+Z[L_] := ZFramed[Unwrithe[toRVT@L]]
 
 (* Partial Trace *)
 
-ptr[L_] := Module[
+ptr[L_RVT] := Module[
         {
                 ZL = Z[L],
                 cod
@@ -545,6 +547,7 @@ ptr[L_] := Module[
         cod = getCO@ZL;
         Table[(Composition@@Table[tr[j],{j,Complement[cod,{i}]}])[ZL],{i,cod}]
 ]
+ptr[L_] := ptr[toRVT[L]]
 
 (* Reindexing of GDO's *)
 
