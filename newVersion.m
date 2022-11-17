@@ -545,3 +545,49 @@ ptr[L_] := Module[
         cod = getCO@ZL;
         Table[(Composition@@Table[tr[j],{j,Complement[cod,{i}]}])[ZL],{i,cod}]
 ]
+
+(* Reindexing of GDO's *)
+
+getGDOIndices[gdo_GDO]:=Sort@Catenate@Through[{getDO, getDC, getCO, getCC}@gdo]
+
+isolateVarIndices[i_ -> j_] := (v:y|b|t|a|x|η|β|α|ξ|A|B|T)[i]->v[j];
+
+ReindexBy[f_][gdo_GDO] := Module[
+        {
+        replacementRules,
+        varIndexFunc,
+        repFunc,
+        indices = getGDOIndices[gdo]
+        },
+        replacementRules = Thread[indices->(f/@indices)];
+        repFunc = ReplaceAll[replacementRules];
+        varIndexFunc = ReplaceAll[Thread[isolateVarIndices[replacementRules]]];
+        gdo//applyToPG[varIndexFunc]//
+                applyToCO[repFunc]//
+                applyToDO[repFunc]//
+                applyToDC[repFunc]//
+                applyToCC[repFunc]
+]
+
+fromAssoc[ass_] := Association[ass][#] &
+
+ReindexToInteger[gdos_List] := Module[
+        {is = getGDOIndices@gdos[[1]], f},
+        f = fromAssoc@Thread[is -> Range[Length[is]]];
+        ReindexBy[f]/@gdos
+]
+
+getReindications[gdos_List] := Module[
+        {
+                gdosInt = ReindexToInteger[gdos],
+                is,
+                fs,
+                ls
+        },
+        is = getGDOIndices[gdosInt[[1]]];
+        fs = (fromAssoc@*Association@*Thread)/@(is -> # & /@ Permutations[is]);
+        ls = CF@ReindexBy[#]/@gdosInt&/@fs;
+        Sort[Sort/@ls]
+]
+
+getCanonicalIndex[gdo_] := First@getReindications@gdo
