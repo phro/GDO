@@ -534,3 +534,14 @@ Unwrithe[RVT[cs_List, xs_List, rs_List]] := Module[{lw},
 ]
 
 Z[L_RVT] := ZFramed[Unwrithe[L]]
+
+(* Partial Trace *)
+
+ptr[L_] := Module[
+        {
+                ZL = Z[L],
+                cod
+        },
+        cod = getCO@ZL;
+        Table[(Composition@@Table[tr[j],{j,Complement[cod,{i}]}])[ZL],{i,cod}]
+]
