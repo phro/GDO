@@ -594,3 +594,16 @@ getReindications[gdos_List] := Module[
 ]
 
 getCanonicalIndex[gdo_] := First@getReindications@gdo
+
+deleteIndex[i_][expr_] := SeriesCoefficient[expr/.U2l, Sequence @@ ({#[i], 0, 0} & /@ {
+        y, b, t, a, x
+})]/.l2U
+
+deleteIndexPG[i_][pg_PG] := pg//
+        applyToL[deleteIndex[i]]//
+        applyToQ[deleteIndex[i]]//
+        applyToP[deleteIndex[i]]
+
+deleteLoop[i_][gdo_] := gdo//
+        applyToCC[Complement[#,{i}]&]//
+        applyToPG[deleteIndexPG[i]]
