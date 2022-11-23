@@ -495,7 +495,26 @@ toList[RVT[cs_List, xs_List, rs_List]] := Flatten[#,1]&@((toGDO/@#&)/@{xs,rs,cs}
 
 getIndices[RVT[cs_List, _List, _List]] := Sort@Flatten[#,1]&@(List@@@cs)
 
-ZFramed[rvt_RVT] := Fold[#2[#1]&, GDO["co"->getIndices@rvt], toList@rvt]
+ZFramedStep[{_List,{},_List,calc_GDO}]:={{},{},{},calc};
+ZFramedStep[{ics_List,xs_List,rs_List,icalc_GDO}]:=Module[
+	{k,x=First[xs],xss=Rest[xs],rg,new,p,cs=ics,calc=icalc, done=getGDOIndices[icalc]},
+	rg=(toGDO/@(Select[rs,MemberQ[x,#[[1]]]&]/. {a_,i_Integer}->{p[a],i}));
+	calc *= (Times@@(cm[p[#],#,#]&/@x))[toGDO[x]*Times@@rg];
+	Do[
+		If[Not@TerminalQ[cs][k] \[And] MemberQ[done,next[cs][k]],
+			calc=calc//cm[k,next[cs][k],k];
+			cs=Echo@DeleteCases[cs,next[cs][k],2]
+		];
+		If[Not@InitialQ[cs][k] \[And] MemberQ[done,prev[cs][k]],
+			calc=calc//cm[prev[cs][k],k,prev[cs][k]];
+			cs=Echo@DeleteCases[cs,k,2]
+		]
+	,{k,List@@x}];
+	List[cs,xss,rs,calc]
+]
+
+ZFramed[rvt_RVT] := Last@FixedPoint[ZFramedStep, {Sequence @@ rvt, GDO[]}]
+
 
 combineBySecond[l_List] := mergeWith[Total,#]& /@ GatherBy[l, First];
 combineBySecond[lis___] := combineBySecond[Join[lis]]
