@@ -487,33 +487,60 @@ cm[ii_List, k_] := Module[
 
 toGDO[Xp[i_,j_]] := cR[i,j]
 toGDO[Xm[i_,j_]] := cRi[i,j]
-toGDO[{i_,n_}]   := CCn[i][n]
 toGDO[xs_Strand] := cm[List@@xs, First[xs]]
 toGDO[xs_Loop]   := Module[{x = First[xs]}, cm[List@@xs, x]//tr[x]]
 
-toList[RVT[cs_List, xs_List, rs_List]] := Flatten[#,1]&@((toGDO/@#&)/@{xs,rs,cs})
-
 getIndices[RVT[cs_List, _List, _List]] := Sort@Catenate@(List@@@cs)
 
-ZFramedStep[{_List,{},_List,calc_GDO}]:={{},{},{},calc};
-ZFramedStep[{ics_List,xs_List,rs_List,icalc_GDO}]:=Module[
-	{k,x=First[xs],xss=Rest[xs],rg,new,p,cs=ics,calc=icalc, done=getGDOIndices[icalc]},
-	rg=(toGDO/@(Select[rs,MemberQ[x,#[[1]]]&]/. {a_,i_Integer}->{p[a],i}));
-	calc *= (Times@@(cm[p[#],#,#]&/@x))[toGDO[x]*Times@@rg];
-	Do[
-		If[Not@TerminalQ[cs][k] \[And] MemberQ[done,next[cs][k]],
-			calc=calc//cm[k,next[cs][k],k];
-			cs=Echo@DeleteCases[cs,next[cs][k],2]
-		];
-		If[Not@InitialQ[cs][k] \[And] MemberQ[done,prev[cs][k]],
-			calc=calc//cm[prev[cs][k],k,prev[cs][k]];
-			cs=Echo@DeleteCases[cs,k,2]
-		]
-	,{k,List@@x}];
-	List[cs,xss,rs,calc]
+TerminalQ[cs_List][i_] := MemberQ[Last/@cs,i];
+next[cs_List][i_]:=If[TerminalQ[cs][i],
+	Nothing,
+	Extract[cs,((#/.{c_,j_}->{c,j+1}&)@FirstPosition[i]@cs)]
+]
+
+InitialQ[cs_List][i_] := MemberQ[First/@cs,i];
+prev[cs_List][i_]:=If[InitialQ[cs][i],
+	Nothing,
+	Extract[cs,((#/.{c_,j_}->{c,j-1}&)@FirstPosition[i]@cs)]
+]
+
+MultiplyAdjacentIndices[{cs_List,calc_GDO}]:=Module[
+	{ is=getCO[calc]
+	, i
+	, i2
+	},
+	i = SelectFirst[is,MemberQ[is,next[cs][#]]&];
+	If[Head[i]===Missing,
+		{cs,calc},
+		i2 = next[cs][i];
+		{DeleteCases[cs,i2,2], calc//cm[i,i2,i]}
+	]
+]
+
+MultiplyAllAdjacentIndices[{cs_List, calc_GDO}] := 
+        FixedPoint[MultiplyAdjacentIndices, {cs, calc}]
+
+generateGDOFromXing[x:_Xp|_Xm,rs_Association]:=Module[
+	{p, i,j, in, jn},
+	{i,j} = List@@x;
+	{in,jn} = Lookup[rs,{i,j},0];
+	toGDO[x]*CCn[p[i]][in]*CCn[p[j]][jn] //cm[p[i],i,i]//cm[p[j],j,j] 
+]
+
+ZFramedStep[{_List,{},_Association,calc_GDO}]:={{},{},<||>,calc};
+ZFramedStep[{cs_List,xs_List,rs_Association,calc_GDO}]:=Module[
+        { x=First[xs], xss=Rest[xs]
+        , csOut, calcOut
+        , new
+        },
+        xs;
+        new=calc*generateGDOFromXing[x,rs];
+        {csOut,calcOut} = MultiplyAllAdjacentIndices[{cs,new}];
+        {csOut,xss,rs,calcOut}
 ]
 
 ZFramed[rvt_RVT] := Last@FixedPoint[ZFramedStep, {Sequence @@ rvt, GDO[]}]
+ZFramed[L_] := ZFramed[toRVT@L]
 
 
 combineBySecond[l_List] := mergeWith[Total,#]& /@ GatherBy[l, First];
