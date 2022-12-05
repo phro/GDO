@@ -318,6 +318,18 @@ cRi[i_, j_] = GDO[
 CC[i_] :=  GDO["co"->{i},"PG"->PG["P"->B[i]^( 1/2)]]
 CCi[i_] := GDO["co"->{i},"PG"->PG["P"->B[i]^(-1/2)]]
 
+cKink[i_]  = Module[{k}, cR[i,k] CCi[k] // cm[i, k, i]]
+cKinki[i_] = Module[{k}, cRi[i,k] CC[k] // cm[i, k, i]]
+
+cKinkn[0][i_]  = cη[i]
+cKinkn[1][i_]  = cKink[i]
+cKinkn[-1][i_] = cKinki[i]
+cKinkn[n_Integer][i_] := Module[{j},cKinkn[n-1][i]cKink[j]//cm[i,j,i]]/; n > 1
+cKinkn[n_Integer][i_] := Module[{j},cKinkn[n+1][i]cKinki[j]//cm[i,j,i]]/; n < -1
+
+uR[i_, j_]  = Module[{k}, cR[i,j] cKinki[k]   //cm[i, k, i]]
+uRi[i_, j_] = Module[{k}, cRi[i,j] cKink[k] //cm[i, k, i]]
+
 getConstLCoef::usage = "getConstLCoef[i][gdo] returns the terms in the L-portion of a GDO expression which are not a function of y[i], b[i], a[i], nor x[i]."
 getConstLCoef[i_][gdo_] :=
         (SeriesCoefficient[#, {b[i],0,0}]&) @*
@@ -485,8 +497,8 @@ cm[ii_List, k_] := Module[
         cm[i,j,l] // cm[Prepend[js, l], k]
 ]
 
-toGDO[Xp[i_,j_]] := cR[i,j]
-toGDO[Xm[i_,j_]] := cRi[i,j]
+toGDO[Xp[i_,j_]] := uR[i,j]
+toGDO[Xm[i_,j_]] := uRi[i,j]
 toGDO[xs_Strand] := cm[List@@xs, First[xs]]
 toGDO[xs_Loop]   := Module[{x = First[xs]}, cm[List@@xs, x]//tr[x]]
 
@@ -542,6 +554,20 @@ ZFramedStep[{cs_List,xs_List,rs_Association,calc_GDO}]:=Module[
 ZFramed[rvt_RVT] := Last@FixedPoint[ZFramedStep, {Sequence @@ rvt, GDO[]}]
 ZFramed[L_] := ZFramed[toRVT@L]
 
+ZStep[{_List,{},_Association,calc_GDO}]:={{},{},<||>,calc};
+ZStep[{cs_List,xs_List,rs_Association,calc_GDO}]:=Module[
+        { x=First[xs], xss=Rest[xs]
+        , csOut, calcOut
+        , new
+        },
+        xs;
+        new=calc*generateGDOFromXing[x,rs];
+        {csOut,calcOut} = MultiplyAllAdjacentIndices[{cs,new}];
+        {csOut,xss,rs,calcOut}
+]
+
+Z[rvt_RVT] := Last@FixedPoint[ZStep, {Sequence @@ rvt, GDO[]}]
+Z[L_] := Z[toRVT@L]
 
 combineBySecond[l_List] := mergeWith[Total,#]& /@ GatherBy[l, First];
 combineBySecond[lis___] := combineBySecond[Join[lis]]
@@ -563,25 +589,14 @@ Reindex[RVT[cs_, xs_, rs_]] := Module[
    RVT[cs2, xs2, rs2]
 ]
 
-Unwrithe[RVT[cs_List, xs_List, rs_List]] := Module[{lw},
-  lw = Table[{l, Plus@@xs/.{
-      Xp[i_,j_] :> If[MemberQ[l,i] \[And] MemberQ[l,j], 1,0],
-      Xm[i_,j_] :> If[MemberQ[l,i] \[And] MemberQ[l,j],-1,0]
-    }},{l, cs}];
-  addLoops[l_,n_]:=Join[l, Head[l]@@Table[Subscript[Last[l], i],{i,2 Abs[n]}]];
-  Xn[n_]:=If[n>=0,Xm,Xp]; (* Loops to counteract the writhe. *)
-  addXings[l_,n_]:=If[n==0,
-    {},
-    Table[Xn[n][Subscript[Last[l],2 i -1], Subscript[Last[l], 2i]],{i,Abs[n]}]
-    ];
-  addRots[l_,n_] := {First@l,n};
-  (* Print["lw: ", lw]; *)
-  Reindex@RVT[addLoops@@@lw,Join [xs, Flatten[addXings@@@lw]], combineBySecond[rs,addRots@@@lw]]
+UnwritheComp[i_][gdo_GDO] := Module[
+        {n = gdo//getL//SeriesCoefficient[#,{a[i]b[i],0,1}]&},
+        gdo//(cKinkn[-n][i])
 ]
 
-toRVT[L_RVT] := L
+Unwrithe[gdo_GDO]:=(Composition@@(UnwritheComp/@(gdo//getCO)))@gdo
 
-Z[L_] := ZFramed[Unwrithe[toRVT@L]]
+toRVT[L_RVT] := L
 
 (* Partial Trace *)
 
