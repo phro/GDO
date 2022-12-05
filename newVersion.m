@@ -539,6 +539,11 @@ generateGDOFromXing[x:_Xp|_Xm,rs_Association]:=Module[
 	toGDO[x]*CCn[p[i]][in]*CCn[p[j]][jn] //cm[p[i],i,i]//cm[p[j],j,j] 
 ]
 
+addRotsToXingFreeStrands[rvt_RVT] := GDO[] * Times @@ (
+        CCn[#][Lookup[rvt[[3]], #, 0]] & /@ 
+        First /@ Select[rvt[[1]], Length@# == 1 &]
+)
+
 ZFramedStep[{_List,{},_Association,calc_GDO}]:={{},{},<||>,calc};
 ZFramedStep[{cs_List,xs_List,rs_Association,calc_GDO}]:=Module[
         { x=First[xs], xss=Rest[xs]
@@ -551,7 +556,8 @@ ZFramedStep[{cs_List,xs_List,rs_Association,calc_GDO}]:=Module[
         {csOut,xss,rs,calcOut}
 ]
 
-ZFramed[rvt_RVT] := Last@FixedPoint[ZFramedStep, {Sequence @@ rvt, GDO[]}]
+ZFramed[rvt_RVT] := Last@FixedPoint[ZFramedStep, {Sequence @@ rvt,
+        addRotsToXingFreeStrands[rvt]}]
 ZFramed[L_] := ZFramed[toRVT@L]
 
 ZStep[{_List,{},_Association,calc_GDO}]:={{},{},<||>,calc};
