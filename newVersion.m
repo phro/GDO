@@ -438,10 +438,10 @@ tr[i_][gdo_GDO] := Module[
                 λ = getxyCoef[i][gdo],
                 ta
         },
-        ta = (1-Exp[-αα]) t[i];
-        expL = cL + αα a[i] + ββ ta;
-        expQ = safeEval[cQ[#] + t[i]ηη[#]ξξ[#]/(1-t[i] λ[#])&][ta];
-        expP = safeEval[βP[#]/(1-t[i] λ[#])&][ta];
+        ta = (1-Exp[-αα]) z[i];
+        expL = cL + αα w[i] + ββ ta;
+        expQ = safeEval[cQ[#] + z[i]ηη[#]ξξ[#]/(1-z[i] λ[#])&][ta];
+        expP = safeEval[βP[#]/(1-z[i] λ[#])&][ta];
         CF[(gdo//closeComponent[i]//setL[expL]//setQ[expQ]//setP[expP])//.l2U]
 ] /; Module[
         {σ = getabCoef[i][gdo]},
@@ -461,7 +461,7 @@ Format[pg_PG] := \[DoubleStruckCapitalE][pg//getL, pg//getQ, pg//getP];
 
 SubscriptFormat[v_] := (Format[v[i_]] := Subscript[v, i]);
 
-SubscriptFormat/@{y,b,t,a,x,η,β,α,ξ,A,B,T};
+SubscriptFormat/@{y,b,t,a,x,z,w,η,β,α,ξ,A,B,T};
 
 (* Z invariant *)
 
@@ -572,7 +572,7 @@ ZStep[{cs_List,xs_List,rs_Association,calc_GDO}]:=Module[
         {csOut,xss,rs,calcOut}
 ]
 
-Z[rvt_RVT] := Last@FixedPoint[ZStep, {Sequence @@ rvt, GDO[]}]
+Z[rvt_RVT] := Unwrithe@Last@FixedPoint[ZFramedStep, {Sequence @@ rvt, GDO[]}]
 Z[L_] := Z[toRVT@L]
 
 combineBySecond[l_List] := mergeWith[Total,#]& /@ GatherBy[l, First];
