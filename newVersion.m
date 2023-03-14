@@ -39,6 +39,7 @@ CF[e_] := Module[
 ];
 CF[e_PG] := e//applyToL[CF]//applyToQ[CF]//applyToP[CF]
 
+Congruent[x_, y_, z__] := And[Congruent[x, y], Congruent[y, z]]
 PG /: Congruent[pg1_PG, pg2_PG] := And[
         CF[getL@pg1 == getL@pg2],
         CF[getQ@pg1 == getQ@pg2],
