@@ -533,7 +533,7 @@ MultiplyAdjacentIndices[{cs_List,calc_GDO}]:=Module[
 	]
 ]
 
-MultiplyAllAdjacentIndices[{cs_List, calc_GDO}] := 
+MultiplyAllAdjacentIndices[{cs_List, calc_GDO}] :=
         FixedPoint[MultiplyAdjacentIndices, {cs, calc}]
 
 generateGDOFromXing[x:_Xp|_Xm,rs_Association]:=Module[
@@ -544,7 +544,7 @@ generateGDOFromXing[x:_Xp|_Xm,rs_Association]:=Module[
 ]
 
 addRotsToXingFreeStrands[rvt_RVT] := GDO[] * Times @@ (
-        CCn[#][Lookup[rvt[[3]], #, 0]] & /@ 
+        CCn[#][Lookup[rvt[[3]], #, 0]] & /@
         First /@ Select[rvt[[1]], Length@# == 1 &]
 )
 
@@ -554,7 +554,6 @@ ZFramedStep[{cs_List,xs_List,rs_Association,calc_GDO}]:=Module[
         , csOut, calcOut
         , new
         },
-        xs;
         new=calc*generateGDOFromXing[x,rs];
         {csOut,calcOut} = MultiplyAllAdjacentIndices[{cs,new}];
         {csOut,xss,rs,calcOut}
@@ -600,8 +599,8 @@ Reindex[RVT[cs_, xs_, rs_]] := Module[
 ]
 
 UnwritheComp[i_][gdo_GDO] := Module[
-        {n = gdo//getL//SeriesCoefficient[#,{a[i]b[i],0,1}]&},
-        gdo//(cKinkn[-n][i])
+        {n = gdo//getL//SeriesCoefficient[#,{a[i]b[i],0,1}]&, j},
+        gdo//(cKinkn[-n][j])//cm[i,j,i]
 ]
 
 Unwrithe[gdo_GDO]:=(Composition@@(UnwritheComp/@(gdo//getCO)))@gdo
