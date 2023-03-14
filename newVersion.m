@@ -465,7 +465,7 @@ Format[pg_PG] := \[DoubleStruckCapitalE][pg//getL, pg//getQ, pg//getP];
 
 SubscriptFormat[v_] := (Format[v[i_]] := Subscript[v, i]);
 
-SubscriptFormat/@{y,b,t,a,x,z,w,η,β,α,ξ,A,B,T};
+SubscriptFormat/@{y,b,t,a,x,z,w,η,β,α,ξ,A,B,T,W};
 
 (* Z invariant *)
 
