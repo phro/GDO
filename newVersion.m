@@ -623,7 +623,7 @@ ptr[L_] := ptr[toRVT[L]]
 
 getGDOIndices[gdo_GDO]:=Sort@Catenate@Through[{getDO, getDC, getCO, getCC}@gdo]
 
-isolateVarIndices[i_ -> j_] := (v:y|b|t|a|x|η|β|α|ξ|A|B|T)[i]->v[j];
+isolateVarIndices[i_ -> j_] := (v:y|b|t|a|x|η|β|α|ξ|A|B|T|w|z|W)[i]->v[j];
 
 ReindexBy[f_][gdo_GDO] := Module[
         {
@@ -666,7 +666,7 @@ getReindications[gdos_List] := Module[
 getCanonicalIndex[gdo_] := First@getReindications@gdo
 
 deleteIndex[i_][expr_] := SeriesCoefficient[expr/.U2l, Sequence @@ ({#[i], 0, 0} & /@ {
-        y, b, t, a, x
+        y, b, t, a, x, z, w
 })]/.l2U
 
 deleteIndexPG[i_][pg_PG] := pg//
