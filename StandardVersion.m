@@ -387,7 +387,7 @@ ThinPosition[K_,n_] := First@MinimalBy[Table[ThinPosition[K], n], Width];
 (* ::Input::Initialization:: *)
 Zvdv[K_] := Zvdv[RVK@EchoFunction[Width]@ThinPosition[K,100]];
 Zvdv[rvk_RVK] := Monitor[ Module[{\[Zeta],done,st,c, \[Chi],i,j,k},
-\[Zeta]=1; done={}; st=Range[2Length[rvk[[1]]]]; $M={};
+\[Zeta]=1; done={};st=Range[2Length[rvk[[1]]]];$st=st;$M={};
 Do[AppendTo[$M,c];
 {i,j}=List@@c;
 \[Chi]=(c/.{_Xp:>Subscript[kR, i,j] Subscript[\!\(\*OverscriptBox[\(kKink\), \(_\)]\), 0],_Xm:>Subscript[\!\(\*OverscriptBox[\(kR\), \(_\)]\), i,j] Subscript[kKink, 0]})//Subscript[km, j,0->j];
@@ -397,11 +397,12 @@ Do[
 If[MemberQ[done, k+1],\[Zeta]=\[Zeta]//Subscript[km, k,k+1->k]; st=st/.k+1->k];
 If[MemberQ[done, k-1],\[Zeta]=\[Zeta]//Subscript[km, st[[k-1]],k->st[[k-1]]]; st=st/.k->st[[k-1]]],
 {k,{i,j}}];
+$st=st;
 done=done\[Union]{i,j},
 {c,rvk[[1]]}
 ];
 CF/@ (\[Zeta] /. {Subscript[x, 1]->x,Subscript[y, 1]->y,Subscript[a, 1]->a})
-], {Length@$M,$M}]
+], Pause[1]; {Length@$M,$M,$st}]
 Subscript[\[Rho], 1][K_]:=Coefficient[Alexander[K][T]^3 (-T)/(T-1)^2 Z[K][[3]]/.{a->-1/2,x->0},\[Epsilon]]//Together//Expand
 
 
