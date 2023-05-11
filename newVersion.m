@@ -290,7 +290,10 @@ Pair[is_List][gdo1_GDO, gdo2_GDO] := GDO[
 ]
 
 gdo1_GDO // gdo2_GDO := Pair[Intersection[gdo1//getCO,gdo2//getDO]][gdo1,gdo2];
-
+(*
+We also define notions of equality and multiplication (by concatenation) for
+\mma{GDO}'s.
+*)
 GDO /: Congruent[gdo1_GDO, gdo2_GDO] := And[
         Sort@*getDO/@Equal[gdo1, gdo2],
         Sort@*getDC/@Equal[gdo1, gdo2],
@@ -306,7 +309,10 @@ GDO /: gdo1_GDO gdo2_GDO := GDO[
         "cc" -> Union[gdo1//getCC, gdo2//getCC],
         "PG" -> (gdo1//getPG)*(gdo2//getPG)
 ]
-
+(*
+For the sake of compatibility with Bar-Natan and van der Veen's program, we
+introduce several conversion functions between the two notations.
+*)
 setEpsilonDegree[k_Integer][gdo_GDO]:=setP[Series[Normal@getP@gdo,{ϵ,0,k}]][gdo]
 
 fromE[Subscript[\[DoubleStruckCapitalE],{do_List, dc_List}->{co_List, cc_List}][
