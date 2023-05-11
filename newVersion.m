@@ -324,7 +324,11 @@ fromE[Subscript[\[DoubleStruckCapitalE], dom_List->cod_List][
 ]] := GDO["do" -> dom, "co" -> cod,
         "PG" -> fromE[\[DoubleStruckCapitalE][L, Q, P]]
 ]
-
+(*
+It is at this point that we implement the morphisms of the algebra $\CU$. Each
+operation is prepended with a \enquote{\mma{c}} to emphasize that this is a
+classical algebra, not a quantum deformation.
+*)
 fromLog[l_] := CF@Module[
         {L, l0 = Limit[l, ϵ->0]},
         L = l0 /. (η|y|ξ|x)[_]->0;
@@ -334,10 +338,10 @@ fromLog[l_] := CF@Module[
         ]/.l2U
 ]
 
-cΛ =    (η[i] + E^(-γ α[i] - ϵ β[i]) η[j]/(1+γ ϵ η[j]ξ[i]))y[k] +
-        (β[i] + β[j] + Log[1 + γ ϵ η[j]ξ[i]]/ϵ) b[k] +
-        (α[i] + α[j] + Log[1 + γ ϵ η[j]ξ[i]]/γ) a[k] +
-        (ξ[j] + E^(-γ α[j] - ϵ β[j]) ξ[i]/(1+γ ϵ η[j]ξ[i]))x[k];
+cΛ = (η[i] + E^(-γ α[i] - ϵ β[i]) η[j]/(1+γ ϵ η[j]ξ[i])) y[k] +
+     (β[i] + β[j] + Log[1 + γ ϵ η[j]ξ[i]]/ϵ            ) b[k] +
+     (α[i] + α[j] + Log[1 + γ ϵ η[j]ξ[i]]/γ            ) a[k] +
+     (ξ[j] + E^(-γ α[j] - ϵ β[j]) ξ[i]/(1+γ ϵ η[j]ξ[i])) x[k];
 
 cm[i_, j_, k_] = GDO["do" -> {i,j}, "co" -> {k}, "PG" -> fromLog[cΛ]];
 
@@ -389,7 +393,12 @@ cKinkn[n_Integer][i_] := Module[{j},cKinkn[n+1][i]cKinki[j]//cm[i,j,i]]/; n < -1
 
 uR[i_, j_]  = Module[{k}, cR[i,j] cKinki[k]   //cm[i, k, i]]
 uRi[i_, j_] = Module[{k}, cRi[i,j] cKink[k] //cm[i, k, i]]
-
+(*
+Now we implement the trace. We introduce several functions which extract the
+various coefficients of a \mma{GDO}, so that we may apply
+\cref{eq:trace_on_gaussian}. 
+*)
+(* TODO: separate what follows into a trace-specific file. *)
 getConstLCoef::usage = "getConstLCoef[i][gdo] returns the terms in the L-portion of a GDO expression which are not a function of y[i], b[i], a[i], nor x[i]."
 getConstLCoef[i_][gdo_] :=
         (SeriesCoefficient[#, {b[i],0,0}]&) @*
