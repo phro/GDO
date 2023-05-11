@@ -560,7 +560,7 @@ generateGDOFromXing[x:_Xp|_Xm,rs_Association]:=Module[
 	{p, i,j, in, jn},
 	{i,j} = List@@x;
 	{in,jn} = Lookup[rs,{i,j},0];
-	toGDO[x]*CCn[p[i]][in]*CCn[p[j]][jn] //cm[p[i],i,i]//cm[p[j],j,j] 
+	toGDO[x]*CCn[p[i]][in]*CCn[p[j]][jn] //cm[p[i],i,i]//cm[p[j],j,j]
 ]
 
 addRotsToXingFreeStrands[rvt_RVT] := GDO[] * Times @@ (
