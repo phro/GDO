@@ -122,8 +122,11 @@ DD[f_, {v_,0}] := f;
 DD[f_, {}] := f;
 DD[f_, {v_,n_Integer}] := DD[DD[f,v],{v,n-1}];
 DD[f_, {l_List, ls___}] := DD[DD[f, l], {ls}];
-
-(* Finite zips *)
+(*
+What follows now is the implementation of contraction as introduced in
+\cref{def:contraction}. We begin with the introduction of contractions of
+(finite) polynomials.
+*)
 collect[sd_SeriesData, ζ_] := MapAt[collect[#, ζ] &, sd, 3];
 collect[expr_, ζ_] := Collect[expr, ζ];
 
@@ -133,9 +136,10 @@ Zip[{ζ_,ζs___}][P_] := (collect[P // Zip[{ζs}],ζ] /.
         f_. ζ^d_. :> DD[f,{Dual[ζ], d}]) /.
         Dual[ζ] -> 0 /.
         ((Dual[ζ] /. {b->B, t->T, α -> A}) -> 1)
-
-(* Q-zips *)
-
+(*
+We define contraction along the variables $x$ and $y$ (here packaged into the
+matrix \mma{Q}).
+*)
 QZip[ζs_List][pg_PG] := Module[{Q, P, ζ, z, zs, c, ys, ηs, qt, zrule, ζrule},
         zs = Dual/@ζs;
         Q  = pg//getQ;
@@ -151,7 +155,10 @@ QZip[ζs_List][pg_PG] := Module[{Q, P, ζ, z, zs, c, ys, ηs, qt, zrule, ζrule}
         ζrule = Thread[ζs -> ζs + ηs . qt];
         CF@setQ[c + ηs.qt.ys]@setP[Det[qt] Zip[ζs][P /. Union[zrule, ζrule]]]@pg
 ]
-
+(*
+We define contraction along the variables $a$ and $b$ (here packaged into the
+matrix \mma{L}).
+*)
 LZip[ζs_List][pg_PG] := Module[
         {
                 L, Q, P, ζ, z, zs, Zs, c, ys, ηs, lt,
@@ -188,7 +195,10 @@ LZip[ζs_List][pg_PG] := Module[
         ]
 
 ]
-
+(*
+The function \mma{Pair} combines the above zipping functions into the final
+contraction map.
+*)
 Pair[{}][L_PG,R_PG] := L R;
 Pair[is_List][L_PG,R_PG] := Module[{n},
         Times[
@@ -197,8 +207,13 @@ Pair[is_List][L_PG,R_PG] := Module[{n},
         ] // LZip[Join@@Table[Through[{β, τ, a}[n@i]],{i, is}]] //
         QZip[Join@@Table[Through[{ξ, y}[n@i]],{i, is}]]
 ]
-
-(* GDO = Gaußian Differential Operator *)
+(*
+Our next task is to provide domain and codomain information for the
+\mma{PG}-objects. These will be packaged inside a \mma{GDO}, (Gaußian
+Differential Operator). The four lists' names refer to whether it is a domain or
+a codomain, and whether the index corresponds to an \emph{open} strand or a
+\emph{closed} one.
+*)
 toGDO[do_List,dc_List,co_List,cc_List,L_,Q_,P_] := GDO[
         "do" -> do,
         "dc" -> dc,
@@ -214,7 +229,12 @@ toGDO[do_List,dc_List,co_List,cc_List,pg_PG] := GDO[
         "cc" -> cc,
         "PG" -> pg
 ]
-
+(*
+Next are defined functions for accessing and modifying sub-parts of
+\mma{GDO}-objects. The last argument of \mma{Lookup} is the default value if
+nothing is specified. This means that a morphism with empty domain or codomain
+may be specified as such by omitting that portion of the definition.
+*)
 getDO[gdo_GDO] := Lookup[Association@@gdo, "do", {}]
 getDC[gdo_GDO] := Lookup[Association@@gdo, "dc", {}]
 getCO[gdo_GDO] := Lookup[Association@@gdo, "co", {}]
