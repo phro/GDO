@@ -104,16 +104,17 @@ l2U = {
         E^(c_. w + d_.)     :> W^(c)E^d,
         E^expr_             :> E^Expand@expr
 };
-
-(* Differentiation *)
-
-DD[f_, b] := D[f, b] - ℏ γ B D[f, B];
+(*
+Below the notion of differentiation is defined for expressions which involve
+both upper- and lower-case variables.
+*)
+DD[f_, b]     := D[f, b   ] - ℏ γ B    D[f, B   ];
 DD[f_, b[i_]] := D[f, b[i]] - ℏ γ B[i] D[f, B[i]];
 
-DD[f_, t] := D[f, t] - ℏ T D[f, T];
+DD[f_, t    ] := D[f, t   ] - ℏ T    D[f, T   ];
 DD[f_, t[i_]] := D[f, t[i]] - ℏ T[i] D[f, T[i]];
 
-DD[f_, α] := D[f, α] + γ A D[f, A];
+DD[f_, α    ] := D[f, α   ] + γ A    D[f, A   ];
 DD[f_, α[i_]] := D[f, α[i]] + γ A[i] D[f, A[i]];
 
 DD[f_, v_] := D[f, v];
