@@ -34,7 +34,11 @@ setP[P_][pg_PG] := setValue[P, pg, "P"];
 applyToL[f_][pg_PG] := pg//setL[pg//getL//f]
 applyToQ[f_][pg_PG] := pg//setQ[pg//getQ//f]
 applyToP[f_][pg_PG] := pg//setP[pg//getP//f]
-
+(*
+Next is a function \mma{CF}, which bring objects into canonical form allows us
+to compare for equality effectively. This is defined by Bar-Natan and van der
+Veen.
+*)
 CCF[e_] := ExpandDenominator@ExpandNumerator@Together[
         Expand[e] //. E^x_ E^y_ :> E^(x + y) /. E^x_ :> E^CCF[x]
 ];
@@ -49,7 +53,10 @@ CF[e_] := Module[
         ]
 ];
 CF[e_PG] := e//applyToL[CF]//applyToQ[CF]//applyToP[CF]
-
+(*
+We must also define the notion of equality for \mma{PG}-objects, as well as what
+it means to multiply them.
+*)
 Congruent[x_, y_, z__] := And[Congruent[x, y], Congruent[y, z]]
 PG /: Congruent[pg1_PG, pg2_PG] := And[
         CF[getL@pg1 == getL@pg2],
@@ -64,15 +71,17 @@ PG /: pg1_PG * pg2_PG := toPG[
 ]
 
 setEpsilonDegree[k_Integer][pg_PG]:= setP[Series[Normal@getP@pg,{ϵ, 0, k}]][pg]
-
-ddsl2vars = {y, b, t, a, x};
-ddsl2varsDual = {η, β, τ, α, ξ};
+(*
+The variables $y$, $b$, $t$, $a$, and $x$ are paired with their dual variables
+$η$, $β$, $τ$, $α$, and $ξ$. This applies as well when they have subscripts.
+*)
+ddsl2vars = {y, b, t, a, x, z};
+ddsl2varsDual = {η, β, τ, α, ξ, ζ};
 
 Evaluate[Dual/@ddsl2vars] = ddsl2varsDual;
 Evaluate[Dual/@ddsl2varsDual] = ddsl2vars;
 Dual@z = ζ;
 Dual@ζ = z;
-
 Dual[u_[i_]]:=Dual[u][i]
 
 U2l = {
