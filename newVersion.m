@@ -267,7 +267,13 @@ applyToPG[f_][gdo_GDO] := gdo//setPG[gdo//getPG//f]
 applyToL[f_][gdo_GDO] := gdo//setL[gdo//getL//f]
 applyToQ[f_][gdo_GDO] := gdo//setQ[gdo//getQ//f]
 applyToP[f_][gdo_GDO] := gdo//setP[gdo//getP//f]
-
+(*
+The canonical form function (\mma{CF}) and the contraction mapping (\mma{Pair})
+we extend to include \mma{GDO}-objects. Furthermore, on the level of
+\mma{GDO}-objects we can compose morphisms and keep track of the corresponding
+domains and codomains, using the left-to-right composition operator
+\enquote{$\then$}.
+*)
 CF[e_GDO] := e//
         applyToDO[Union]//
         applyToDC[Union]//
