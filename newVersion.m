@@ -70,7 +70,7 @@ PG /: pg1_PG * pg2_PG := toPG[
         getP@pg1 * getP@pg2
 ]
 
-setEpsilonDegree[k_Integer][pg_PG]:= setP[Series[Normal@getP@pg,{ϵ, 0, k}]][pg]
+setEpsilonDegree[k_Integer][pg_PG] := setP[Series[Normal@getP@pg,{ϵ, 0, k}]][pg]
 (*
 The variables $y$, $b$, $t$, $a$, and $x$ are paired with their dual variables
 $η$, $β$, $τ$, $α$, and $ξ$. This applies as well when they have subscripts.
@@ -313,7 +313,8 @@ GDO /: gdo1_GDO gdo2_GDO := GDO[
 For the sake of compatibility with Bar-Natan and van der Veen's program, we
 introduce several conversion functions between the two notations.
 *)
-setEpsilonDegree[k_Integer][gdo_GDO]:=setP[Series[Normal@getP@gdo,{ϵ,0,k}]][gdo]
+setEpsilonDegree[k_Integer][gdo_GDO] :=
+        setP[Series[Normal@getP@gdo,{ϵ,0,k}]][gdo]
 
 fromE[Subscript[\[DoubleStruckCapitalE],{do_List, dc_List}->{co_List, cc_List}][
         L_, Q_, P_
