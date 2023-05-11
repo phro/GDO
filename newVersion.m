@@ -1,17 +1,28 @@
+(*
+This is a Mathematica™ implementation of the trace. We begin by setting some
+variables, as well as a method for modifying associations.
+*)
 γ = 1; ℏ = 1; $k = 0;
 setValue[value_,obj_,coord_]:=Module[
         {b=Association@@obj},
         b[coord] = value; Head[obj]@@Normal@b
 ]
-
-(* PG[L, Q, P] = Perturbed Gaußian Pe^(L + Q) *)
-
+(*
+We introduce notation \mma{PG[L, Q, P]} to be interpreted as the Perturbed
+Gaußian $P\Exp{L + Q}$. The function \mma{fromE} serves as a compatibility
+layer between a former version of the code.
+*)
 toPG[L_, Q_, P_] := PG["L"->L, "Q"->Q, "P"->P]
 fromE[e_\[DoubleStruckCapitalE]] := toPG@@e/.
         Subscript[(v:y|b|t|a|x|B|T|η|β|τ|α|ξ|A), i_] -> v[i]
-
+(*
+We define the Kronecker-$δ$ function next.
+*)
 δ[i_,j_] := If[SameQ[i,j],1,0]
-
+(*
+Next we introduce helper functions for the reading and manipulating of
+\mma{PG}-objects:
+*)
 getL[pg_PG] := Lookup[Association@@pg,"L",0]
 getQ[pg_PG] := Lookup[Association@@pg,"Q",0]
 getP[pg_PG] := Lookup[Association@@pg,"P",1]
