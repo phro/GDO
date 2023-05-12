@@ -654,7 +654,10 @@ ZFramedStep[{cs_List,xs_List,rs_Association,calc_GDO}]:=Module[
 ZFramed[rvt_RVT] := Last@FixedPoint[ZFramedStep, {Sequence @@ rvt,
         addRotsToXingFreeStrands[rvt]}]
 ZFramed[L_] := ZFramed[toRVT@L]
-
+(*
+Finally, when we wish to consider the unframed invariant, we apply the function
+\mma{Unwrithe}, defined below.
+*)
 Z[rvt_RVT] := Unwrithe@Last@FixedPoint[ZFramedStep, {Sequence @@ rvt, GDO[]}]
 Z[L_] := Z[toRVT@L]
 
@@ -686,9 +689,9 @@ UnwritheComp[i_][gdo_GDO] := Module[
 Unwrithe[gdo_GDO]:=(Composition@@(UnwritheComp/@(gdo//getCO)))@gdo
 
 toRVT[L_RVT] := L
-
-(* Partial Trace *)
-
+(*
+The partial trace is what we use to close a subset of the strands in a tangle.
+*)
 ptr[L_RVT] := Module[
         {
                 ZL = Z[L],
