@@ -397,7 +397,8 @@ uRi[i_, j_] = Module[{k}, cRi[i,j] cKink[k] //cm[i, k, i]]
 (*
 Now we implement the trace. We introduce several functions which extract the
 various coefficients of a \mma{GDO}, so that we may apply
-\cref{eq:trace_on_gaussian}. 
+\cref{eq:trace_on_gaussian}. Coefficients are extracted baased on whether they
+belong to the matrix \mma{L} or the matrix \mma{Q}.
 *)
 (* TODO: separate what follows into a trace-specific file. *)
 getConstLCoef::usage = "getConstLCoef[i][gdo] returns the terms in the L-portion of a GDO expression which are not a function of y[i], b[i], a[i], nor x[i]."
@@ -482,7 +483,11 @@ getxyCoef[i_][gdo_][bb_] :=
         (Coefficient[#,y[i],1]&) @*
         getQ@
         gdo
-
+(*
+In order to run more efficiently, limits are first computed by direct
+evaluation, unless such an operation is ill-defined. In such a case, the
+corresponding series is computed and evaluated at the limit point.
+*)
 safeEval[f_][x_] := Module[{fx, x0},
         If[(fx=Quiet[f[x]]) === Indeterminate,
                 Series[f[x0],{x0,x,0}]//Normal,
@@ -493,7 +498,11 @@ safeEval[f_][x_] := Module[{fx, x0},
 closeComponent[i_][gdo_GDO]:=gdo//
         setCO[Complement[gdo//getCO,{i}]]//
         setCC[Union[gdo//getCC,{i}]]
-
+(*
+Now we come to the implementation of the trace map. The current implementation
+requires that the coefficient of $a_ib_i$ be zero. (See \cref{sec:limitations}
+for how this restriction limits computability.)
+*)
 tr::usage = "tr[i] computes the trace of a GDO element on component i. Current implementation assumes the Subscript[a, i] Subscript[b, i] term vanishes and $k=0."
 tr::nonzeroSigma = "tr[`1`]: Component `1` has writhe: `2`, expected: 0."
 tr[i_][gdo_GDO] := Module[
