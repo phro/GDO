@@ -529,9 +529,9 @@ tr[i_][gdo_GDO] := Module[
                 Message[tr::nonzeroSigma, i, ToString[σ]]; False
         ]
 ]
-
-(* Formatting *)
-
+(*
+Here we introduce some formatting to display the output more aesthetically.
+*)
 Format[gdo_GDO] := Subsuperscript[\[DoubleStruckCapitalE],
         Row[{gdo//getCO, ",", gdo//getCC}],
         Row[{gdo//getDO, ",", gdo//getDC}]
@@ -541,9 +541,12 @@ Format[pg_PG] := \[DoubleStruckCapitalE][pg//getL, pg//getQ, pg//getP];
 SubscriptFormat[v_] := (Format[v[i_]] := Subscript[v, i]);
 
 SubscriptFormat/@{y,b,t,a,x,z,w,η,β,α,ξ,A,B,T,W};
-
-(* Z invariant *)
-
+(*
+\subsection{Implementing the full invariant}
+Now we are in a position to implement the $Z$ invariant to tangles with a closed
+component. We begin by defining an object representing an isolated strand with
+arbitrary integer rotation number, \mma{CCn}:
+*)
 CCn[i_][n_Integer]:=Module[{j},
   If[n==0,
     GDO["co"->{i}],
@@ -559,7 +562,12 @@ CCn[i_][n_Integer]:=Module[{j},
     ]
   ]
 ]
-
+(*
+Since multiplication is associative, we may implement a generalized
+multiplication which can take any number of arguments. It is also named
+\mma{cm}, with a first argument given as an ordered list of indices to be
+concatenated.
+*)
 cm[{}, j_] := cη[j]
 cm[{i_}, j_] := cσ[i,j]
 cm[{i_, j_}, k_] := cm[i,j,k]
