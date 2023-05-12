@@ -583,7 +583,10 @@ cm[ii_List, k_] := Module[
         js = Rest[is];
         cm[i,j,l] // cm[Prepend[js, l], k]
 ]
-
+(*
+The function \mma{toGDO} serves as the invariant for the generators of the tangles.
+We define its value on crossings and on concatenations of elements.
+*)
 toGDO[Xp[i_,j_]] := cR[i,j]
 toGDO[Xm[i_,j_]] := cRi[i,j]
 toGDO[xs_Strand] := cm[List@@xs, First[xs]]
@@ -602,7 +605,11 @@ prev[cs_List][i_]:=If[InitialQ[cs][i],
 	Nothing,
 	Extract[cs,((#/.{c_,j_}->{c,j-1}&)@FirstPosition[i]@cs)]
 ]
-
+(*
+To minimize the size of computations, whenever adjacent indices are present in
+the partial computation, they are to be concatenated before more crossings are
+introduced.
+*)
 MultiplyAdjacentIndices[{cs_List,calc_GDO}]:=Module[
 	{ is=getCO[calc]
 	, i
@@ -630,7 +637,9 @@ addRotsToXingFreeStrands[rvt_RVT] := GDO[] * Times @@ (
         CCn[#][Lookup[rvt[[3]], #, 0]] & /@
         First /@ Select[rvt[[1]], Length@# == 1 &]
 )
-
+(*
+Next we implement the framed link invariant \mma{ZFramed}.
+*)
 ZFramedStep[{_List,{},_Association,calc_GDO}]:={{},{},<||>,calc};
 ZFramedStep[{cs_List,xs_List,rs_Association,calc_GDO}]:=Module[
         { x=First[xs], xss=Rest[xs]
@@ -645,18 +654,6 @@ ZFramedStep[{cs_List,xs_List,rs_Association,calc_GDO}]:=Module[
 ZFramed[rvt_RVT] := Last@FixedPoint[ZFramedStep, {Sequence @@ rvt,
         addRotsToXingFreeStrands[rvt]}]
 ZFramed[L_] := ZFramed[toRVT@L]
-
-ZStep[{_List,{},_Association,calc_GDO}]:={{},{},<||>,calc};
-ZStep[{cs_List,xs_List,rs_Association,calc_GDO}]:=Module[
-        { x=First[xs], xss=Rest[xs]
-        , csOut, calcOut
-        , new
-        },
-        xs;
-        new=calc*generateGDOFromXing[x,rs];
-        {csOut,calcOut} = MultiplyAllAdjacentIndices[{cs,new}];
-        {csOut,xss,rs,calcOut}
-]
 
 Z[rvt_RVT] := Unwrithe@Last@FixedPoint[ZFramedStep, {Sequence @@ rvt, GDO[]}]
 Z[L_] := Z[toRVT@L]
