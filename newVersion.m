@@ -691,6 +691,9 @@ Unwrithe[gdo_GDO]:=(Composition@@(UnwritheComp/@(gdo//getCO)))@gdo
 toRVT[L_RVT] := L
 (*
 The partial trace is what we use to close a subset of the strands in a tangle.
+It takes the trace of all but one component, then returns the collection of all
+such ways of leaving one component open. (As described in
+\cref{sec:dependence-on-open-component}).
 *)
 ptr[L_RVT] := Module[
         {
@@ -701,9 +704,13 @@ ptr[L_RVT] := Module[
         Table[(Composition@@Table[tr[j], {j,Complement[cod,{i}]}])[ZL], {i,cod}]
 ]
 ptr[L_] := ptr[toRVT[L]]
-
-(* Reindexing of GDO's *)
-
+(*
+In order to be able to compare \mma{GDO}'s properly, we require a way to
+canonically represent them. This is achieved by reindexing the strands of the
+link and selecting one who's resulting invariant comes first in an
+(arbitrarily-selected) order, in this case the built-in ordering of expressions
+as defined by Mathematica™.
+*)
 getGDOIndices[gdo_GDO]:=Sort@Catenate@Through[{getDO, getDC, getCO, getCC}@gdo]
 
 isolateVarIndices[i_ -> j_] := (v:y|b|t|a|x|η|β|α|ξ|A|B|T|w|z|W)[i]->v[j];
@@ -751,7 +758,13 @@ getCanonicalIndex[gdo_] := First@getReindications@gdo
 deleteIndex[i_][expr_] := SeriesCoefficient[expr/.U2l, Sequence @@ ({#[i], 0, 0} & /@ {
         y, b, t, a, x, z, w
 })]/.l2U
-
+(*
+Here we introduce functions to further verify the co-algebra structure of a
+traced ribbon meta-Hopf algebra. In particular, the counit is responsible for
+deleting a strand. This has further applications in determining whether the
+invariants of individual components are contained in those of more complex
+links.
+*)
 deleteIndexPG[i_][pg_PG] := pg//
         applyToL[deleteIndex[i]]//
         applyToQ[deleteIndex[i]]//
