@@ -698,7 +698,7 @@ ptr[L_RVT] := Module[
                 cod
         },
         cod = getCO@ZL;
-        Table[(Composition@@Table[tr[j],{j,Complement[cod,{i}]}])[ZL],{i,cod}]
+        Table[(Composition@@Table[tr[j], {j,Complement[cod,{i}]}])[ZL], {i,cod}]
 ]
 ptr[L_] := ptr[toRVT[L]]
 
