@@ -393,8 +393,8 @@ cKinkn[-1][i_] = cKinki[i]
 cKinkn[n_Integer][i_] := Module[{j},cKinkn[n-1][i]cKink[j]//cm[i,j,i]]/; n > 1
 cKinkn[n_Integer][i_] := Module[{j},cKinkn[n+1][i]cKinki[j]//cm[i,j,i]]/; n < -1
 
-uR[i_, j_]  = Module[{k}, cR[i,j] cKinki[k]   //cm[i, k, i]]
-uRi[i_, j_] = Module[{k}, cRi[i,j] cKink[k] //cm[i, k, i]]
+uR[i_, j_]  = Module[{k}, cR[i,j] cKinki[k] // cm[i, k, i]]
+uRi[i_, j_] = Module[{k}, cRi[i,j] cKink[k] // cm[i, k, i]]
 (*
 \section{Implementation of the trace}
 Now we implement the trace. We introduce several functions which extract the
