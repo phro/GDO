@@ -1,6 +1,6 @@
-Get["~/ed/gdo/StandardVersion.m"]
-Get["~/ed/gdo/newVersion.m"];
-Get["~/ed/gdo/RVT.m"]
+(* Get["~/ed/gdo/StandardVersion.m"] *)
+(* Get["coverage/newVersion.m"]; *)
+(* Get["coverage/RVT.m"] *)
 
 pg1 = toPG[Subscript[a, 1],Subscript[x, 1],1 + \[Epsilon] + O[\[Epsilon]]^3]; 
 pg2 = toPG[Subscript[b, 1],Subscript[y, 1],-1 + 2\[Epsilon] + O[\[Epsilon]]^3];
