@@ -1,6 +1,7 @@
 (*
-This is a Mathematica™ implementation of the trace. We begin by setting some
-variables, as well as a method for modifying associations.
+This is a Mathematica™ implementation by Bar-Natan and van der Veen in
+\cite{BV}, modified by the author. We begin by setting some variables, as well
+as a method for modifying associations.
 *)
 γ = 1; ℏ = 1; $k = 0;
 setValue[value_,obj_,coord_]:=Module[
@@ -392,15 +393,15 @@ cKinkn[-1][i_] = cKinki[i]
 cKinkn[n_Integer][i_] := Module[{j},cKinkn[n-1][i]cKink[j]//cm[i,j,i]]/; n > 1
 cKinkn[n_Integer][i_] := Module[{j},cKinkn[n+1][i]cKinki[j]//cm[i,j,i]]/; n < -1
 
-uR[i_, j_]  = Module[{k}, cR[i,j] cKinki[k]   //cm[i, k, i]]
-uRi[i_, j_] = Module[{k}, cRi[i,j] cKink[k] //cm[i, k, i]]
+uR[i_, j_]  = Module[{k}, cR[i,j] cKinki[k] // cm[i, k, i]]
+uRi[i_, j_] = Module[{k}, cRi[i,j] cKink[k] // cm[i, k, i]]
 (*
+\section{Implementation of the trace}
 Now we implement the trace. We introduce several functions which extract the
 various coefficients of a \mma{GDO}, so that we may apply
-\cref{eq:trace_on_gaussian}. Coefficients are extracted baased on whether they
+\cref{eq:trace_on_gaussian}. Coefficients are extracted based on whether they
 belong to the matrix \mma{L} or the matrix \mma{Q}.
 *)
-(* TODO: separate what follows into a trace-specific file. *)
 getConstLCoef::usage = "getConstLCoef[i][gdo] returns the terms in the L-portion of a GDO expression which are not a function of y[i], b[i], a[i], nor x[i]."
 getConstLCoef[i_][gdo_] :=
         (SeriesCoefficient[#, {b[i],0,0}]&) @*
