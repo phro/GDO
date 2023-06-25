@@ -523,7 +523,7 @@ tr[i_][gdo_GDO] := Module[
         expL = cL + αα w[i] + ββ ta;
         expQ = safeEval[cQ[#] + z[i]ηη[#]ξξ[#]/(1-z[i] λ[#])&][ta];
         expP = safeEval[βP[#]/(1-z[i] λ[#])&][ta];
-        CF[(gdo//closeComponent[i]//setL[expL]//setQ[expQ]//setP[expP])//.l2U]
+        CF[(gdo//closeComponent[i]// setL[expL]//setQ[expQ]//setP[expP])//.l2U]
 ] /; Module[
         {σ = getabCoef[i][gdo]},
         If[σ == 0,
@@ -598,14 +598,14 @@ getIndices[RVT[cs_List, _List, _List]] := Sort@Catenate@(List@@@cs)
 
 TerminalQ[cs_List][i_] := MemberQ[Last/@cs,i];
 next[cs_List][i_]:=If[TerminalQ[cs][i],
-	Nothing,
-	Extract[cs,((#/.{c_,j_}->{c,j+1}&)@FirstPosition[i]@cs)]
+        Nothing,
+        Extract[cs,((#/.{c_,j_}->{c,j+1}&)@FirstPosition[i]@cs)]
 ]
 
 InitialQ[cs_List][i_] := MemberQ[First/@cs,i];
 prev[cs_List][i_]:=If[InitialQ[cs][i],
-	Nothing,
-	Extract[cs,((#/.{c_,j_}->{c,j-1}&)@FirstPosition[i]@cs)]
+        Nothing,
+        Extract[cs,((#/.{c_,j_}->{c,j-1}&)@FirstPosition[i]@cs)]
 ]
 (*
 To minimize the size of computations, whenever adjacent indices are present in
@@ -613,26 +613,26 @@ the partial computation, they are to be concatenated before more crossings are
 introduced.
 *)
 MultiplyAdjacentIndices[{cs_List,calc_GDO}]:=Module[
-	{ is=getCO[calc]
-	, i
-	, i2
-	},
-	i = SelectFirst[is,MemberQ[is,next[cs][#]]&];
-	If[Head[i]===Missing,
-		{cs,calc},
-		i2 = next[cs][i];
-		{DeleteCases[cs,i2,2], calc//cm[i,i2,i]}
-	]
+        { is=getCO[calc]
+        , i
+        , i2
+        },
+        i = SelectFirst[is,MemberQ[is,next[cs][#]]&];
+        If[Head[i]===Missing,
+                {cs,calc},
+                i2 = next[cs][i];
+                {DeleteCases[cs,i2,2], calc//cm[i,i2,i]}
+        ]
 ]
 
 MultiplyAllAdjacentIndices[{cs_List, calc_GDO}] :=
         FixedPoint[MultiplyAdjacentIndices, {cs, calc}]
 
 generateGDOFromXing[x:_Xp|_Xm,rs_Association]:=Module[
-	{p, i,j, in, jn},
-	{i,j} = List@@x;
-	{in,jn} = Lookup[rs,{i,j},0];
-	toGDO[x]*CCn[p[i]][in]*CCn[p[j]][jn] //cm[p[i],i,i]//cm[p[j],j,j]
+        {p, i,j, in, jn},
+        {i,j} = List@@x;
+        {in,jn} = Lookup[rs,{i,j},0];
+        toGDO[x]*CCn[p[i]][in]*CCn[p[j]][jn] //cm[p[i],i,i]//cm[p[j],j,j]
 ]
 
 addRotsToXingFreeStrands[rvt_RVT] := GDO[] * Times @@ (
