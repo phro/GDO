@@ -1,6 +1,7 @@
 (*
 This is a Mathematica™ implementation by Bar-Natan and van der Veen in
-\cite{BV}, modified by the author. We begin by setting some variables, as well
+\cite{BV}, modified by the author. The full source code is available at
+\url{https://github.com/phro/GDO}. We begin by setting some variables, as well
 as a method for modifying associations.
 *)
 γ = 1; ℏ = 1; $k = 0;
