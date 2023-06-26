@@ -599,13 +599,13 @@ getIndices[RVT[cs_List, _List, _List]] := Sort@Catenate@(List@@@cs)
 TerminalQ[cs_List][i_] := MemberQ[Last/@cs,i];
 next[cs_List][i_]:=If[TerminalQ[cs][i],
         Nothing,
-        Extract[cs,((#/.{c_,j_}->{c,j+1}&)@FirstPosition[i]@cs)]
+        Extract[cs, ((#/.{c_,j_}->{c,j+1}&)@FirstPosition[i]@cs)]
 ]
 
 InitialQ[cs_List][i_] := MemberQ[First/@cs,i];
 prev[cs_List][i_]:=If[InitialQ[cs][i],
         Nothing,
-        Extract[cs,((#/.{c_,j_}->{c,j-1}&)@FirstPosition[i]@cs)]
+        Extract[cs, ((#/.{c_,j_}->{c,j-1}&)@FirstPosition[i]@cs)]
 ]
 (*
 To minimize the size of computations, whenever adjacent indices are present in
