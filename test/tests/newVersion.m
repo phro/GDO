@@ -5,7 +5,7 @@
 pg1 = toPG[Subscript[a, 1],Subscript[x, 1],1 + \[Epsilon] + O[\[Epsilon]]^3]; 
 pg2 = toPG[Subscript[b, 1],Subscript[y, 1],-1 + 2\[Epsilon] + O[\[Epsilon]]^3];
 
-
+(* Getters and Setters *)
 VerificationTest[
         getL@pg1
 ,
@@ -66,24 +66,8 @@ VerificationTest[
         toPG[Subscript[a, 1]+Subscript[b, 1],Subscript[x, 1]+Subscript[y, 1],-1 + \[Epsilon] + 2\[Epsilon]^2 +O[\[Epsilon]]^3]
 ,
 {TestID->"multiplication of PG's behaves properly"}]
-VerificationTest[
-        QZip[{\[Xi][i]}][toPG[a[i],\[Mu] \[Xi][i]x[i],1]]
-,
-        fromE@Subscript[QZipOld, {Subscript[\[Xi], i]}][\[DoubleStruckCapitalE][Subscript[a, i],\[Mu] Subscript[\[Xi], i] Subscript[x, i],1]]
-,
-{TestID->"New QZip matches old QZip.",SameTest->Congruent}]
-VerificationTest[
-        LZip[{\[Xi][i]}][toPG[a[i]b[i] + \[Lambda] b[i],\[Mu] \[Xi][i]x[i],b[i]^2]]
-,
-        fromE@Subscript[LZipOld, {Subscript[\[Xi], i]}][\[DoubleStruckCapitalE][Subscript[a, i] Subscript[b, i] + \[Lambda] Subscript[b, i],\[Mu] Subscript[\[Xi], i] Subscript[x, i],Subscript[b, i]^2]]
-,
-{TestID->"New LZip matches old LZip.",SameTest->Congruent}]
-VerificationTest[
-        Pair[{i}][toPG[a[i],x[i],b[i]^2],toPG[\[Mu] \[Alpha][i]+ c \[Beta][i], \[Lambda] \[Xi][i],1]]
-,
-        fromE@Subscript[B, {i}][\[DoubleStruckCapitalE][Subscript[a, i],Subscript[x, i],Subscript[b, i]^2],\[DoubleStruckCapitalE][\[Mu] Subscript[\[Alpha], i]+ c Subscript[\[Beta], i], \[Lambda] Subscript[\[Xi], i],1]]
-,
-{TestID->"Pair behaves the same as Subscript[B, _]",SameTest->Congruent}]
+
+(* Reidemeister moves *)
 VerificationTest[
         Module[{k},cR[k,i]CC[k]//cm[i,k,i]]
 ,
@@ -138,6 +122,38 @@ VerificationTest[
         ZFramed@RVT[{Strand[1],Strand[2]},{},<|2->1|>],
         {TestID->"ZFramed R2"}
 ]
+VerificationTest[
+        cR[1,2]CC[pr1]CCi[po1]CC[pr2]CCi[po2]//
+                cm[{pr1,1, po1},1]//
+                cm[{pr2,2, po2},2]
+,
+        cR[1,2]
+,
+{TestID->"Positive CCW Whirl relation",SameTest->Congruent}]
+VerificationTest[
+        cR[1,2]CCi[pr1]CC[po1]CCi[pr2]CC[po2]//
+                cm[{pr1,1, po1},1]//
+                cm[{pr2,2, po2},2]
+,
+        cR[1,2]
+,
+{TestID->"Positive CW Whirl relation",SameTest->Congruent}]
+VerificationTest[
+        cRi[1,2]CC[pr1]CCi[po1]CC[pr2]CCi[po2]//
+                cm[{pr1,1, po1},1]//
+                cm[{pr2,2, po2},2]
+,
+        cRi[1,2]
+,
+{TestID->"Negative CCW Whirl relation",SameTest->Congruent}]
+VerificationTest[
+        cRi[1,2]CCi[pr1]CC[po1]CCi[pr2]CC[po2]//
+                cm[{pr1,1, po1},1]//
+                cm[{pr2,2, po2},2]
+,
+        cRi[1,2]
+,
+{TestID->"Negative CW Whirl relation",SameTest->Congruent}]
 VerificationTest[
         CCi[1]CCi[2]cR[3,4]CC[5]CC[6]//cm[{1,3,5},i]//cm[{2,4,6},j]
 ,
