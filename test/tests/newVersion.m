@@ -67,6 +67,73 @@ VerificationTest[
 ,
 {TestID->"multiplication of PG's behaves properly"}]
 
+(* Algebraic axioms *)
+
+(** meta-monoid axioms **)
+VerificationTest[
+        cm[1,2,1]//cm[1,3,1],
+        cm[2,3,2]//cm[1,2,1],
+{TestID->"mult",SameTest->Congruent}]
+
+VerificationTest[
+        cη[1]//cη[2]//cm[1,2,1],
+        cη[1],
+{TestID->"unit 1",SameTest->Congruent}]
+
+VerificationTest[
+        cη[1]//cη[2]//cm[2,1,1],
+        cη[1],
+{TestID->"unit 2",SameTest->Congruent}]
+
+(** meta-comonoid axioms **)
+VerificationTest[
+        cΔ[1,1,2]//cΔ[2,2,3],
+        cΔ[1,1,3]//cΔ[1,1,2],
+{TestID->"comult",SameTest->Congruent}]
+
+VerificationTest[
+        cη[1]//cΔ[1,1,2]//cϵ[2],
+        cη[1],
+{TestID->"counit 1",SameTest->Congruent}]
+
+VerificationTest[
+        cη[1]//cΔ[1,2,1]//cϵ[2],
+        cη[1],
+{TestID->"counit 2",SameTest->Congruent}]
+
+(** meta-bimonoid axoims **)
+VerificationTest[
+        cΔ[1,1,3]//cΔ[2,2,4]//cm[1,2,1]//cm[3,4,2],
+        cm[1,2,1]//cΔ[1,1,2],
+TestID->"mult comult",SameTest->Congruent]
+
+VerificationTest[
+        cη[1]cη[2]//cm[1,2,1]//cϵ[1],
+        cη[1]cη[2]//cϵ[1]//cϵ[2],
+TestID->"mult counit",SameTest->Congruent]
+
+VerificationTest[
+        cη[1]//cΔ[1,1,2],
+        cη[1]cη[2],
+TestID->"comult unit",SameTest->Congruent]
+
+VerificationTest[
+        cη[2]cη[1]//cϵ[1],
+        cη[2],
+TestID->"unit counit",SameTest->Congruent]
+
+(** meta-Hopf monoid axioms **)
+VerificationTest[
+        cη[1]//cϵ[1]//cη[1],
+        cΔ[1,1,2]//cS[1]//cm[1,2,1],
+TestID->"antipode 1",SameTest->Congruent]
+
+VerificationTest[
+        cη[1]//cϵ[1]//cη[1],
+        cΔ[1,1,2]//cS[2]//cm[1,2,1],
+TestID->"antipode 2",SameTest->Congruent]
+
+
 (* Reidemeister moves *)
 VerificationTest[
         Module[{k},cR[k,i]CC[k]//cm[i,k,i]]
