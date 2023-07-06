@@ -502,22 +502,6 @@ safeEval[f_][x_] := Module[{fx, x0},
         ]
 ]
 
-(* safeEvalVars[f_][vars_List][vals_List] := Module[{fx, x0}, *)
-        (* If[(fx=Quiet[f/.Thread[vars->vals]]) === Indeterminate, *)
-                (* Series[f, Sequence@@MapThread[{#1,#2,0}&,vars,vals]]//Normal, *)
-                (* fx *)
-        (* ] *)
-(* ] *)
-
-(* ηs = CF/@Table[Limit[D[Q,z], (#1->0&)/@ζs],{z,zs}]; *)
-safeEvalVars[f_][vars_List][val_] := Module[{fx},
-        If[(fx=Quiet[f/.Thread[vars->ConstantArray[val, Length[vars]]]]) ===
-                Indeterminate,
-                Series[f, Sequence@@MapThread[{#1,#2,0}&,vars,vals]]//Normal,
-                fx
-        ]
-]
-
 closeComponent[i_][gdo_GDO]:=gdo//
         setCO[Complement[gdo//getCO,{i}]]//
         setCC[Union[gdo//getCC,{i}]]
