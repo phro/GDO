@@ -506,7 +506,7 @@ closeComponent[i_][gdo_GDO]:=gdo//
         setCC[Union[gdo//getCC,{i}]]
 (*
 Now we come to the implementation of the trace map. The current implementation
-requires that the coefficient of $a_ib_i$ be zero. (See \cref{sec:limitations}
+requires that the coefficient of $a_ib_i$ be zero. (See \cref{sec:coinv_comp}
 for how this restriction limits computability.)
 *)
 tr::usage = "tr[i] computes the trace of a GDO element on component i. Current implementation assumes the Subscript[a, i] Subscript[b, i] term vanishes and $k=0."
