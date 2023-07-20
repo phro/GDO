@@ -698,8 +698,8 @@ toRVT[L_RVT] := L
 (*
 The partial trace is what we use to close a subset of the strands in a tangle.
 It takes the trace of all but one component, then returns the collection of all
-such ways of leaving one component open. (As described in
-\cref{sec:dependence-on-open-component}).
+such ways of leaving one component open (as described in
+\cref{sec:compare_MVA}).
 *)
 ptr[L_RVT] := Module[
         {
