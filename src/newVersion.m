@@ -1,8 +1,6 @@
 (*
-This is a Mathematica™ implementation by Bar-Natan and van der Veen in
-\cite{BV}, modified by the author. The full source code is available at
-\url{https://github.com/phro/GDO}. We begin by setting some variables, as well
-as a method for modifying associations.
+We begin by setting some variables, as well as a method for modifying
+associations.
 *)
 γ = 1; ℏ = 1; $k = 0;
 setValue[value_,obj_,coord_]:=Module[
@@ -12,7 +10,7 @@ setValue[value_,obj_,coord_]:=Module[
 (*
 We introduce notation \mma{PG[L, Q, P]} to be interpreted as the Perturbed
 Gaußian $P\Exp{L + Q}$. The function \mma{fromE} serves as a compatibility
-layer between a former version of the code.
+layer between a Bar-Natan and van der Veen's implementation and this one.
 *)
 toPG[L_, Q_, P_] := PG["L"->L, "Q"->Q, "P"->P]
 fromE[e_\[DoubleStruckCapitalE]] := toPG@@e/.
