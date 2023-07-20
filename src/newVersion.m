@@ -54,8 +54,8 @@ CF[e_] := Module[
 ];
 CF[e_PG] := e//applyToL[CF]//applyToQ[CF]//applyToP[CF]
 (*
-We must also define the notion of equality for \mma{PG}-objects, as well as what
-it means to multiply them.
+We define the notion of equality for \mma{PG}-objects, as well as what it means
+to multiply them.
 *)
 Congruent[x_, y_, z__] := And[Congruent[x, y], Congruent[y, z]]
 PG /: Congruent[pg1_PG, pg2_PG] := And[
@@ -230,10 +230,10 @@ toGDO[do_List,dc_List,co_List,cc_List,pg_PG] := GDO[
         "PG" -> pg
 ]
 (*
-Next are defined functions for accessing and modifying sub-parts of
-\mma{GDO}-objects. The last argument of \mma{Lookup} is the default value if
-nothing is specified. This means that a morphism with empty domain or codomain
-may be specified as such by omitting that portion of the definition.
+Next are functions for accessing and modifying sub-parts of \mma{GDO}-objects.
+The last argument of \mma{Lookup} is the default value if nothing is specified.
+This means that a morphism with empty domain or codomain may be specified as
+such by omitting that portion of the definition.
 *)
 getDO[gdo_GDO] := Lookup[Association@@gdo, "do", {}]
 getDC[gdo_GDO] := Lookup[Association@@gdo, "dc", {}]
@@ -328,7 +328,8 @@ fromE[Subscript[\[DoubleStruckCapitalE], dom_List->cod_List][
 (*
 It is at this point that we implement the morphisms of the algebra $\CU$. Each
 operation is prepended with a \enquote{\mma{c}} to emphasize that this is a
-classical algebra, not a quantum deformation.
+classical algebra, not a quantum deformation. These match the quantities given
+in \cref{thm:CU_gaussian}.
 *)
 fromLog[l_] := CF@Module[
         {L, l0 = Limit[l, ϵ->0]},
@@ -400,7 +401,7 @@ cKinkn[n_Integer][i_] := Module[{j},cKinkn[n+1][i]cKinki[j]//cm[i,j,i]]/; n < -1
 uR[i_, j_]  = Module[{k}, cR[i,j] cKinki[k] // cm[i, k, i]]
 uRi[i_, j_] = Module[{k}, cRi[i,j] cKink[k] // cm[i, k, i]]
 (*
-\section{Implementation of the trace}
+\section{Implementation of the trace and $\ptr$}
 Now we implement the trace. We introduce several functions which extract the
 various coefficients of a \mma{GDO}, so that we may apply
 \cref{eq:trace_on_gaussian}. Coefficients are extracted based on whether they
